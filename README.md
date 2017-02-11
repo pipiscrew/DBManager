@@ -34,6 +34,14 @@ last update done at 2014.
 
 <br><br>
 
+##This project uses the following 3rd-party dependencies :<br>
+-[Aga.Controls.dll](https://sourceforge.net/projects/treeviewadv/)<br>
+-[ICSharpCode.TextEditor.dll](http://www.icsharpcode.net/)<br>
+-[MySql.Data.dll](https://dev.mysql.com)<br>
+-[Newtonsoft.Json.dll](http://www.newtonsoft.com/json)<br>
+-[SQLite.NET.dll](http://adodotnetsqlite.sourceforge.net/)<br>
+
+<br><br>
 
 Copyright (c) 2017 [PipisCrew](http://pipiscrew.com)
 
