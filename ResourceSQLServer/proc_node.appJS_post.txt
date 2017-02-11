@@ -1,0 +1,4 @@
+--app.js
+app.post('/a/{{dbase}}/{{function}}{{id}}', express.bodyParser({uploadDir:'./uploads'}), function(req, res){	
+	{{dbase}}.{{function}}(req,res,maindata);
+});

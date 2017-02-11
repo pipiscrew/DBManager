@@ -1,0 +1,16 @@
+﻿<?php
+function connect() {
+	$mysql_hostname = "localhost";  //your mysql host name
+	$mysql_user = "";			//your mysql user name
+	$mysql_password = "";			//your mysql password
+	$mysql_database = "";	//your mysql database
+	
+	$dbh = new PDO("mysql:host=$mysql_hostname;dbname=$mysql_database", $mysql_user, $mysql_password);
+	
+	//enable utf8!
+	$dbh->exec("set names utf8");
+	
+	return $dbh;
+}
+
+?>

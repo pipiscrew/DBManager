@@ -1,0 +1,8 @@
+
+$*field*=null;
+if (!empty($_POST['*field*']))
+{
+	$dt = DateTime::createFromFormat('d-m-Y', $_POST['*field*']);
+	
+	$*field* =	$dt->format('Y-m-d');
+}

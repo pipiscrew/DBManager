@@ -1,0 +1,9 @@
+
+$*field* = *0var*;
+
+if (isset($_POST['*field*'])) {
+	if ($_POST['*field*'] == "on")
+		$*field* = 1;
+	else
+		$*field* = *0var*;
+}

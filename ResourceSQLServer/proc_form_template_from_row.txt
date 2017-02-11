@@ -1,0 +1,5 @@
+                                        <div class='form-group'>
+                                            <label>txt{{paramname}} :</label>
+                                            <input name='{{paramname}}' class='form-control' placeholder='txt{{paramname}}'>
+                                        </div>
+

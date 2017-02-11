@@ -1,0 +1,29 @@
+<?php
+
+function connect() {
+	$mysql_hostname = "localhost";  //your mysql host name
+	$mysql_user = "pipiscrew";			//your mysql user name
+	$mysql_password = "pipiscrew";			//your mysql password
+	$mysql_database = "pipiscrew";	//your mysql database
+
+    //setup a connection with mySQL
+    $mysqli = new mysqli($mysql_hostname, $mysql_user, $mysql_password,$mysql_database);
+
+    /* check connection */
+    if (mysqli_connect_errno()) {
+        printf("Connect failed: %s\n", mysqli_connect_error());
+        exit();
+    }
+
+    return $mysqli;
+}
+
+
+function getScalar($conne,$sql) {
+    if ( $rs = $conne->query($sql) ) {
+        $r = $rs->fetch_array();
+        $rs->free();
+        return $r[0];
+    }
+    return $def;
+}

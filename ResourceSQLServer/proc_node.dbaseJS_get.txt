@@ -1,0 +1,14 @@
+
+
+--dbase.js
+function fn_{{function}}(req, res) {
+	var params = req.params;
+	var data = {};
+
+	var sqlq = "EXEC [{{procname}}]{{id1}}";
+	sql.query(conn, sqlq{{id2}}, function(error, rows) {
+		data = rows;
+
+		res.end("{{function}}_cb(" + JSON.stringify(data) + ");");
+	});
+}

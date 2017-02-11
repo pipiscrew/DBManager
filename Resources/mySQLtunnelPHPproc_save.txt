@@ -1,0 +1,37 @@
+<?php
+
+if (**post validation**) {
+	echo "error010101010";
+	return;
+}
+
+**bit validation**
+
+require_once ('general.php');
+
+$db = connect();
+
+if ($stmt = $db -> prepare("call **proc_name** (**q**)")) {
+
+	//bind our params
+	$stmt -> bind_param('**s**', **bind_param**);
+	
+**bind_set**
+
+		/* Execute the prepared Statement */
+		$stmt -> execute();
+
+		$g = $stmt -> affected_rows;
+
+		if ($g == -1)
+			echo "error";
+		else
+			echo "ok";
+}
+
+//close the statement
+$stmt -> close();
+
+$db -> close();
+
+?>

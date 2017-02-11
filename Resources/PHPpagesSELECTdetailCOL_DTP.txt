@@ -1,0 +1,7 @@
+
+			<div class="col-xs-6 col-md-4">
+				<div class='form-group'>
+					<label>*field* :</label><br>
+					<input type="text" class="form-control" name="*field*" data-date-format="yyyy-mm-dd" style="width:100px" >
+				</div>
+			</div>

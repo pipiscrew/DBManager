@@ -1,0 +1,77 @@
+    ////////////////////////////////////////
+    // MODAL SUBMIT aka save button
+    $('#form{{name}}').submit(function(e) {
+        e.preventDefault();
+
+            //add new
+            if ($('[name=updateID]').val()==''){
+                    var company_id = <?=$_SESSION['adb_companyid']?>;
+                    
+                    $.ajax({        
+                            url: "http://server.azurewebsites.net/a/dbasename/product_add/" + <?=$_SESSION['adb_companyid']?>,
+                            dataType: 'json', 
+                            type: 'POST', 
+                            data: { 
+{{fields}}
+                                    }, 
+                            success: function (result) { 
+                                 fillGrid();
+                            }, 
+                            //timeout: CALLS_TIMEOUT, 
+                            error: function (jqXHR, status, errorThrown) { 
+                                console.log("error in json - message: " + jqXHR.responseText); 
+                            } 
+                        });
+                    }
+            else { //update
+                    $.ajax({        
+                            url: "http://server.azurewebsites.net/a/dbasename/product_update/" + $('[name=updateID]').val(),
+                            dataType: 'json', 
+                            type: 'POST', 
+                            data: {
+{{fields}}
+                                    }, 
+                            success: function (result) { 
+                                fillGrid();
+                            }, 
+                            //timeout: CALLS_TIMEOUT, 
+                            error: function (jqXHR, status, errorThrown) { 
+                                console.log("error in json - message: " + jqXHR.responseText); 
+                            } 
+                        });
+            }
+    });
+
+
+
+                <!-- EDIT {{name}} MODAL [START] -->
+                <div class="modal fade" id="modal{{name}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    &times;
+                                </button>
+                                <h4 class="modal-title" id='lblTitle'>New</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form id="form{{name}}" role="form" method="post">
+                                    <form role="form">
+{{formfields}}
+                                        
+                                        <input name="updateID" class="form-control" style="display:none;">
+                            </div>
+                            <div class="modal-footer">
+                                <button id="bntCancel" type="button" class="btn btn-default" data-dismiss="modal">
+                                    ακύρωση
+                                </button>
+                                <button id="bntSave" class="btn btn-primary" type="submit" name="submit">
+                                    αποθήκευση
+                                </button>
+                            </div>
+                            </form>
+                        </div>
+                        <
+                    </div>
+                </div>
+                <!-- EDIT {{name}} MODAL [END] -->

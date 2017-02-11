@@ -1,0 +1,202 @@
+--JS
+<script type="text/javascript">
+
+     //init grid - display records
+     fillGrid();
+		
+    $(document).ready(function() {
+        //functionality when modal closed, hide the warning messages + reset
+        $('#modal{{table}}').on('hidden.bs.modal', function() {
+            //when close - clear elements
+            $('#form{{table}}').trigger("reset");
+            
+            //set form texts for new record
+            $('#bntSave').text('αποθήκευση');
+            $('#lblTitle').text('Νέο Προϊον');
+        });
+    
+    
+        ////////////////////////////////////////
+        // add new button
+        $(document).on("click", "#btn_new", function(e) {
+            //show form
+            $('#modal{{table}}').modal('show');
+        });
+
+    
+        ////////////////////////////////////////
+        // delete button - comes from GRID only
+        $(document).on("click", "#btn_delete", function(e) {
+            var s = $(this).parent().parent().find("td:nth-child(1)").text();
+            
+                if (confirm('Θέλετε να διαγράψετε το προϊον \r\n\r\n' + s)) {
+                        $.ajax({        
+                                url: "http://server.azurewebsites.net/a/dbasename/{{table}}_delete/" + $(this).attr('data-name'),
+                                dataType: 'json', 
+                                type: 'POST', 
+                                success: function (result) { 
+                                     fillGrid();
+                                }, 
+                                //timeout: CALLS_TIMEOUT, 
+                                error: function (jqXHR, status, errorThrown) { 
+                                    console.log("error in json - message: " + jqXHR.responseText); 
+                                } 
+                            });
+                } else {
+                    alert('abort');
+                }
+        });
+
+
+        ////////////////////////////////////////
+        // edit button - comes from GRID only
+        $(document).on("click", "#btn_edit", function(e) {
+            
+             //query for record       
+            $.ajax({
+                url : "http://server.azurewebsites.net/a/dbasename/{{table}}_listwhere/" + $(this).attr('data-name') + "?callback={{table}}_listwhere_cb",
+                dataType : 'jsonp',
+                jsonpCallback : '{{table}}_listwhere_cb',
+                jsonp : 'callback',
+                success : function (result)
+                {
+    
+                },
+                error : function(jqXHR, status, errorThrown) {
+                    console.log("error in json - message: " + jqXHR.responseText);
+                }
+            });
+    
+        });
+
+
+        ////////////////////////////////////////
+        // MODAL SUBMIT aka save button
+        $('#form{{table}}').submit(function(e) {
+            e.preventDefault();
+    
+                //add new
+                if ($('[name=updateID]').val()==''){
+                        var company_id = <?=$_SESSION['adb_companyid']?>;
+                        
+                        $.ajax({        
+                                url: "http://server.azurewebsites.net/a/dbasename/{{table}}_add/" + <?=$_SESSION['adb_companyid']?>,
+                                dataType: 'json', 
+                                type: 'POST', 
+                                data: { 
+{{fields}}
+                                        }, 
+                                success: function (result) { 
+                                     fillGrid();
+                                }, 
+                                //timeout: CALLS_TIMEOUT, 
+                                error: function (jqXHR, status, errorThrown) { 
+                                    console.log("error in json - message: " + jqXHR.responseText); 
+                                } 
+                            });
+                        }
+                else { //update
+                        $.ajax({        
+                                url: "http://server.azurewebsites.net/a/dbasename/{{table}}_update/" + $('[name=updateID]').val(),
+                                dataType: 'json', 
+                                type: 'POST', 
+                                data: {
+{{fields}}
+                                        }, 
+                                success: function (result) { 
+                                    fillGrid();
+                                }, 
+                                //timeout: CALLS_TIMEOUT, 
+                                error: function (jqXHR, status, errorThrown) { 
+                                    console.log("error in json - message: " + jqXHR.responseText); 
+                                } 
+                            });
+                }
+        });
+
+    }); //JQuery ends here
+
+    
+    function fillGrid(){
+      $.ajax({           
+            url: "http://server.azurewebsites.net/a/dbasename/{{table}}s_listwhere/<?=$_SESSION['adb_companyid']?>/?callback={{table}}s_listwhere_cb",
+            dataType: 'jsonp',
+            jsonpCallback: '{{table}}s_listwhere_cb',
+            jsonp: 'callback',
+            error: function (jqXHR, status, errorThrown) {
+                console.log("error in json - message: " + jqXHR.responseText);
+            }
+        });
+        
+         //close form
+         $('#modal{{table}}').modal('hide');
+    }
+    
+    function {{table}}_listwhere_cb(e){
+        console.log(e);
+        
+          //set records detail in dialog
+{{listwhere}}
+         
+        //set form texts
+        $('#bntSave').text('ενημέρωση');
+        $('#lblTitle').text('Αλλαγή στοιχείων');
+        
+         //hold the record ID in hidden field
+         $('[name=updateID]').val(e[0]["prd_id"]);
+         
+         //show form
+         $('#modal{{table}}').modal('toggle');
+         
+    }
+    
+    function {{table}}s_listwhere_cb(e){
+        console.log(e);
+        var inj="";
+        for (var it=0; it<e.length; it++){
+            inj+="<tr>";
+{{listwheres}}
+            inj+="<td><input id='btn_edit' type='button' value='Αλλαγη' class='greenBtn' data-name='"+ e[it][*"{{table}}_id"] +"'/></td>";
+            inj+="<td><input id='btn_delete' type='button' value='Διαγραφη' class='redBtn' data-name='"+ e[it][*"{{table}}_id"] +"' /></td>";
+            
+            inj+="<tr>";
+            
+        }
+        $("#contents").html(inj);
+    }
+    
+</script>
+
+
+
+--HTML
+				<!-- NEW {{table}} MODAL [START] -->
+				<div class="modal fade" id="modal{{table}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									&times;
+								</button>
+								<h4 class="modal-title" id='lblTitle_{{table}}'>New {{table}}</h4>
+							</div>
+							<div class="modal-body">
+								<form id="form{{table}}" role="form" method="post">
+									<form role="form">
+{{modalElements}}
+										<input name="{{table}}_updateID" class="form-control" style="display:none;">
+
+							</div>
+							<div class="modal-footer">
+								<button id="bntCancel_{{table}}" type="button" class="btn btn-default" data-dismiss="modal">
+									cancel
+								</button>
+								<button id="bntSave_{{table}}" class="btn btn-primary" type="submit" name="submit">
+									save
+								</button>
+							</div>
+							</form>
+						</div>
+                    </div>
+                </div>
+				<!-- NEW {{table}} MODAL [END] -->

@@ -1,0 +1,13 @@
+
+    $('[name=*field*]').datetimepicker({
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 1
+    });
+	
+	//set default value
+	$('[name=*field*]').val(new Date().toISOString().slice(0, 10));

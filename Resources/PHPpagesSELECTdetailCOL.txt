@@ -1,0 +1,7 @@
+
+			<div class="col-xs-6 col-md-4">
+				<div class='form-group'>
+					<label>*field* :</label>
+					<input name='*field*' class='form-control' maxlength="*fieldsize*" placeholder='*field*'>
+				</div>
+			</div>

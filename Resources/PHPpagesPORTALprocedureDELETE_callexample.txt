@@ -1,0 +1,41 @@
+<?php
+
+session_start();
+
+if (!isset($_SESSION["u"])) {
+    header("Location: index.html");
+    exit ;
+}
+
+if (!isset($_POST['category_id'])) {
+	echo "error010101010";
+	return;
+}
+
+require_once ('92nNE1WK_config.php');
+
+$db = connect();
+
+if ($stmt = $db -> prepare("call categories_delete (?)")) {
+
+	//bind param
+	$stmt -> bind_param('s', $rec_id);
+	
+	$rec_id=$_POST['category_id'];
+	
+	/* Execute the prepared Statement */
+	$stmt -> execute();
+
+	$g = $stmt -> affected_rows;
+
+	if ($g == -1)
+		echo "error";
+	else
+		echo "ok";
+}
+
+//close the statement
+$stmt -> close();
+
+$db -> close();
+?>

@@ -1,0 +1,26 @@
+<?
+session_start();
+
+if (isset($_POST['submit']))//If the form has been submitted
+{
+	include ('config.php');
+
+	$db = connect();
+
+	$r = getScalar($db, "SELECT COUNT(USER_ID) FROM USERS WHERE USER_NAME='" . $db -> real_escape_string($_POST['user']) . "' AND USER_PASSWORD='" . $db -> real_escape_string($_POST['password']) . "'");
+
+	if ($r>0) {
+		//Login success - set session cookie
+		$_SESSION['u'] = $_POST['user'];
+
+		//Redirect the user to a logged in page
+		header("Location: portal.php");
+
+		//Do not display any more script for this page
+		exit ;
+	} else {
+		//Redirect the user to a log in page
+		header("Location: admin.php");
+	}
+
+}

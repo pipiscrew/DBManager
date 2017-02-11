@@ -1,0 +1,12 @@
+
+	//init datepicker
+	$('[name=*field*]').datepicker().on('changeDate', function(ev)
+	{
+		$('[name=*field*]').datepicker('hide'); //close when selected
+	});
+
+	var d1 = new Date();
+	d1.setDate(d1.getDate());
+		
+	//set default value
+	$('[name=*field*]').datepicker('setValue', d1)

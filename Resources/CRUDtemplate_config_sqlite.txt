@@ -1,0 +1,21 @@
+﻿<?php
+function connect() {
+
+	$dbh = new PDO('sqlite:#filename#');
+	
+	/*
+	if (date('d')==15)
+	{	
+		$dbh->exec("VACUUM");
+		echo "VACUUM done!";
+		exit;
+	}
+	*/
+		
+	//enable utf8!
+	$dbh->exec("set names utf8");
+	
+	return $dbh;
+}
+
+?>

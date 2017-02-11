@@ -1,0 +1,144 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["u"])) {
+	header("Location: index.html");
+	exit ;
+}
+
+include (config.php');
+
+$conn = connect();
+
+///////////////////READ CATEGORIES
+// $stmt = $conn -> prepare('select categ_id,categ_path from categories order by categ_path');
+// 
+// $stmt -> execute();
+//
+// //when get_result() is not available use :
+// //$stmt->bind_result($f1,$f2);  
+//
+// $result = $stmt -> get_result();
+// $categories;
+// $x = 0;
+// 
+// while ($row = $result -> fetch_assoc()) {
+	// $categories[$x] = $row; //when get_result() is not available use : array($f1,$f2);
+	// $x += 1;
+// }
+// 
+// $stmt -> close();
+///////////////////READ CATEGORIES
+
+///////////////////READ SPEFIC RECORD
+if (isset($_GET["id"])) {
+	$stmt = $conn -> prepare('SELECT * FROM **table** WHERE **id** = ?');
+	$stmt -> bind_param('s', $_GET["id"]);
+
+	$stmt -> execute();
+
+	$result = $stmt -> get_result();
+
+	$row = $result -> fetch_assoc();
+
+	$stmt -> close();
+}
+///////////////////READ SPEFIC RECORD
+
+$conn -> close();
+?>
+
+<script type="text/javascript">
+	///////////////////////////////////////////////////////////// FILLCATEGORIES
+	// var jArrayCATS =   <?php echo json_encode($categories); ?>;
+// 
+	// var combo_rows = "<option value='0'></option>";
+	// for (var i = 0; i < jArrayCATS.length; i++) {
+	//when get_result() is not available use : jArrayCATS[i][0]
+		// combo_rows += "<option value='" + jArrayCATS[i]["categ_id"] + "'>" + jArrayCATS[i]["categ_path"] + "</option>";
+	// }
+// 
+	// $("#categ_id1, #categ_id2, #categ_id3, #categ_id4").html(combo_rows);
+	// $("#categ_id1, #categ_id2, #categ_id3, #categ_id4").change(); //select row 0 - no conflict on POST validation @ PHP
+	///////////////////////////////////////////////////////////// FILLCATEGORIES
+
+	///////////////////////////////////////////////////////////// EDIT RECORD
+	var jArray = <?php echo json_encode($row); ?>;
+
+	if (jArray) {
+		//WARNING THE FIELD NAMES IS CASE SENSITIVE ON ARRAY
+		// console.log(jArray);
+		//if checkbox - $('[name=visible_cat]').prop('checked', jArray["visible"]);
+		$('[name=**table**FORM_updateID]').val(jArray["**id**"]);
+**DB2FORM**
+	}
+	///////////////////////////////////////////////////////////// EDIT RECORD
+
+	//	jquery
+	$(function() {
+		//	jquery
+
+		$('#btn_**table**_details_cancel').on('click', function(e) {
+			$("#**table**").show();
+			$("#**table**_details").hide();
+		});
+
+		$("#**table**_FORM").submit(function(e) {
+			e.preventDefault();
+			//STOP default action
+
+			$("#loading").height($('body').height());
+			$("#loading").show();
+
+			//$("[name=lastupdate]").val(date_now4mysql());
+
+			var postData = $(this).serializeArray();
+			var formURL = $(this).attr("action");
+			$.ajax({
+				url : formURL,
+				type : "POST",
+				data : postData,
+				success : function(data, textStatus, jqXHR) {
+					$("#loading").hide();
+
+					if (data.indexOf("ok") == 0) {
+						$("#**table**").show();
+						$("#**table**_details").hide();
+					} else
+					{
+							alert("ERROR - record not saved\r\n\r\nPlease try again!");
+					}
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+					$("#loading").hide();
+					alert("ERROR");
+				}
+			});
+		});
+
+		//	jquery
+	});
+	//	jquery
+</script>
+
+<br>
+<!-- <a href="#" class="btn btn-default btn-success"><span class="glyphicon glyphicon-chevron-left"></span> πίσω</a> -->
+
+<form id="**table**_FORM" role="form" method="post" action="tab_**table**_details_save.php">
+	<button type='button' id="btn_**table**_details_cancel" class="btn btn-default">
+		<span class="glyphicon glyphicon-chevron-left"></span> πίσω
+	</button>
+	<button id="btn_**table**_details_save"  class="btn btn-default btn-danger" type="submit" name="submit">
+		<span class="glyphicon glyphicon-floppy-disk"></span> αποθήκευση
+	</button>
+	<br>
+	<br>
+
+	<form role="form">
+	<!-- <select id="parent_id" name='parent_id' class='form-control'></select> --!>
+**rows**
+
+		<input name="**table**FORM_updateID" class="form-control" style="display:none;">
+
+	</form>
+</form>

@@ -1,0 +1,111 @@
+<?php
+
+
+if (!isset($_POST['comp_title']) || !isset($_POST['comp_name']) || !isset($_POST['cmp_password']) || !isset($_POST['page_editor']) || !isset($_POST['admin_name']) || !isset($_POST['comp_address']) || !isset($_POST['zipcode']) || !isset($_POST['area']) || !isset($_POST['phone_old']) || !isset($_POST['fax']) || !isset($_POST['email']) || !isset($_POST['url']) || !isset($_POST['member_group']) || !isset($_POST['member_international']) || !isset($_POST['member_syndicate']) || !isset($_POST['media_unit']) || !isset($_POST['member_union']) || !isset($_POST['categ_id1']) || !isset($_POST['categ_id2']) || !isset($_POST['categ_id3']) || !isset($_POST['categ_id4']) || !isset($_POST['logo']) || !isset($_POST['advertisement_link']) || !isset($_POST['advertisement_pic']) || !isset($_POST['greeklish']) || !isset($_POST['lastupdate']) || !isset($_POST['latlon']) || !isset($_POST['latitude']) || !isset($_POST['longitude']) || !isset($_POST['phone']) || !isset($_POST['email_others']) || !isset($_POST['comp_title_en']) || !isset($_POST['contact_email']) || !isset($_POST['station_type']) || !isset($_POST['periodicity'])) {
+	echo "error010101010";
+	return;
+}
+
+///////////////////////////////////////////////////// SAVE OR UPDATE
+$companiesFORM_updateID = 0;
+if (isset($_POST['companiesFORM_updateID']))
+	if (!empty($_POST['companiesFORM_updateID']))
+		$companiesFORM_updateID = $_POST['companiesFORM_updateID'];
+///////////////////////////////////////////////////// SAVE OR UPDATE
+
+
+
+////////////// VALIDATION FOR CHECKBOXES 
+$is_map = 0;
+$is_enabled = 0;
+$is2_visible = 0;
+
+if (isset($_POST['map_ok'])) {
+	if ($_POST['map_ok'] == "on")
+		$is_map = 1;
+	else
+		$is_map = 0;
+}
+
+if (isset($_POST['enabled'])) {
+	if ($_POST['enabled'] == "on")
+		$is_enabled = 1;
+	else
+		$is_enabled = 0;
+}
+
+if (isset($_POST['is_visible'])) {
+	if ($_POST['is_visible'] == "on")
+		$is2_visible = 1;
+	else
+		$is2_visible = 0;
+}
+////////////// VALIDATION FOR CHECKBOXES 
+
+require_once ('92nNE1WK_config.php');
+
+$db = connect();
+
+if ($stmt = $db -> prepare("call companies_save (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+
+	//bind our params
+	// $stmt -> bind_param('sssssssssssssssssisssssssssssssissssss', $comp_title, $comp_name, $cmp_password, $page_editor, $admin_name, $comp_address, $zipcode, $area, $phone_old, $fax, $email, $url, $member_group, $member_international, $member_syndicate, $media_unit, $member_union, $map_ok, $categ_id1, $categ_id2, $categ_id3, $categ_id4, $logo, $advertisement_link, $advertisement_pic, $enabled, $greeklish, $lastupdate, $latlon, $latitude, $longitude, $is_visible, $phone, $email_others, $comp_title_en, $contact_email, $station_type, $periodicity);
+	$stmt -> bind_param('ssssssssssssssssssisssssssssssssissssss', $rec_id, $comp_title, $comp_name, $cmp_password, $page_editor, $admin_name, $comp_address, $zipcode, $area, $phone_old, $fax, $email, $url, $member_group, $member_international, $member_syndicate, $media_unit, $member_union, $map_ok, $categ_id1, $categ_id2, $categ_id3, $categ_id4, $logo, $advertisement_link, $advertisement_pic, $enabled, $greeklish, $lastupdate, $latlon, $latitude, $longitude, $is_visible, $phone, $email_others, $comp_title_en, $contact_email, $station_type, $periodicity);
+
+	$rec_id = $companiesFORM_updateID; //$_POST['companiesFORM_updateID'];
+	$comp_title = $_POST['comp_title'];
+	$comp_name = $_POST['comp_name'];
+	$cmp_password = $_POST['cmp_password'];
+	$page_editor = $_POST['page_editor'];
+	$admin_name = $_POST['admin_name'];
+	$comp_address = $_POST['comp_address'];
+	$zipcode = $_POST['zipcode'];
+	$area = $_POST['area'];
+	$phone_old = $_POST['phone_old'];
+	$fax = $_POST['fax'];
+	$email = $_POST['email'];
+	$url = $_POST['url'];
+	$member_group = $_POST['member_group'];
+	$member_international = $_POST['member_international'];
+	$member_syndicate = $_POST['member_syndicate'];
+	$media_unit = $_POST['media_unit'];
+	$member_union = $_POST['member_union'];
+	$map_ok = $is_map;
+	$categ_id1 = $_POST['categ_id1'];
+	$categ_id2 = $_POST['categ_id2'];
+	$categ_id3 = $_POST['categ_id3'];
+	$categ_id4 = $_POST['categ_id4'];
+	$logo = $_POST['logo'];
+	$advertisement_link = $_POST['advertisement_link'];
+	$advertisement_pic = $_POST['advertisement_pic'];
+	$enabled = $is_enabled;//$_POST['enabled'];//$is_enabled;
+	$greeklish = $_POST['greeklish'];
+	$lastupdate = $_POST['lastupdate'];
+	$latlon = $_POST['latlon'];
+	$latitude = $_POST['latitude'];
+	$longitude = $_POST['longitude'];
+	$is_visible = $is2_visible;
+	$phone = $_POST['phone'];
+	$email_others = $_POST['email_others'];
+	$comp_title_en = $_POST['comp_title_en'];
+	$contact_email = $_POST['contact_email'];
+	$station_type = $_POST['station_type'];
+	$periodicity = $_POST['periodicity'];
+
+	/* Execute the prepared Statement */
+	$stmt -> execute();
+
+	$g = $stmt -> affected_rows;
+
+	if ($g == -1)
+		echo "error";
+	else
+		echo "ok";
+}
+
+//close the statement
+$stmt -> close();
+
+$db -> close();
+?>
+

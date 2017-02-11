@@ -1,0 +1,10 @@
+
+$#table#_rows=null;
+///////////////////READ #table#
+	$find_sql = "SELECT * FROM `#table#` order by #txt#";
+	$stmt      = $db->prepare($find_sql);
+	
+	$stmt->execute();
+	$#table#_rows = $stmt->fetchAll();
+///////////////////READ #table#
+

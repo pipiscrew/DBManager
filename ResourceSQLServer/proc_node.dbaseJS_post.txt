@@ -1,0 +1,21 @@
+
+
+--dbase.js
+function fn_{{function}}(req, res) {
+	var params = req.params;
+	var data = {};
+
+	if {{validation}}
+		res.end(JSON.stringify({
+			message : "Too few params"
+		}));
+		return;
+	} else {
+		var sqlq = "EXEC [{{procname}}] {{qmarks}}";	
+		sql.query(conn, sqlq{{params}}, function(error, rows) {
+			data = rows;
+	
+			res.end(JSON.stringify({			message : "OK"		}));
+		});
+	}
+}

@@ -1,0 +1,25 @@
+<?php
+@session_start();
+
+if (!isset($_SESSION["id"]) || empty($_POST['*PK*'])) {
+	echo json_encode(null);
+	exit ;
+}
+
+
+try {
+	include ('config.php');
+
+	$db = connect();
+
+	$r= getRow($db, "SELECT *select* FROM *table* where *PK*=?", array($_POST['*PK*']));
+
+    //unicode
+    header("Content-Type: application/json", true);
+	echo json_encode($r);
+
+	
+} catch (exception $e) {
+    echo json_encode(null);
+}
+?>

@@ -1,0 +1,197 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["u"])) {
+    header("Location: index.html");
+    exit ;
+}
+
+// include your code to connect to DB.
+include (config.php');
+
+$conn = connect();
+
+//your table name
+$tbl_name = "**table**";
+
+// How many adjacent pages should be shown on each side?
+$adjacents = 3;
+
+/*
+ First get total number of rows in data table.
+ If you have a WHERE clause in your query, make sure you mirror it here.
+ */
+ 
+$where = "";
+if (isset($_GET['where']) && isset($_GET['where_val'])) {
+//	if (!(empty($_GET['where_val']) || empty($_GET['where_val'])))
+	if (strlen($_GET['where'])>0 && strlen($_GET['where_val'])>0)
+	{
+		if ($_GET['where_val']=="0" || $_GET['where_val']=="1") //when is boolean/integer field
+			$where = "where " . $conn->real_escape_string($_GET['where']) . " = " . $conn->real_escape_string($_GET['where_val']);
+		else 
+			$where = "where " . $conn->real_escape_string($_GET['where']) . " like '%" . $conn->real_escape_string($_GET['where_val']) ."%'";
+	}
+}
+
+$sort_order = "";
+if (isset($_GET['sort_val'])) {
+	if (!empty($_GET['sort_val']))
+	{
+		if ($_GET['sort_val']!="0" && $_GET['sort_val']!="0 ASC" && $_GET['sort_val']!="0 DESC")
+		{
+				$sort_order=" order by ". $conn->real_escape_string($_GET['sort_val']);
+		}
+	}
+}
+
+$query = "count(*) with query joins " . $where;
+
+$total_items = getScalar($conn, $query);
+
+/* Setup vars for query. */
+//how many items to show per page
+$limit = 15;
+
+if (isset($_GET['page'])) {
+	$page = $_GET['page'];
+	$start = ($page - 1) * $limit;
+	//first item to display on this page
+} else {
+	$page = 0;
+	$start = 0;
+	//if no page var is given, set start to 0
+}
+
+/* Get data. */
+ $sql ="**query** " . $where . $sort_order . " LIMIT $start, $limit";
+
+ $result = $conn -> query($sql);
+
+/* Setup page vars for display. */
+
+//if no page var is given, default to 1.
+if ($page == 0)
+	$page = 1;
+
+//previous page is page - 1
+$prev = $page - 1;
+
+//next page is page + 1
+$next = $page + 1;
+
+//lastpage is = total pages / items per page, rounded up.
+$lastpage = ceil($total_items / $limit);
+
+//last page minus 1
+$lpm1 = $lastpage - 1;
+
+/*
+ Now we apply our rules and draw the pagination object.
+ We're actually saving the code to a variable in case we want to draw it more than once.
+ */
+$pagination = "";
+if ($lastpage > 1) {
+	$pagination .= "<div class=\"pagination pagination-centered\"><ul class=\"pagination\">";
+	//previous button
+	if ($page > 1)
+		$pagination .= "<li><a href='#' onClick='load_**table**_Records($prev)'>previous</a></li>";
+	else
+		$pagination .= "<li class=\"disabled\"><a href=\"#\">previous</a></li>";
+
+	//pages
+	if ($lastpage < 7 + ($adjacents * 2))//not enough pages to bother breaking it up
+	{
+		for ($counter = 1; $counter <= $lastpage; $counter++) {
+			if ($counter == $page)
+				$pagination .= "<li class=\"active\"><a href=\"#\">$counter</a></li>";
+			else
+				$pagination .= "<li><a href='#' onClick='load_**table**_Records($counter)'>$counter</a></li>";
+		}
+	} elseif ($lastpage > 5 + ($adjacents * 2))//enough pages to hide some
+	{
+		//close to beginning; only hide later pages
+		if ($page < 1 + ($adjacents * 2)) {
+			for ($counter = 1; $counter < 4 + ($adjacents * 2); $counter++) {
+				if ($counter == $page)
+					$pagination .= "<li class=\"active\"><a href=\"#\">$counter</a></li>";
+				else
+					$pagination .= "<li><a href='#' onClick='load_**table**_Records($counter)'>$counter</a></li>";
+			}
+			$pagination .= "<li><a href=\"#\">...</a></li>";
+			$pagination .= "<li><a href='#' onClick='load_**table**_Records($lpm1)'>$lpm1</a></li>";
+			$pagination .= "<li><a href='#' onClick='load_**table**_Records($lastpage)'>$lastpage</a></li>";
+		}
+		//in middle; hide some front and some back
+		elseif ($lastpage - ($adjacents * 2) > $page && $page > ($adjacents * 2)) {
+			$pagination .= "<li><a href='#' onClick='load_**table**_Records(1)'>1</a></li>";
+			$pagination .= "<li><a href='#' onClick='load_**table**_Records(2)'>2</a></li>";
+			$pagination .= "<li><a href=\"#\">...</a></li>";
+			for ($counter = $page - $adjacents; $counter <= $page + $adjacents; $counter++) {
+				if ($counter == $page)
+					$pagination .= "<li class=\"active\"><a href=\"#\">$counter</a></li>";
+				else
+					$pagination .= "<li><a href='#' onClick='load_**table**_Records($counter)'>$counter</a></li>";
+			}
+			$pagination .= "<li><a href=\"#\">...</a></li>";
+			$pagination .= "<li><a href='#' onClick='load_**table**_Records($lpm1)'>$lpm1</a></li>";
+			$pagination .= "<li><a href='#' onClick='load_**table**_Records($lastpage)'>$lastpage</a></li>";
+		}
+		//close to end; only hide early pages
+		else {
+			$pagination .= "<li><a href='#' onClick='load_**table**_Records(1)'>1</a></li>";
+			$pagination .= "<li><a href='#' onClick='load_**table**_Records(2)'>2</a></li>";
+			$pagination .= "<li><a href=\"#\">...</a>";
+			for ($counter = $lastpage - (2 + ($adjacents * 2)); $counter <= $lastpage; $counter++) {
+				if ($counter == $page)
+					$pagination .= "<li class=\"active\"><a href=\"#\">$counter</a></li>";
+				else
+					$pagination .= "<li><a href='#' onClick='load_**table**_Records($counter)'>$counter</a></li>";
+			}
+		}
+	}
+
+	//next button
+	if ($page < $counter - 1)
+		$pagination .= "<li><a href='#' onClick='load_**table**_Records($next)'>next</a></li>";
+	else
+		$pagination .= "<li class=\"disabled\"><a href=\"#\">next</a></li>";
+	$pagination .= "</ul></div>\n";
+}
+
+$recordRowTemplate = <<<EOD
+							   <tr>  
+**tds**
+							   </tr>  
+EOD;
+
+$tableRows = "";
+
+$imgfolder = "images" . DIRECTORY_SEPARATOR;
+
+$rowTBL="";
+while ($row = mysqli_fetch_array($result)) {
+	$rowTBL = str_replace('{{isd}}', $row["**id**"], $recordRowTemplate);
+**table_row**
+	
+	if ($row["visible"]==1)
+		$rowTBL = str_replace('{{visible}}', '<span class="glyphicon glyphicon-ok">', $rowTBL);
+	else 
+		$rowTBL = str_replace('{{visible}}', '<span class="glyphicon glyphicon-remove">', $rowTBL);
+	
+
+	$rowTBL = str_replace('{{last_upd}}', $row["last_update"], $rowTBL);
+	
+	$tableRows.= $rowTBL;
+}
+
+///////////////////////////////////////////////////////
+// return table contents + pagination
+
+$json = array('tableRows' => $tableRows, 'pagination' => $pagination."<center><span class='label label-primary'>Εγγραφές : " . $total_items."</span></center>");
+
+$conn -> close();
+
+header("Content-Type: application/json", true);
+echo json_encode($json);
+?>

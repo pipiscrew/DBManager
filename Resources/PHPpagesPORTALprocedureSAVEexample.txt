@@ -1,0 +1,61 @@
+CREATE PROCEDURE `bestof_save` (
+	IN `rec_idVAR` INT
+	,IN `customer_idVAR` INT
+	,IN `company_idVAR` INT
+	,IN `titleVAR` VARCHAR(250) CHARSET utf8
+	,IN `productVAR` VARCHAR(250) CHARSET utf8
+	,IN `infosVAR` VARCHAR(2000) CHARSET utf8
+	,IN `vimeoVAR` VARCHAR(250) CHARSET utf8
+	,IN `pictureVAR` VARCHAR(250) CHARSET utf8
+	,IN `categoryVAR` VARCHAR(250) CHARSET utf8
+	,IN `soundcloudVAR` VARCHAR(250) CHARSET utf8
+	,IN `flickrVAR` VARCHAR(250) CHARSET utf8
+	,IN `lastupdateVAR` DATETIME
+	)
+
+BEGIN
+
+IF rec_idVAR=0 THEN
+	INSERT INTO bestof (
+		customer_id
+		,company_id
+		,title
+		,product
+		,infos
+		,vimeo
+		,picture
+		,category
+		,soundcloud
+		,flickr
+		,lastupdate
+		)
+	VALUES (
+		customer_idVAR
+		,company_idVAR
+		,titleVAR
+		,productVAR
+		,infosVAR
+		,vimeoVAR
+		,pictureVAR
+		,categoryVAR
+		,soundcloudVAR
+		,flickrVAR
+		,lastupdateVAR
+		);
+ELSE
+	UPDATE bestof
+	SET customer_id = customer_idVAR
+		,company_id = company_idVAR
+		,title = titleVAR
+		,product = productVAR
+		,infos = infosVAR
+		,vimeo = vimeoVAR
+		,picture = pictureVAR
+		,category = categoryVAR
+		,soundcloud = soundcloudVAR
+		,flickr = flickrVAR
+		,lastupdate = lastupdateVAR
+	WHERE ID = rec_idVAR;
+END IF;
+END
+

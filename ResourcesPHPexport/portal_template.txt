@@ -1,0 +1,93 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["u"])) {
+	header("Location: admin.php");
+	exit ;
+}
+?>
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Portal</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- Bootstrap core CSS -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+
+		<!-- scripts -->
+		<script type='text/javascript' src="js/jquery-1.10.2.min.js"></script>
+		<script type='text/javascript' src="js/bootstrap.min.js"></script>
+		<script type='text/javascript' src="js/jquery.validate.min.js"></script>
+
+<!--
+	**COMMON** 
+table selected row 
++
+label for validator -->
+		<style>
+			.table-striped tbody tr.highlight td {
+				background-color: #B0BED9;
+			}
+
+			label.error { color: #FF0000; font-size: 11px; display: block; width: 100%; white-space: nowrap; float: none; margin: 8px 0 -8px 0; padding: 0!important; }
+		</style>
+
+		<script type="text/javascript">
+		
+		    //**COMMON** add validation for currency
+		    $.validator.addMethod('currency', function(value, element, regexp) {
+		        var re = /^\d{1,9}(\.\d{1,2})?$/;
+		        return this.optional(element) || re.test(value);
+		    }, '');
+    
+			//**COMMON** function for child PHP
+			// Get the selected row
+			function getSelected(selector) {
+				var lines=null;
+				
+				$('#' + selector + ' > tbody  > tr').each(function() {
+					if ($(this).hasClass('highlight')) {
+
+						lines = $('td', $(this)).map(function(index, td) {
+							return $(td).text();
+						});
+
+						return false;
+						//return lines;
+						//alert(lines[0] + ' ' + lines[1]);
+
+						//alert($(this).html());
+					}
+				});
+
+				return lines;
+			}
+
+			$(function() {
+				loadProducts(1);
+			});
+
+		</script>
+
+		<body>
+			<!-- TABS -->
+			<ul class='nav nav-tabs' id='tabContainer'>
+				<li class='active'>
+					<a href='#{{Ltable}}TAB' data-toggle='tab'>Products</a>
+				</li>
+				<li>
+					<a href='#pipiscrewTAB' data-toggle='tab'>PipisCrew</a>
+				</li>
+			</ul>
+
+			<!-- TABS Content [START] -->
+			<div id="tabsContent" class="tab-content">
+				<?  include('{{Ltable}}.php')
+				?>
+			</div>
+
+		</body>
+</html>

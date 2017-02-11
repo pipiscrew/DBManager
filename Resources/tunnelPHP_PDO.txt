@@ -1,0 +1,80 @@
+<?php
+if (!isset($_POST["sql"]) || !isset($_POST["p"])) {
+	// if(!isset($_POST["sql"]) || !isset($_POST["p"])){
+	echo json_encode("Error: no token1");
+	return;
+	// }
+} else if ($_POST["p"] != **password entered at desktop program**) {
+	echo json_encode("Error: no token2");
+	return;
+}
+
+//on old server something wrong with json_decode, use also the same function '_json_decode', on transfer batch functions
+$x = _json_decode($_POST["sql"]);
+
+/////////////////////////////////////////////////////////////////////////////////////
+// 			SETUP MYSQL CONNECTION [START]
+/////////////////////////////////////////////////////////////////////////////////////
+$mysql_hostname = "localhost";
+$mysql_user = "x";
+$mysql_password = "y";
+$mysql_database = "x";
+	
+//setup a connection with mySQL
+$db = new PDO("mysql:host=$mysql_hostname;dbname=$mysql_database", $mysql_user, $mysql_password,
+                    array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
+
+/* check connection */
+if (!$db) {
+	printf("Connect failed");
+	exit();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+// 			SETUP MYSQL CONNECTION [END]
+/////////////////////////////////////////////////////////////////////////////////////
+
+
+
+if ($x -> q == "testconnection") {
+	echo "true";
+	return;
+}
+
+$find_sql = $x -> q;
+
+$stmt      = $db->prepare($find_sql);
+
+$stmt->execute();
+$resultSET = $stmt->fetchAll();
+	
+	
+if (!$resultSET) {
+	$e = var_dump($stmt->errorInfo());
+	printf("Error: %s\n", $e);
+	return;
+}
+
+
+$affected = $db -> rowCount;
+
+$returnVAR = array();
+
+foreach($resultSET as $row) {
+	$returnVAR[] = $row;
+}
+
+
+//unicode
+header("Content-Type: application/json", true);
+
+echo json_encode(array('result' => $returnVAR, 'affected' => $affected));
+
+function _json_decode($string) {
+	if (get_magic_quotes_gpc()) {
+		$string = stripslashes($string);
+	}
+
+	return json_decode($string);
+}
+?>

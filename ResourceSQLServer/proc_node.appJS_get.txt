@@ -1,0 +1,4 @@
+--app.js
+app.get('/a/{{dbase}}/{{function}}{{id}}', function(req, res){	
+	{{dbase}}.{{function}}(req,res,maindata);
+});

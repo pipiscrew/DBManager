@@ -1,0 +1,51 @@
+﻿<?php
+//session_start();
+//
+//if (!isset($_SESSION["u"])) {
+//	header("Location: index.html");
+//	exit ;
+//}
+
+$active_tab = "#tblname#";
+
+if(#validation#){
+	echo "error010101010";
+	return;
+}
+
+// include DB
+require_once ('config.php');
+
+$db = connect();
+
+#checkboxes#
+
+#dtptimes#
+
+$ret_val="";
+if(isset($_POST['#tblname#FORM_updateID']) && !empty($_POST['#tblname#FORM_updateID']))
+{
+	$sql = "UPDATE `#tblname#` set #updateVAL# WHERE #updateWhere#=:#updateWhere#";
+	$stmt = $db->prepare($sql);
+	$stmt->bindValue(':#updateWhere#', $_POST['#tblname#FORM_updateID']);
+	$ret_val = "isupdate";
+}
+else
+{
+	$sql = "INSERT INTO `#tblname#` (#insertFields#) VALUES (#insertVAL#)";
+	$stmt = $db->prepare($sql);
+	$ret_val = "isnew";
+}
+
+#stmt#
+$stmt->execute();
+
+$res = $stmt->rowCount();
+
+
+if($res == 1)
+	header("Location: tab_#tblname#.php?$ret_val=1");
+else
+	header("Location: tab_#tblname#.php?iserror=1");
+
+?>

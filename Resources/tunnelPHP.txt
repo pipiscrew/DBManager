@@ -1,0 +1,71 @@
+<?php
+if (!isset($_POST["sql"]) || !isset($_POST["p"])) {
+	// if(!isset($_POST["sql"]) || !isset($_POST["p"])){
+	echo json_encode("Error: no token1");
+	return;
+	// }
+} else if ($_POST["p"] != **password entered at desktop program**) {
+	echo json_encode("Error: no token2");
+	return;
+}
+
+$x = json_decode($_POST["sql"]);
+
+/////////////////////////////////////////////////////////////////////////////////////
+// 			SETUP MYSQL CONNECTION [START]
+/////////////////////////////////////////////////////////////////////////////////////
+$mysql_hostname = "localhost";
+$mysql_user = "x";
+$mysql_password = "y";
+$mysql_database = "x";
+
+//setup a connection with mySQL
+$db = new mysqli($mysql_hostname, $mysql_user, $mysql_password, $mysql_database);
+
+/* check connection */
+if (mysqli_connect_errno()) {
+	printf("Connect failed: %s\n", mysqli_connect_error());
+	exit();
+}
+
+//enable utf8!
+$db -> query("SET character_set_results = 'utf8', character_set_client = 'utf8', character_set_connection = 'utf8', character_set_database = 'utf8', character_set_server = 'utf8'");
+
+/////////////////////////////////////////////////////////////////////////////////////
+// 			SETUP MYSQL CONNECTION [END]
+/////////////////////////////////////////////////////////////////////////////////////
+
+
+if (!$db) {
+	die("Connection error: " . mysqli_connect_error());
+}
+
+if ($x -> q == "testconnection") {
+	echo "true";
+	return;
+}
+
+$resultSET = $db -> query($x -> q, MYSQLI_STORE_RESULT);
+
+if (!$resultSET) {
+	printf("Error: %s\n", $db -> error);
+	return;
+}
+
+$affected = $db -> affected_rows;
+
+$returnVAR = array();
+
+if (!is_bool($resultSET)) {
+	while ($row = $resultSET -> fetch_array(MYSQLI_ASSOC)) {
+		$returnVAR[] = $row;
+	}
+}
+
+$db->close;
+
+//unicode
+header("Content-Type: application/json", true);
+
+echo json_encode(array('result' => $returnVAR, 'affected' => $affected));
+?>

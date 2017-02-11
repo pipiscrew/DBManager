@@ -1,0 +1,34 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["u"]) || empty($_POST['{{2ndfield}}'])) {
+	echo json_encode(null);
+	exit ;
+} else {
+	include ('config.php');
+
+	$db = connect();
+
+	if (empty($_POST['{{Utable}}_updateID'])) {
+		//insert
+		$sql = "INSERT INTO {{table}} (
+{{insFields}}) VALUES ({{qmarks}})";
+
+	} else {
+		$recID = $_POST['{{Utable}}_updateID'];
+		$sql = "UPDATE {{table}} SET
+{{updFields}} where {{id}}=" . $recID;
+
+	}
+
+{{post2vars}}
+
+	if ($stmt = $db -> prepare($sql)) {
+		$stmt -> bind_param('{{parameterFieldsType}}', {{parameterFields}});
+		$stmt -> execute();
+	}
+
+	$db -> close();
+
+	echo json_encode("refresh");
+}

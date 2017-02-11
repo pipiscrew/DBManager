@@ -1,0 +1,28 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["u"]) || empty($_POST['{{Utable}}id'])) {
+    echo json_encode(null);
+    exit ;
+}
+
+try {
+	include ('config.php');
+
+	$db = connect();
+
+    $t = $db->real_escape_string($_POST['{{Utable}}id']);
+
+    $r = $db->query("SELECT * FROM {{table}} where {{id}}=" . $t);
+
+
+    //unicode
+    header("Content-Type: application/json", true);
+	echo json_encode(mysqli_fetch_assoc($r));
+
+	$db -> close();
+	
+} catch (exception $e) {
+    echo json_encode(null);
+}
+?>

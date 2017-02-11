@@ -1,0 +1,104 @@
+<?php
+//add it near connect tunnel PHP file with name trans.php
+if(!isset($_POST['statement']))
+{		echo json_encode("error - no token1");
+		return;}
+
+if(!isset($_POST['record']))
+{		echo json_encode("error - no token2");
+		return;
+} else if ($_POST["p"] != **password entered at desktop program**) {
+	echo json_encode("error - wrong password");
+	return;
+}
+
+$json = json_decode($_POST['statement']);
+$statement = $json -> q;
+
+
+$json = json_decode($_POST['record'],TRUE);
+
+
+$params=array();
+$x=0;
+
+//fields to array
+foreach ($json as $key => $value){
+        $params[$x] = $value;
+	    $x+=1;
+}
+	
+/////////////////////////////////////////////////////////////////////////////////////
+// 			SETUP MYSQL CONNECTION [START]
+/////////////////////////////////////////////////////////////////////////////////////
+$mysql_hostname = "localhost";
+$mysql_user = "x";
+$mysql_password = "y";
+$mysql_database = "x";
+
+//setup a connection with mySQL
+$db = new mysqli($mysql_hostname, $mysql_user, $mysql_password, $mysql_database);
+
+/* check connection */
+if (mysqli_connect_errno()) {
+	printf("error - Connect failed: %s\n", mysqli_connect_error());
+	exit();
+}
+
+//enable utf8!
+$db -> query("SET character_set_results = 'utf8', character_set_client = 'utf8', character_set_connection = 'utf8', character_set_database = 'utf8', character_set_server = 'utf8'");
+
+/////////////////////////////////////////////////////////////////////////////////////
+// 			SETUP MYSQL CONNECTION [END]
+/////////////////////////////////////////////////////////////////////////////////////
+
+if (!$db) {
+	die("Connection error: " . mysqli_connect_error());
+}
+
+$rows_affected = 0;
+
+//create the prepared statement
+if ($stmt = $db -> prepare($statement)) {
+
+    //bind our params
+	$types  = str_repeat( 's', count( $params ));
+
+    bind_param_array( $stmt, $types,$params);
+
+	$stmt -> execute();
+	
+	$rows_affected = $stmt -> affected_rows;
+
+	if ($rows_affected == -1)
+		{
+			echo "error -> ".$stmt->error;
+			
+			//close the statement
+			$stmt -> close();
+	
+			return;
+		}
+
+	
+	//close the statement
+	$stmt -> close();
+}
+
+//close connection
+$db -> close();
+
+echo $rows_affected;
+
+//http://no2.php.net/manual/en/mysqli-stmt.bind-param.php#115028
+function bind_param_array( $stmt,  $types,  $vars ){
+    $php_command = '$stmt->bind_param( $types';
+    for( $i=0;$i<count($vars);$i++)
+    {
+        $php_command .= ',$vars['.$i.']';
+    }
+    $php_command .= ');';
+    return eval( $php_command );
+}
+
+?>

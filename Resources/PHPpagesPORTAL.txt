@@ -1,0 +1,14 @@
+			<li>
+				<a href="##table#TAB" data-toggle='tab'>#table#</a>
+			</li>
+
+
+			<div class="tab-pane fade" id="#table#TAB">
+				<div id="#table#">
+					<?php
+					include ('tab_#table#.php');
+					?>
+				</div>
+				<div id="#table#_details">
+				</div>
+			</div>

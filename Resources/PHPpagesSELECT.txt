@@ -1,0 +1,228 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["u"])) {
+	header("Location: index.html");
+	exit ;
+}
+?>
+
+<script type="text/javascript">
+	var last_**table**_Page;
+
+	function load_**table**_Records(page) {
+
+		$("#loading").height($('body').height());
+		$("#loading").show();
+
+		last_**table**_Page = page;
+
+		$.ajax({
+			type : "GET",
+			url : "tab_**table**_pagination.php",
+			data : {
+				page : page,
+				where : $("#**table**_search_combo").val(),
+				where_val : $("#**table**_search_txt").val(),
+				sort_val : $("#**table**_sort_combo").val() + ' ' + $('#sort_**table**_order').val()
+			},
+			datatype : "json",
+			success : function(msg) {
+				$("#record_**table**_rows").html(msg.tableRows);
+				$("#records_**table**_pg").html(msg.pagination);
+
+				$("#loading").hide();
+			}
+		});
+	}
+
+	//	jquery
+	$(function() {
+		//	jquery
+
+////seach X button
+      $('#**table**_search_txt').keyup(function() {
+        $('#**table**_searchclear').toggle(Boolean($(this).val()));
+      });
+      $('#**table**_searchclear').toggle(Boolean($("#**table**_search_txt").val()));
+      $('#**table**_searchclear').click(function() {
+        $('#**table**_search_txt').val('').focus();
+        $(this).hide();
+      });
+////seach X button
+
+		load_**table**_Records(1);
+
+		$('#btn_**table**_search').on('click', function(e) {
+			load_**table**_Records(1);
+		});
+
+		//table - set selected row
+		$('#records_**table**_TBL').on('click', 'tbody tr', function(event) {
+			$(this).addClass('highlight').siblings().removeClass('highlight');
+		});
+
+		//combo - search direct
+		$('#**table**_sort_combo').on('change', function() {
+			console.log("combo_sort");
+			load_**table**_Records(1);
+		});
+
+		//checkbox functionality
+		$('#sort_**table**_order').click(function() {
+			if ($(this).val() == "ASC")
+				$(this).val("DESC");
+			else
+				$(this).val("ASC");
+		});
+
+		$("#**table**_search_txt").on("keypress", function(e) {
+			if (e.keyCode == 13) {
+				load_**table**_Records(1);
+			}
+		});
+		
+		//delete record
+		$('#btn_**table**_delete').on('click', function(e) {
+			var rowData = getSelected('records_**table**_TBL');
+			if (rowData == null) {
+				alert("Παρακαλώ επιλέξτε εγγραφή!");
+				return;
+			}
+
+			if (confirm('Είστε σίγουροι ότι θέλετε να διαγράψετε το επιλεγμένο?')) {
+				
+				$("#loading").height($('body').height());
+				$("#loading").show();
+				
+					$.ajax({
+						type : "POST",
+						url : "tab_**table**_delete.php",
+						data : {
+							company_id : rowData[0]
+						},
+						success : function(data, textStatus, jqXHR) {
+							$("#loading").hide();
+		
+							if (data.indexOf("ok") == 0) {
+								load_**table**_Records(last_**table**_Page)
+							} else
+								alert("ERROR - record not deleted\r\n\r\nPlease try again!");
+						},
+						error : function(jqXHR, textStatus, errorThrown) {
+							$("#loading").hide();
+							alert("ERROR");
+						}
+					});
+				
+				
+			}
+
+		});
+		
+		//edit record
+		$('#btn_**table**_edit').on('click', function(e) {
+			var rowData = getSelected('records_**table**_TBL');
+			if (rowData == null) {
+				alert("Παρακαλώ επιλέξτε εγγραφή!");
+				return;
+			}
+
+			$("#loading").height($('body').height());
+			$("#loading").show();
+
+			$("#**table**_details").load('tab_**table**_details.php?id=' + rowData[0], function() {
+				$("#loading").hide();
+				$("#**table**").hide();
+				$("#**table**_details").show();
+			});
+		});
+
+		//new record
+		$('#btn_**table**_new').on('click', function(e) {
+			$("#loading").height($('body').height());
+			$("#loading").show();
+
+			$("#**table**_details").load('tab_**table**_details.php', function() {
+				$("#loading").hide();
+				$("#**table**").hide();
+				$("#**table**_details").show();
+			});
+		});
+
+		//	jquery
+	});
+	//	jquery
+
+</script>
+<!-- <div id="loading" style="display:none;background-color:rgba(0,0,0,0.5);position:absolute;top:0;left:0;height:100%;width:100%;z-index:999;vertical-align:middle; text-align:center"><img src='css/loading.gif' />
+</div> -->
+<br>
+<button id="btn_**table**_new" type="button" class="btn btn-primary">
+	Νέα
+</button>
+
+<button id="btn_**table**_edit" type="button" class="btn btn-primary">
+	Διόρθωση
+</button>
+<button id="btn_**table**_delete" type="button" class="btn btn-danger">
+	Διαγραφή
+</button>
+<button type="button" class="btn btn-success" style="float: right; margin-left: 5px" onclick="load_**table**_Records(last_**table**_Page);">
+	Ανανέωση
+</button>
+
+<!-- <a href="products_export.php" class="btn btn-warning" style="float: right">Export</a> -->
+
+<br>
+<br>
+
+<ul class="list-inline">
+	<li>
+		<div class="btn-group">
+			<input class="form-control"  placeholder="αναζήτηση" id="**table**_search_txt">
+			<span id="**table**_searchclear" class="deltextcontent glyphicon glyphicon-remove-circle"></span>
+		</div>
+	</li>
+	<li>
+		<select class="form-control" id="**table**_search_combo" style="width: 200px">
+**search**
+		</select>
+	</li>
+	<li>
+		<button type="button" id="btn_**table**_search" class="btn btn-success">
+			Αναζήτηση
+		</button>
+	</li>
+	<li></li>
+	<li>
+		<label >Ταξινόμηση :</label>
+	</li>
+	<li>
+
+		<select class="form-control" id="**table**_sort_combo" style="width: 200px">
+			<option value=0>Καμία</option>
+**search**
+		</select>
+	</li>
+
+	<button id="sort_**table**_order" type="button" class="btn btn-default" data-toggle="button" value="ASC">
+		αντίστροφη ταξινόμηση
+	</button>
+
+</ul>
+
+
+<table id='records_**table**_TBL' class="table table-striped" >
+
+	<thead>
+		<tr>
+**table_cols**
+		</tr>
+	</thead>
+
+	<tbody id="record_**table**_rows"></tbody>
+</table>
+
+<div id="records_**table**_pg"></div>
+<!-- </div> -->

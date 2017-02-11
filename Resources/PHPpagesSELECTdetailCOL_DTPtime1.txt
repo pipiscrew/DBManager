@@ -1,0 +1,7 @@
+
+			<div class="col-xs-6 col-md-4">
+				<div class='form-group'>
+					<label>*field* :</label><br>
+					<input type="text" name="*field*" class="form-control" data-date-format="dd-mm-yyyy" readonly class="form_datetime">
+				</div>
+			</div>

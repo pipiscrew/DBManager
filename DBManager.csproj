@@ -1,0 +1,440 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{45FB801C-0E31-4AD1-8ACC-F46B2ABDD6C2}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DBManager</RootNamespace>
+    <AssemblyName>DBManager</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>data.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Aga.Controls">
+      <HintPath>..\Aga.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.TextEditor">
+      <HintPath>..\ICSharpCode.TextEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.JScript" />
+    <Reference Include="MySql.Data">
+      <HintPath>..\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLite.NET">
+      <HintPath>..\SQLite.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="About.designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BlueForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DBASES\ADOnet.cs" />
+    <Compile Include="DBASES\ADOnetClass.cs" />
+    <Compile Include="DBASES\MySQLTunnel.cs" />
+    <Compile Include="ErrorReporter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExcelWriter.cs" />
+    <Compile Include="frmADOConnection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmADOConnection.Designer.cs">
+      <DependentUpon>frmADOConnection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmGeneratePHP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGeneratePHP.Designer.cs">
+      <DependentUpon>frmGeneratePHP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmGeneratePHPpages.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGeneratePHPpages.Designer.cs">
+      <DependentUpon>frmGeneratePHPpages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmGeneratePHP_CRUD.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGeneratePHP_CRUD.Designer.cs">
+      <DependentUpon>frmGeneratePHP_CRUD.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmInformation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmInformation.Designer.cs">
+      <DependentUpon>frmInformation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmJScustom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmJScustom.Designer.cs">
+      <DependentUpon>frmJScustom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMySQLTunnelServerConnection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMySQLTunnelServerConnection.designer.cs">
+      <DependentUpon>frmMySQLTunnelServerConnection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPicture.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPicture.Designer.cs">
+      <DependentUpon>frmPicture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSQLcopyrows.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSQLcopyrows.Designer.cs">
+      <DependentUpon>frmSQLcopyrows.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ListStrings.cs" />
+    <Compile Include="DBASES\MySQL.cs" />
+    <Compile Include="DBASES\MySQLClass.cs" />
+    <Compile Include="DBASES\SQLite.cs" />
+    <Compile Include="DBASES\SQLServer.cs" />
+    <Compile Include="dbConnection.cs" />
+    <Compile Include="DBASES\IdbType.cs" />
+    <Compile Include="frmEditByte.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEditByte.designer.cs">
+      <DependentUpon>frmEditByte.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmGenerateDesigner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGenerateDesigner.designer.cs">
+      <DependentUpon>frmGenerateDesigner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmGenerateFormCode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGenerateFormCode.designer.cs">
+      <DependentUpon>frmGenerateFormCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmGenerator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGenerator.designer.cs">
+      <DependentUpon>frmGenerator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmGenerator4Report.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGenerator4Report.designer.cs">
+      <DependentUpon>frmGenerator4Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmGenerator4ReportChooser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGenerator4ReportChooser.designer.cs">
+      <DependentUpon>frmGenerator4ReportChooser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMySQLServerConnection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMySQLServerConnection.designer.cs">
+      <DependentUpon>frmMySQLServerConnection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSQLiteConnection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSQLiteConnection.Designer.cs">
+      <DependentUpon>frmSQLiteConnection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSQLServerConnection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSQLServerConnection.designer.cs">
+      <DependentUpon>frmSQLServerConnection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="General.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DBASES\SQLClass.cs" />
+    <Compile Include="DBASES\SQLiteClass.cs" />
+    <Compile Include="StripRender\CustomProfessionalColors.cs" />
+    <Compile Include="StripRender\CustomProfessionalHelper.cs" />
+    <Compile Include="StripRender\CustomProfessionalRenderer.cs" />
+    <Compile Include="treeItem.cs" />
+    <Compile Include="treeItem2.cs" />
+    <Compile Include="WaitWindow\WaitWindow.cs" />
+    <Compile Include="WaitWindow\WaitWindowEventArgs.cs" />
+    <Compile Include="WaitWindow\WaitWindowGUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WaitWindow\WaitWindowGUI.designer.cs">
+      <DependentUpon>WaitWindowGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WebPostRequest.cs" />
+    <EmbeddedResource Include="About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmADOConnection.resx">
+      <DependentUpon>frmADOConnection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEditByte.resx">
+      <DependentUpon>frmEditByte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGenerateDesigner.resx">
+      <DependentUpon>frmGenerateDesigner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGenerateFormCode.resx">
+      <DependentUpon>frmGenerateFormCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGeneratePHP.resx">
+      <DependentUpon>frmGeneratePHP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGeneratePHPpages.resx">
+      <DependentUpon>frmGeneratePHPpages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGeneratePHP_CRUD.resx">
+      <DependentUpon>frmGeneratePHP_CRUD.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGenerator.resx">
+      <DependentUpon>frmGenerator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGenerator4Report.resx">
+      <DependentUpon>frmGenerator4Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGenerator4ReportChooser.resx">
+      <DependentUpon>frmGenerator4ReportChooser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmInformation.resx">
+      <DependentUpon>frmInformation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmJScustom.resx">
+      <DependentUpon>frmJScustom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMySQLServerConnection.resx">
+      <DependentUpon>frmMySQLServerConnection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMySQLTunnelServerConnection.resx">
+      <DependentUpon>frmMySQLTunnelServerConnection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPicture.resx">
+      <DependentUpon>frmPicture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSQLcopyrows.resx">
+      <DependentUpon>frmSQLcopyrows.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSQLiteConnection.resx">
+      <DependentUpon>frmSQLiteConnection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSQLServerConnection.resx">
+      <DependentUpon>frmSQLServerConnection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="WaitWindow\WaitWindowGUI.resx">
+      <DependentUpon>WaitWindowGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\copy16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\about-logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document_new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button-Delete-iconOther.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button-Delete-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PHPtemplate.zip" />
+    <None Include="Resources\PHPtemplateCRUD.zip" />
+    <None Include="Resources\PHPtemplateCRUDbootstraptable.zip" />
+    <None Include="Resources\text_marked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ResourceSQLServer\proc_node.dbaseJS_get.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nodeJS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ResourceSQLServer\proc_node.appJS_get.txt" />
+    <EmbeddedResource Include="ResourceSQLServer\proc_node.appJS_post.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ResourceSQLServer\proc_node.dbaseJS_post.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ResourceSQLServer\proc_node.dbaseJS_declaration.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="data.ico" />
+    <None Include="Resources\tunnelPHP_PDO.txt" />
+    <None Include="Resources\CRUDtemplate_save_dtptime_validation1.txt" />
+    <None Include="Resources\CRUDtemplate_Control_DTPtime_init1.txt" />
+    <None Include="Resources\PHPpagesSELECTdetailCOL_DTPtime1.txt" />
+    <None Include="Resources\CRUD2template_save.txt" />
+    <None Include="Resources\CRUD2template_delete.txt" />
+    <None Include="Resources\CRUD2template_fetch.txt" />
+    <None Include="Resources\CRUD2template_pagination.txt" />
+    <None Include="Resources\CRUD2template_main_TABLE_Item.txt" />
+    <None Include="Resources\CRUD2template_main.txt" />
+    <None Include="Resources\templateCRUDbootstraptable.png" />
+    <None Include="Resources\templateCRUDadminLTE.png" />
+    <None Include="Resources\CRUDtemplate_save_dtptime_validation.txt" />
+    <None Include="Resources\CRUDtemplate_Control_DTPtime_init.txt" />
+    <None Include="Resources\PHPpagesSELECTdetailCOL_DTPtime.txt" />
+    <None Include="Resources\PHPpagesSELECTdetailCOL_DTP.txt" />
+    <None Include="Resources\CRUDtemplate_Control_DTP_init.txt" />
+    <None Include="Resources\CRUDtemplate_save_checkbox_validation.txt" />
+    <None Include="Resources\PHPpagesSELECTdetailCOL_CHECK.txt" />
+    <None Include="Resources\CRUDtemplate_FK_Control_FILL_COMBO.txt" />
+    <None Include="Resources\CRUDtemplate_FK_Control_FILL.txt" />
+    <None Include="Resources\PHPpagesSELECTdetailCOL_COMBO.txt" />
+    <None Include="Resources\CRUDtemplate_config_mysql.txt" />
+    <None Include="Resources\CRUDtemplate_config_sqlite.txt" />
+    <None Include="Resources\CRUDtemplate_detail.txt" />
+    <None Include="Resources\CRUDtemplate_save.txt" />
+    <None Include="Resources\CRUDtemplate_delete.txt" />
+    <None Include="Resources\CRUDtemplate_table.txt" />
+    <None Include="Resources\CRUDtemplate_top_item.txt" />
+    <None Include="Resources\CRUDtemplate_top.txt" />
+    <None Include="Resources\PDOprepared.txt" />
+    <None Include="Resources\PHPpagesPORTALprocedureDELETE_callexample.txt" />
+    <None Include="Resources\PHPpagesPORTALprocedureSAVE_callexample.txt" />
+    <None Include="Resources\PHPpagesPORTALprocedureSAVEexample.txt" />
+    <None Include="Resources\PHPpagesPORTALexample.txt" />
+    <None Include="Resources\PHPpagesPORTAL.txt" />
+    <None Include="Resources\PHPpagesSELECTdetailCOL.txt" />
+    <None Include="Resources\PHPpagesSELECTdetail.txt" />
+    <None Include="Resources\PHPpagesSELECTpagination.txt" />
+    <None Include="Resources\PHPpagesSELECT.txt" />
+    <None Include="Resources\mySQLtunnelPHPproc_save.txt" />
+    <None Include="Resources\tunnelPHPtransBATCH.txt" />
+    <None Include="Resources\tunnelPHPtrans.txt" />
+    <None Include="Resources\tunnelPHP.txt" />
+    <EmbeddedResource Include="ResourcesPHPexport\jquery.validate.min.js" />
+    <EmbeddedResource Include="ResourcesPHPexport\bootstrap.min.css" />
+    <EmbeddedResource Include="ResourcesPHPexport\bootstrap.min.js" />
+    <EmbeddedResource Include="ResourcesPHPexport\jquery-1.10.2.min.js" />
+    <EmbeddedResource Include="ResourcesPHPexport\signin.css" />
+    <EmbeddedResource Include="ResourcesPHPexport\portal_template.txt" />
+    <EmbeddedResource Include="ResourcesPHPexport\auth_admin.txt" />
+    <EmbeddedResource Include="ResourcesPHPexport\auth_login.txt" />
+    <EmbeddedResource Include="ResourcesPHPexport\ExcelWriterXML.txt" />
+    <EmbeddedResource Include="ResourcesPHPexport\ExcelWriterXML_Sheet.txt" />
+    <EmbeddedResource Include="ResourcesPHPexport\ExcelWriterXML_Style.txt" />
+    <EmbeddedResource Include="ResourcesPHPexport\page_export_template.txt" />
+    <EmbeddedResource Include="ResourcesPHPexport\page_delete_template.txt" />
+    <EmbeddedResource Include="ResourcesPHPexport\page_fetch_template.txt" />
+    <EmbeddedResource Include="ResourcesPHPexport\page_save_template.txt" />
+    <EmbeddedResource Include="ResourcesPHPexport\table_pagination.txt" />
+    <EmbeddedResource Include="ResourcesPHPexport\config.txt" />
+    <EmbeddedResource Include="ResourcesPHPexport\page_template_modal_element.txt" />
+    <EmbeddedResource Include="ResourcesPHPexport\page_template.txt" />
+    <None Include="Resources\helpEXCEL.png" />
+    <None Include="Resources\help.png" />
+    <None Include="Resources\export16.png" />
+    <None Include="Resources\refresh24.png" />
+    <None Include="Resources\windows.png" />
+    <EmbeddedResource Include="ResourceSQLServer\proc_form_bootstrap_template.txt" />
+    <None Include="Resources\rename.png" />
+    <None Include="Resources\window.png" />
+    <EmbeddedResource Include="ResourceSQLServer\proc_form_template_from_row.txt" />
+    <EmbeddedResource Include="ResourceSQLServer\proc_form_template.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

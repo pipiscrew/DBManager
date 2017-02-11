@@ -1,0 +1,23 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["u"]) || empty($_POST['{{Utable}}id'])) {
+	echo json_encode(null);
+	exit ;
+}
+
+try {
+	include ('config.php');
+
+	$db = connect();
+
+	$t = $db -> real_escape_string($_POST['{{Utable}}id']);
+
+	if ($db -> query("delete FROM {{table}} where {{id}}=" . $t))
+		echo json_encode("refresh");
+	else
+		echo json_encode(null);
+} catch (exception $e) {
+	echo json_encode(null);
+}
+?>

@@ -1,0 +1,21 @@
+<?php
+@session_start();
+
+if (!isset($_SESSION["id"]) || empty($_POST['*PK*'])) {
+	echo json_encode(null);
+	exit ;
+}
+
+
+require_once ('config.php');
+
+$db = connect();
+
+$sql = "DELETE FROM `*table*` WHERE *PK*=:*PK*";
+$sth = $db->prepare($sql);
+$sth->bindValue(':*PK*', $_POST['*PK*']);
+	
+$sth->execute();
+
+echo $sth->errorCode(); 
+?>

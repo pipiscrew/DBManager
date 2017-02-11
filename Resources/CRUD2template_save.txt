@@ -1,0 +1,39 @@
+<?php
+@session_start();
+
+if (!isset($_SESSION["id"])) {
+    echo json_encode(null);
+    exit ;
+}
+ 
+if (#validation#){
+	echo "error010101010";
+	return;
+}
+ 
+//DB
+require_once ('config.php');
+ 
+$db = connect();
+ 
+#checkboxes#
+
+#dtptimes#
+
+if(isset($_POST['#tblname#FORM_updateID']) && !empty($_POST['#tblname#FORM_updateID']))
+{
+	$sql = "UPDATE #tblname# set #updateVAL# where #updateWhere#=:#updateWhere#";
+	$stmt = $db->prepare($sql);
+	$stmt->bindValue(':#updateWhere#' , $_POST['#tblname#FORM_updateID']);
+}
+else
+{
+	$sql = "INSERT INTO #tblname# (#insertFields#) VALUES (#insertVAL#)";
+	$stmt = $db->prepare($sql);
+}
+
+#stmt#
+$stmt->execute();
+ 
+echo $stmt->errorCode(); 
+?>

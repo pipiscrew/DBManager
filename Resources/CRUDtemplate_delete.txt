@@ -1,0 +1,31 @@
+﻿<?php
+
+//session_start();
+//
+//if (!isset($_SESSION["u"])) {
+//	header("Location: index.html");
+//	exit ;
+//}
+
+if (!isset($_GET['id'])) {
+	echo "error010101010";
+	return;
+}
+
+require_once ('config.php');
+
+$db = connect();
+
+$sql = "DELETE FROM `#table#` WHERE #PK#=:#PK#";
+$sth = $db->prepare($sql);
+$sth->bindValue(':#PK#', $_GET['id']);
+	
+$sth->execute();
+
+$g = $sth->rowCount();
+
+if($g == 1)
+	header("Location: tab_#table#.php?isdelete=1");
+else
+	header("Location: tab_#table#.php?iserror=1");
+?>

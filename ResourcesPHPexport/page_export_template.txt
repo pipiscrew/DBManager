@@ -1,0 +1,21 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["u"])) {
+    header("Location: admin.php");
+    exit ;
+}
+else {
+include('ExcelWriterXML.php');
+$xml = new ExcelWriterXML('{{Utable}}'.date('Y-m-d').'.xls');
+$xml->showErrorSheet(true);
+
+$tables = array(
+	'{{table}}'
+);
+$xml->mysqlTableDump('pipiscrew','pipiscrew','pipiscrew','pipiscrew',$tables);
+
+$xml->sendHeaders();
+$xml->writeData();
+}
+?>

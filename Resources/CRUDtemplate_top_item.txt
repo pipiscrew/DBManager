@@ -1,0 +1,12 @@
+﻿						<li class="treeview <?php if (isset($active_tab) && $active_tab=="#table#") echo "active"?> ">
+							<a href="#"> <i class="glyphicon glyphicon-th-large"></i> <span>#table#</span> <i class="glyphicon pull-right glyphicon-chevron-right"></i> </a>
+							<ul class="treeview-menu" style="display: none;">
+								<li >
+									<a href="tab_#table#.php" style="margin-left: 10px;"><i class="glyphicon glyphicon-list"></i> List</a>
+								</li>
+								<li >
+									<a href="tab_#table#_details.php" style="margin-left: 10px;"><i class="glyphicon glyphicon-plus"></i> Create</a>
+								</li>
+							</ul>
+						</li>
+

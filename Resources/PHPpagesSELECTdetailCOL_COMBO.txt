@@ -1,0 +1,8 @@
+
+			<div class="col-xs-6 col-md-4">
+				<div class='form-group'>
+					<label>*field* :</label>
+					<select id="*field*" name='*field*' class='form-control'>
+					</select>
+				</div>
+			</div>

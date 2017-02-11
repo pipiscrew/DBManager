@@ -1,0 +1,310 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="mySQLtunnelPHPproc_save" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mySQLtunnelPHPproc_save.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="rename" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rename.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="helpEXCEL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\helpEXCEL.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CRUDtemplate_save" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUDtemplate_save.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="tunnelPHPtrans" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tunnelPHPtrans.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="PHPpagesSELECTdetailCOL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PHPpagesSELECTdetailCOL.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\refresh.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="document" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\document.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PHPpagesPORTALprocedureSAVEexample" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PHPpagesPORTALprocedureSAVEexample.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="document_new" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\document_new.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CRUDtemplate_Control_DTPtime_init" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUDtemplate_Control_DTPtime_init.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-7</value>
+  </data>
+  <data name="CRUDtemplate_top" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUDtemplate_top.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="help" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\help.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CRUDtemplate_Control_DTP_init" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUDtemplate_Control_DTP_init.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="PHPpagesSELECT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PHPpagesSELECT.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="PHPpagesSELECTdetailCOL_COMBO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PHPpagesSELECTdetailCOL_COMBO.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="copy16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\copy16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PHPpagesSELECTdetailCOL_CHECK" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PHPpagesSELECTdetailCOL_CHECK.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="refresh24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\refresh24.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="export16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\export16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PHPpagesPORTALexample" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PHPpagesPORTALexample.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="tunnelPHPtransBATCH" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tunnelPHPtransBATCH.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="PHPpagesSELECTpagination" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PHPpagesSELECTpagination.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="PHPtemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PHPtemplate.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PHPtemplateCRUD" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PHPtemplateCRUD.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="windows" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\windows.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CRUDtemplate_detail" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUDtemplate_detail.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="text_marked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\text_marked.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CRUDtemplate_config_sqlite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUDtemplate_config_sqlite.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Button-Delete-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Button-Delete-icon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="nodeJS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\nodeJS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PHPpagesSELECTdetail" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PHPpagesSELECTdetail.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="PHPpagesPORTALprocedureDELETE_callexample" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PHPpagesPORTALprocedureDELETE_callexample.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="PHPpagesPORTALprocedureSAVE_callexample" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PHPpagesPORTALprocedureSAVE_callexample.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUDtemplate_table" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUDtemplate_table.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="CRUDtemplate_save_checkbox_validation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUDtemplate_save_checkbox_validation.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUDtemplate_FK_Control_FILL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUDtemplate_FK_Control_FILL.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="PDOprepared" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PDOprepared.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUDtemplate_config_mysql" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUDtemplate_config_mysql.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="window" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\window.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CRUDtemplate_delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUDtemplate_delete.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="CRUDtemplate_save_dtptime_validation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUDtemplate_save_dtptime_validation.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-7</value>
+  </data>
+  <data name="Button-Delete-iconOther" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Button-Delete-iconOther.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PHPpagesSELECTdetailCOL_DTP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PHPpagesSELECTdetailCOL_DTP.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="tunnelPHP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tunnelPHP.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="PHPpagesSELECTdetailCOL_DTPtime" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PHPpagesSELECTdetailCOL_DTPtime.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-7</value>
+  </data>
+  <data name="about-logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\about-logo.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PHPpagesPORTAL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PHPpagesPORTAL.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUDtemplate_FK_Control_FILL_COMBO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUDtemplate_FK_Control_FILL_COMBO.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUDtemplate_top_item" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUDtemplate_top_item.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="CRUD2template_main" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD2template_main.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="templateCRUDadminLTE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\templateCRUDadminLTE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="templateCRUDbootstraptable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\templateCRUDbootstraptable.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CRUD2template_delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD2template_delete.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD2template_fetch" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD2template_fetch.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD2template_main_TABLE_Item" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD2template_main_TABLE_Item.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD2template_pagination" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD2template_pagination.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD2template_save" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD2template_save.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="PHPtemplateCRUDbootstraptable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PHPtemplateCRUDbootstraptable.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CRUDtemplate_Control_DTPmalot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUDtemplate_Control_DTPtime_init1.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUDtemplate_save_dtpmalot_validation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUDtemplate_save_dtptime_validation1.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="PHPpagesSELECTdetailCOL_DTPmalot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PHPpagesSELECTdetailCOL_DTPtime1.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="tunnelPHP_PDO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tunnelPHP_PDO.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+</root>

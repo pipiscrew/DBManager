@@ -1,0 +1,14 @@
+
+	///////////////////////////////////////////////////////////// FILL #table#
+	var jArray_#table# =   <?php echo json_encode($#table#_rows); ?>;
+
+	var combo_#table#_rows = "<option value='0'></option>";
+	for (var i = 0; i < jArray_#table#.length; i++)
+	{
+		combo_#table#_rows += "<option value='" + jArray_#table#[i]["#PK#"] + "'>" + jArray_#table#[i]["#TXT#"] + "</option>";
+	}
+
+	$("[name=#FK_NAME#]").html(combo_#table#_rows);
+	$("[name=#FK_NAME#]").change(); //select row 0 - no conflict on POST validation @ PHP
+	///////////////////////////////////////////////////////////// FILL #table#
+

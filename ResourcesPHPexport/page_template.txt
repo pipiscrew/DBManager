@@ -1,0 +1,265 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["u"])) {
+    header("Location: admin.php");
+    exit ;
+}
+?>
+
+<script type="text/javascript">
+	var last{{Cfield}}Page;
+
+	function load{{Cfield}}s(page) {
+		last{{Cfield}}Page = page;
+
+		$.ajax({
+			type : "GET",
+			url : "{{Lfield}}_pagination.php",
+			data : {
+				page : page
+			},
+			datatype : "json",
+			success : function(msg) {
+				$("#{{Lfield}}_rows").html(msg.tableRows);
+				$("#{{Lfield}}_pg").html(msg.pagination);
+			}
+		});
+	}
+
+	///////////////// JQuery when document is ready
+	$(function() {
+
+		//functionality when the modal already shown and its long
+		//when reloaded scroll to top
+		$('#modal{{Ufield}}').on('shown.bs.modal', function() {
+			$(this).animate({
+				scrollTop : 0
+			}, 'slow');
+		});
+
+		//http://stackoverflow.com/questions/2086287/how-to-clear-jquery-validation-error-messages
+		//functionality when modal closed, hide the warning messages + reset
+		$('#modal{{Ufield}}').on('hidden.bs.modal', function() {
+			//when close - clear elements
+			$('#form{{Ufield}}').trigger("reset");
+
+			//remove error class
+			$(".form-group").removeClass("has-error");
+
+			//clear validator
+			validator{{Ufield}}.resetForm();
+
+			//set form texts for new record
+			$('#bntSave_{{Ufield}}').text('save');
+			$('#lblTitle_{{Ufield}}').text('New {{Cfield}}');
+		});
+
+		//http://stackoverflow.com/questions/18754020/bootstrap-3-with-jquery-validation-plugin
+		// validate signup form on keyup and submit
+		var validator{{Ufield}} = $("#form{{Ufield}}").validate({
+			rules : {
+{{validationDECLARATION}}
+			},
+			messages : {
+{{validationErrMessages}}
+			},
+			highlight : function(element) {
+				$(element).closest('.form-group').addClass('has-error');
+			},
+			unhighlight : function(element) {
+				$(element).closest('.form-group').removeClass('has-error');
+			}
+		});
+
+		//set selected row on table
+		$('#{{Lfield}}TBL').on('click', 'tbody tr', function(event) {
+			$(this).addClass('highlight').siblings().removeClass('highlight');
+		});
+
+		//used for insert+update
+		$('#form{{Ufield}}').submit(function(e) {
+			e.preventDefault();
+			var form = $(this);
+
+			////////////////////////// validation
+			form.validate();
+
+			if (!form.valid())
+				return;
+			////////////////////////// validation
+
+			$.ajax({
+				type : form.attr('method'),
+				url : form.attr('action'),
+				data : form.serialize(),
+				dataType : 'json',
+				success : function(msg) {
+
+					if (msg == "refresh") {
+						//refresh the table
+						load{{Cfield}}s(last{{Cfield}}Page);
+
+						//close modal
+						$('#modal{{Ufield}}').modal('toggle');
+					} else {
+						//warn user
+						alert("Catastrophic Error!\r\nRecord couldnt update");
+					}
+
+				},
+				error : function() {
+					alert("Connection Error!");
+				}
+				// ,
+				// done: function($msg){
+				// alert("!" + $msg);
+				// }
+			});
+		});
+
+	});
+
+	///////////////// JQuery Functions
+	(
+		function($) {
+			//delete button
+			$(document).on("click", "#btn_Del{{Ufield}}", function(e) {
+				e.preventDefault();
+
+				//get selected row - ID column
+				var rowData = getSelected('{{Lfield}}TBL');
+				if (rowData == null) {
+					alert("Please select a row!");
+					return;
+				}
+
+				if (confirm('Would you like to delete :\r\n' + rowData[1])) {
+					//when yes
+					$.ajax({
+						type : "POST",
+						url : "{{Lfield}}_delete.php",
+						data : "{{Ufield}}id=" + rowData[0],
+						datatype : "json",
+						success : function(data) {
+							if (data != 'null') {
+								//refresh the table
+								load{{Cfield}}s(last{{Cfield}}Page);
+							} else
+								alert("Catastrophic Error!");
+						}
+					});
+
+				}
+			});
+
+			//edit button
+			$(document).on("click", "#btn_Edit{{Ufield}}", function(e) {
+				e.preventDefault();
+
+				//get selected row - ID column
+				var anSelected = getSelected('{{Lfield}}TBL');
+				if (anSelected == null) {
+					alert("Please select a row!");
+					return;
+				}
+
+				var rowData = anSelected[0];
+
+				$.ajax({
+					type : "POST",
+					url : "{{Lfield}}_fetch.php",
+					data : "{{Ufield}}id=" + anSelected[0],
+					datatype : "json",
+					success : function(data) {
+						if (data != null) {
+							//set the db values to textboxes
+{{elementsEDIT}}
+
+							//set form texts for update
+							$('#bntSave_{{Ufield}}').text('update');
+							$('#lblTitle_{{Ufield}}').text('Edit {{Cfield}}');
+
+							//set recordID
+							$('[name={{Ufield}}_updateID]').val(anSelected[0]);
+
+							//show modal
+							$('#modal{{Ufield}}').modal('toggle');
+						} else
+							alert("Catastrophic Error!\r\nRecord not found!");
+					},
+					error : function() {
+						alert("Connection Error!");
+					}
+				});
+
+			});
+
+		})(jQuery); 
+</script>
+
+<!-- TAB {{Ufield}} [START] -->
+<div class="tab-pane fade in active" id="{{Lfield}}TAB">
+	<!-- NEW {{Ufield}} MODAL [START] -->
+	<div class="modal fade" id="modal{{Ufield}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title" id='lblTitle_{{Ufield}}'>New {{Cfield}}</h4>
+				</div>
+				<div class="modal-body">
+					<form id="form{{Ufield}}" role="form" method="post" action="{{Lfield}}_save.php">
+						<form role="form">
+{{modalElements}}
+
+							<input name="{{Ufield}}_updateID" class="form-control" style="display:none;">
+
+				</div>
+				<div class="modal-footer">
+					<button id="bntCancel_{{Ufield}}" type="button" class="btn btn-default" data-dismiss="modal">
+						cancel
+					</button>
+					<button id="bntSave_{{Ufield}}" class="btn btn-primary" type="submit" name="submit">
+						save
+					</button>
+				</div>
+				</form>
+			</div>
+			<
+		</div>
+	</div>
+	<!-- NEW {{Ufield}} MODAL [END] -->
+
+	<br>
+	<div id="box" class="container">
+		<a data-toggle="modal" href="#modal{{Ufield}}" class="btn btn-default">New</a>
+		<button id="btn_Edit{{Ufield}}" type="button" class="btn btn-primary">
+			Edit
+		</button>
+		<button id="btn_Del{{Ufield}}" type="button" class="btn btn-danger">
+			Delete
+		</button>
+		<button type="button" class="btn btn-success" style="float: right; margin-left: 5px" onclick="load{{Cfield}}s(last{{Cfield}}Page);">
+			Refresh
+		</button>
+
+		<a href="{{Lfield}}_export.php" class="btn btn-warning" style="float: right">Export</a>
+
+		<br>
+		<br>
+		<table id='{{Lfield}}TBL' class="table table-striped" >
+			<thead>
+				<tr>
+{{tableCOLS}}
+				</tr>
+			</thead>
+
+			<tbody id="{{Lfield}}_rows"></tbody>
+		</table>
+
+		<div id="{{Lfield}}_pg"></div>
+	</div>
+</div>

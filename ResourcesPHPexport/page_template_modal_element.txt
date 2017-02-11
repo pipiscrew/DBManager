@@ -1,0 +1,5 @@
+
+							<div class='form-group'>
+								<label>txt{{field}} :</label>
+								<input name='{{field}}' class='form-control' placeholder='{{field}}'>
+							</div>
