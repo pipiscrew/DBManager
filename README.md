@@ -41,8 +41,8 @@ last update done at 2014.
 -[Newtonsoft.Json.dll](http://www.newtonsoft.com/json)<br>
 -[SQLite.NET.dll](http://adodotnetsqlite.sourceforge.net/)<br>
 -[sqlite3.dll](https://sqlite.org/)
-<br><br>
-This project is no longer maintained
+<br><br><br>
+##This project is no longer maintained
 <br><br>
 Copyright (c) 2017 [PipisCrew](http://pipiscrew.com)
 
