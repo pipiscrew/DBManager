@@ -17,7 +17,8 @@ require_once('template_top.php');
                       <a href="logout.php" class="btn btn-primary btn-lg" style="display:block;margin:10px;">Logout</a>
                       <a id="sweet1" class="btn btn-danger btn-lg" style="display:block;margin:10px;">sweetalert2 - cancel</a>
                       <a id="sweet2" class="btn btn-success btn-lg" style="display:block;margin:10px;">sweetalert2 - success</a>
-                      <a href="test_child_summernote.php" class="btn btn-success btn-lg" style="display:block;margin:10px;">summernote</a>
+                      <a href="test_child_summernote.php" class="btn btn-warning btn-lg" style="display:block;margin:10px;">summernote</a>
+                      <a id="showindicator" class="btn btn-primary btn-lg" style="display:block;margin:10px;">indicator</a>
                 </div>
                 <div class="col-md-4"></div>
             </div>
@@ -45,6 +46,18 @@ require_once('template_top.php');
 						).then(function() {
 							alert('when sweet closed');
 						});
+						
+				});
+				
+				$('#showindicator').on('click', function(e) {
+					e.preventDefault();
+					
+					loading.appendTo(document.body);
+					
+					
+					setTimeout(function() {
+						loading.remove();
+					}, 2000);
 						
 				});
 				
