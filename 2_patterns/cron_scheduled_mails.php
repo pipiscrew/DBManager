@@ -13,6 +13,10 @@
 	
 example :
 php -q /xx/xx/public_html/cron_scheduled_mails.php
+
+//the query field as :
+`service_starts` date DEFAULT NULL
+
 */
 
 
