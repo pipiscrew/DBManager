@@ -43,9 +43,6 @@ if (sizeof($rows)>0)
 		
 		$body = "The contract starts ".$row["service_starts_formatted"]." ends " .$row["service_ends_formatted"]. " for the client ".$row['offer_company_name']."<br>";
 		
-		write_log($db,1, $body, $row['company_id'], $row['offer_seller_id']);
-		
-		//mail seller
 		send_mail_to_user($row['employee_mail'], $row['customer_mail'] , $subject, $body);
 	}
 
