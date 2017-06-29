@@ -6,11 +6,8 @@
 	write on top of the script + run it :
 		echo getcwd(); //returns the full path, we need it for cron execution path
 		exit;
-	
+
 3-
-	now on server set the filepath
-	
-4-
 	find the times http://wwp.greenwichmeantime.com/to/mst/index.htm
 	
 	
@@ -18,6 +15,9 @@ example :
 php -q /xx/xx/public_html/cron_scheduled_mails.php
 */
 
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //as a class by zinsou - https://www.phpclasses.org/package/10351-PHP-Execute-action-when-a-given-date-is-reached.html
 
 <?php
