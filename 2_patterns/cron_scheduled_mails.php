@@ -41,7 +41,6 @@ write_log($db,5, "Scheduled Task - ".date("Y-m-d H:i:s")."  - ServiceStart found
 
 if (sizeof($rows)>0)
 {
-	$report="";
 	foreach($rows as $row) {
 		$subject = "Test Inc. - {$row['offer_company_name']} Ad Service Starts Today";
 		
