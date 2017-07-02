@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using %NAMESPACE%.Models;
+using System.Web.Mvc;
+
+/// <summary>
+/// %GENERATED%
+/// Template last modified 2017-06-23
+/// </summary>
+
+namespace %NAMESPACE%.EF
+{
+    class SelList_%CLASS%
+    {
+        private const string exceptionMessage = "A database exception occurred";
+
+        /// <summary>
+        /// Returns a SelectListItem list of model objects out of database
+        /// </summary>
+        /// <returns> A list of SelectListItem - List of model object</returns>
+        public static List<SelectListItem> GetList()
+        {
+            try
+            {
+                List<SelectListItem> sellist = new List<SelectListItem>();
+                using (%EFCONTEXT% model = new %EFCONTEXT%())
+                {
+                    var list = model.%TABLE%.OrderBy(w => w.%ORDER_COL%).ToList();
+                    foreach (%TABLE% item in list)
+                    {
+                        sellist.Add(new SelectListItem { Value = item.%COL_PK%.ToString(), Text = item.%ORDER_COL% });
+                    }
+                    return sellist;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseException(exceptionMessage, ex);
+            }
+        }
+    }
+}

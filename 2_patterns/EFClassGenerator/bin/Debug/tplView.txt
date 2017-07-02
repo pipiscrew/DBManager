@@ -1,0 +1,65 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using %NAMESPACE%.Models;
+
+/// <summary>
+/// %GENERATED%
+/// Template last modified 2017-06-23
+/// </summary>
+
+namespace %NAMESPACE%.EF
+{
+    class %CLASS%
+    {
+        private const string exceptionMessage = "A database exception occurred";
+
+        /// <summary>
+        /// Returns a list of model objects out of database
+        /// </summary>
+        /// <returns>A list of %TABLE% - List of model object</returns>
+        public static List<%TABLE%> GetList()
+        {
+            try
+            {
+                using (%EFCONTEXT% model = new %EFCONTEXT%())
+                {
+                    //DELETED:TRUE return model.%TABLE%.Where(w => w.DELETED == null).OrderBy(o => o.%ORDER_COL%).ToList();
+                    //DELETED:FALSE return model.%TABLE%.OrderBy(o => o.%ORDER_COL%).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseException(exceptionMessage, ex);
+            }
+        }
+        /// <summary>
+        /// Get an existing record from database
+        /// </summary>
+        /// <param name="id">Id (primary key) of the model object requested to get</param>
+        /// <returns>%TABLE% model object</returns>
+        public static %TABLE% GetByID(%COL_DATATYPE% id)
+        {
+            try
+            {
+                using (%EFCONTEXT% context = new %EFCONTEXT%())
+                {
+                    //DELETED:TRUE var query = context.%TABLE%.Where(w => w.%COL_PK% == id && w.DELETED == null);
+                    //DELETED:FALSE var query = context.%TABLE%.Where(w => w.%COL_PK% == id);
+                    %TABLE% itm = query.FirstOrDefault();
+                    if (itm != null)
+                    {
+                        return itm;
+                    }
+                    return null;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseException(exceptionMessage, ex);
+            }
+
+        }
+    }
+}
