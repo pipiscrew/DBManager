@@ -12,7 +12,7 @@ https://www.phpclasses.org/package/10328-PHP-Encrypt-or-decrypt-data-using-Crypt
 
 alternative :
 
-###Add a security layer to server to server requests
+### Add a security layer to server to server requests
 
 This package add a security layer to server to server requests.
 
