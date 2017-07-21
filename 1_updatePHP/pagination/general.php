@@ -2,6 +2,19 @@
 class dbase{
 	private $db;
 
+	function connect_postgre() {
+		$postgre_hostname = "localhost";
+		$postgre_user = "root";
+		$postgre_password = "password";
+		$postgre_database = "x"; 
+		 
+		//Postgres, the default charset and collation is utf8_ci 
+		$this->db = new PDO("pgsql:host=$postgre_hostname;dbname=$postgre_database", $postgre_user, $postgre_password, 
+	  array(
+		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+		PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC));
+	}
+	
 	function connect_mysql() {
 		$mysql_hostname = "localhost";
 		$mysql_user = "root";
