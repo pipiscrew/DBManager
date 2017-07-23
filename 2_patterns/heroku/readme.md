@@ -51,4 +51,30 @@ function connect()
 }
 ```
 
+
+
+----------
+
+
+tip1 :
+the table before :
+```sql
+CREATE TABLE foo (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+bar varchar);
+```
+after (Postgre flavor)
+```sql
+CREATE TABLE foo (
+id SERIAL,
+bar varchar);
+```
+⋅⋅
+
+tip2 :
+lets say you want to trigger a PHP file (x.php) every x minutes, there is no possibility to do it at heroku freeplan, use your own server cron :) by executing :
+
+    wget https://xnews.herokuapp.com/x.php
+⋅⋅
+⋅⋅
 more info about heroku [http://www.pipiscrew.com/2017/04/deploy-your-angular2-app-to-heroku/](http://www.pipiscrew.com/2017/04/deploy-your-angular2-app-to-heroku/)
