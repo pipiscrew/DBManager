@@ -17,3 +17,5 @@ What we want to achieve is when the Postgre dbase reach more than 9000 records t
 
 
 ps Today is the first time this process ran the log.txt -- Total Execution Time: 2.0911996324857 mins
+
+as more fields added to Postgre, the transcation now reach the 3.4mins, I came up with new idea of how to transfer the recordset to your server. The method is to use the bzip2 (where is enabled by default on heroku.PHP installation). So the plan is at heroku select the records and dump it (bzip2) to a file, then upload the file to your server unwrap it and import the records http://www.pipiscrew.com/2017/11/servera-wrap-bzip2-database-recordset-serverb-unwrap-it/ .
