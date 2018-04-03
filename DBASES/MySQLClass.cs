@@ -35,7 +35,8 @@ namespace DBManager.DBASES
         {
             get
             {
-                if (objConn == null | objConn.State != ConnectionState.Open)
+                //hotfix - https://stackoverflow.com/a/34357667/1320686
+                if (objConn == null | objConn.State.HasFlag(ConnectionState.Open)) //.State != ConnectionState.Open)
                 {
                     return false;
                 }
