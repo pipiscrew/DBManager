@@ -56,3 +56,16 @@ public IEnumerable<Favorites> GetFavorites()
         }
     }
 }
+
+
+/*
+https://stackoverflow.com/a/31738645
+https://stackoverflow.com/a/33238806
+*/
+SqlConnection con = new SqlConnection("connection string");
+con.Open();
+SqlCommand cmd = new SqlCommand("select top 10 documentid from document order by 1 desc", con);
+SqlDataReader dr = cmd.ExecuteReader();             
+
+List<string> docids = (from IDataRecord r in dr select (string)r["documentid"]).ToList<string>();
+con.Close();
