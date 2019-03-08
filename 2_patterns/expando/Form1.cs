@@ -67,10 +67,29 @@ namespace WindowsFormsApp1
                 MessageBox.Show("There is no bike!");
                 return;
             }
+            else {
+                string mail_body = "<table>";
+                
+                //loop through all records
+                foreach (IDictionary<string, object> item in BikeTest2)
+                {
+                      mail_body += "<tr>";
+                      
+                      //loop through all columns
+                      foreach(KeyValuePair<string, object> kvp in item)
+                      {
+                        // Console.WriteLine("Key : " + kvp.Key.ToString() + ", Value : " + kvp.Value);
+                          mail_body += "<td>" + kvp.Value + "</td>";
+                      }
 
+                      mail_body += "</tr>";               
+                 }
 
-            //prepare a csv string
+                    mail_body += "</table>";
+            }
             
+            
+            //prepare a csv string            
             string BikeCSV2 = string.Join(",", BikeTest2.Select(i => (i as IDictionary<string, object>)["BikeID"]));
 
             // OR //
