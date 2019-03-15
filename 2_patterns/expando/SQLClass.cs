@@ -123,6 +123,35 @@ namespace WindowsFormsApp1
             }
             return rows;
         }
+        
+        
+       public Int64 ExecuteInsertQuery(string query, Dictionary<string, string> parameters, SqlConnection conn)
+        {  //Int64 because SQL return the newly created record id. (https://stackoverflow.com/a/10999467/) ex.
+           //INSERT INTO table(fieldA,fieldB) output INSERTED.tableID VALUES(@fieldA,@fieldB)
+            Int64 result = -1;
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    foreach (KeyValuePair<string, string> field in parameters)
+                    {
+                        cmd.Parameters.AddWithValue(field.Key, field.Value);
+                    }
+
+                    object RecordID = cmd.ExecuteScalar();
+
+                    if (RecordID != null)
+                        result = Int64.Parse(RecordID.ToString());
+                    else
+                        result = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
 
 
         public object ExecuteScalarQuery(string query)
