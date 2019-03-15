@@ -42,6 +42,36 @@ namespace WindowsFormsApp1
                 "where ID = @ID",
                 fields
             );
+            
+            /*
+            //insert the get newly created record ID + TransactionScope
+            Dictionary<string, string> fields;
+
+            using (TransactionScope ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+               fields = new Dictionary<string, string>();
+
+                foreach (Person item in People)
+                {
+                    fields.Clear();
+
+                    //ADD to TABLE
+                    fields.Add("@fieldA", "test");
+                    fields.Add("@fieldB", "test");
+                    fields.Add("@fieldC", "test");
+                    fields.Add("@fieldD", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                    fields.Add("@fieldE", "test");
+
+                    Int64 NewID = dbActions.ExecuteInsertQuery(
+                        "INSERT into table (fieldA, fieldB, fieldC, fieldD, fieldE)  output INSERTED.tableID VALUES (@fieldA, @fieldB, @fieldC, @fieldD, @fieldE)",
+                        fields,
+                        connection
+                    );
+                }
+
+                ts.Complete();
+            }
+            */
         }
 
         private void button3_Click(object sender, EventArgs e)
