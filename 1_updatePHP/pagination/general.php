@@ -43,8 +43,13 @@ class dbase{
     
 	function connect_sqlite() {
 		//if doesnt exist, will created.
-		$this->db = new PDO('sqlite:dbase.db');
-		//$dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+		//$this->db = new PDO('sqlite:dbase.db');
+		//$dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION ); //only for debug
+		
+		$this->db = new PDO('sqlite:dbase.db',null,null,array(
+			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+			PDO::ATTR_EMULATE_PREPARES => false,
+			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC));
 		
 		//check if table has records, if not create table
 		$d = $this->getScalar("select count(*) from users",null);
