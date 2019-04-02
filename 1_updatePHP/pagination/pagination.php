@@ -35,18 +35,17 @@ $limit = $_GET["limit"];
 $offset= $_GET["offset"];
 
 
+    
+//connect to database
+$conn = new dbase();
+$conn->connect_mysql();
+
+
 //used when user search for something
 $search = null;
 
 if (isset($_GET["search"]))
 	$search = $conn->escape_str($_GET["search"]);
-
-   
-    
-    
-//connect to database
-$conn = new dbase();
-$conn->connect_mysql();
 
 
 $sql="select question_id, categories.category_name as category_name,  questions.subcategory_id as subcategory_id, subcategories.subcategory_name as subcategory_name, languages.language_name as language_id, title, question, misc1, misc2, misc3, misc4, (date_rec + INTERVAL -:browsertime MINUTE) as date_rec from questions 
