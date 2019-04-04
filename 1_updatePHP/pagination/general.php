@@ -62,6 +62,31 @@ class dbase{
 			chmod("dbase.db", 0600);
 		}
 	}
+	
+	function connect_sqlserver() {
+		//you need to download https://github.com/Microsoft/msphpsql/releases
+		//using phpinfo() check if needs 'Thread Safe' or not, for TS :
+		//copy php_pdo_sqlsrv_73_ts.dll to php\ext
+		//then add to php.ini
+		//extension=pdo_sqlsrv_73_ts
+		//restart the server.
+		//
+		//refs :
+		//https://www.php.net/manual/en/intro.sqlsrv.php
+		//http://www.synet.sk/php/en/230-php-drivers-for-microsoft-sql-server-mssql-sqlsrv-utf8
+		
+		
+		$sql_servername = ".\sqlexpress";
+		$sql_user = "sa";
+		$sql_password = "123456";
+		$sql_database = "testDB"; 
+		 
+		 //specify port via "sqlsrv:Server=server.dyndns.biz,1433;Database=DBNAME";
+		 //https://stackoverflow.com/a/36212561
+		$this->db = new PDO("sqlsrv:server=$sql_servername;database=$sql_database", $sql_user, $sql_password, array(
+			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC));
+	}
     
     function getConnection(){
         return $this->db;
