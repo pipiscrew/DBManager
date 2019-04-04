@@ -75,6 +75,7 @@ class dbase{
 		//refs :
 		//https://www.php.net/manual/en/intro.sqlsrv.php
 		//http://www.synet.sk/php/en/230-php-drivers-for-microsoft-sql-server-mssql-sqlsrv-utf8
+		//https://docs.microsoft.com/en-us/sql/connect/php/system-requirements-for-the-php-sql-driver?view=sql-server-2017
 		
 		
 		$sql_servername = ".\sqlexpress";
