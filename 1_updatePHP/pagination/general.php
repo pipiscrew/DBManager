@@ -65,6 +65,7 @@ class dbase{
 	
 	function connect_sqlserver() {
 		//you need to download https://github.com/Microsoft/msphpsql/releases
+		//depend on your php version, you have to download the corresponding Windows-7.?.zip
 		//using phpinfo() check if needs 'Thread Safe' or not, for TS :
 		//copy php_pdo_sqlsrv_73_ts.dll to php\ext
 		//then add to php.ini
