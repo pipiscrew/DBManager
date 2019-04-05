@@ -87,6 +87,7 @@ class dbase{
 		 //https://stackoverflow.com/a/36212561
 		$this->db = new PDO("sqlsrv:server=$sql_servername;database=$sql_database", $sql_user, $sql_password, array(
 			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+			PDO::SQLSRV_ATTR_ENCODING => PDO::SQLSRV_ENCODING_UTF8,
 			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC));
 	}
     
