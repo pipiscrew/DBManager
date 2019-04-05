@@ -85,6 +85,7 @@ class dbase{
 		 
 		 //specify port via "sqlsrv:Server=server.dyndns.biz,1433;Database=DBNAME";
 		 //https://stackoverflow.com/a/36212561
+		 //attributes - https://docs.microsoft.com/en-us/sql/connect/php/pdo-setattribute?view=sql-server-2017
 		$this->db = new PDO("sqlsrv:server=$sql_servername;database=$sql_database", $sql_user, $sql_password, array(
 			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 			PDO::SQLSRV_ATTR_ENCODING => PDO::SQLSRV_ENCODING_UTF8,
