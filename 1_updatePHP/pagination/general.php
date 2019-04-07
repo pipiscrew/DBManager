@@ -72,6 +72,8 @@ class dbase{
 		//extension=pdo_sqlsrv_73_ts
 		//restart the server.
 		//
+		//requires ODBC driver -> https://www.microsoft.com/en-us/download/details.aspx?id=53339
+		//
 		//refs :
 		//https://www.php.net/manual/en/intro.sqlsrv.php
 		//http://www.synet.sk/php/en/230-php-drivers-for-microsoft-sql-server-mssql-sqlsrv-utf8
