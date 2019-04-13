@@ -33,7 +33,7 @@
 
 <br><br>
 
-version history:
+version history:<br>
 2019 - v2.4.0 (sqlserver tunnel support added)<br>
 2014 - v2.3.9
 
