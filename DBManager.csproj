@@ -41,7 +41,7 @@
       <HintPath>bin\Aga.Controls.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>bin\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.TextEditor">
       <HintPath>bin\ICSharpCode.TextEditor.dll</HintPath>
