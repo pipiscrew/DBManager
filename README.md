@@ -33,7 +33,11 @@
 
 <br><br>
 
-last update done at 2014.
+version history:
+2019 - v2.4.0 (sqlserver tunnel support added)
+2014 - v2.3.9
+
+
 <br><br>
 *known bug* – when creating a new connection doesn’t appear to connections, user has to restart the application!
 
