@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Threading;
+using System.Net;
 
 namespace DBManager
 {
@@ -22,6 +23,8 @@ namespace DBManager
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             //
 
+            ////enable HTTPS - avoid "The request was aborted: Could not create SSL/TLS secure channel" - https://stackoverflow.com/a/51346252
+            //ServicePointManager.SecurityProtocol = (SecurityProtocolType)(0xc0 | 0x300 | 0xc00);
 
             Application.Run(new MainForm());
         }

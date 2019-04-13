@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 if (!isset($_POST["sql"]) || !isset($_POST["p"])) {
 	echo json_encode("Error: no token1");
 	return;
@@ -12,18 +12,18 @@ try {
 	$x = _json_decode($_POST["sql"]);
 
 	/////////////////////////////////////////////////////////////////////////////////////
-	// 			SETUP MYSQL CONNECTION [START]
+	// 			SETUP SQLSERVER CONNECTION [START]
 	/////////////////////////////////////////////////////////////////////////////////////
-	$mysql_hostname = "x";
-	$mysql_user = "x";
-	$mysql_password = "x";
-	$mysql_database = "x";
+	$sql_servername = "x";
+	$sql_user = "x";
+	$sql_password = "x";
+	$sql_database = "x"; 
 		
-	//setup a connection with mySQL
-	$db = new PDO("mysql:host=$mysql_hostname;dbname=$mysql_database", $mysql_user, $mysql_password,
-	                    		array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-								PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
-								PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC));
+	//setup a connection with MSSQL - help https://github.com/pipiscrew/DBManager/blob/master/1_updatePHP/pagination/general.php
+	$db = new PDO("sqlsrv:server=$sql_servername;database=$sql_database", $sql_user, $sql_password, array(
+				PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+				PDO::SQLSRV_ATTR_ENCODING => PDO::SQLSRV_ENCODING_UTF8,
+				PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC));
 
 	/* check connection */
 	if (!$db) {
@@ -32,7 +32,7 @@ try {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-	// 			SETUP MYSQL CONNECTION [END]
+	// 			SETUP SQLSERVER CONNECTION [END]
 	/////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -41,9 +41,8 @@ try {
 		echo "true";
 		return;
 	} else if ($x -> q == 'dbschema') {
+		
 		header('Content-Type: application/json', true);
-
-		//echo json_encode(array('result' => dbschema($db)));
 		
 		$output = json_encode(array('result' => dbschema($db)));
 		
@@ -51,7 +50,7 @@ try {
 		
 		return;
 	}
-
+	
 	$find_sql = $x -> q;
 
 	$stmt      = $db->prepare($find_sql);
@@ -61,7 +60,7 @@ try {
 	if ($stmt->execute()) {
 		$affected =  $stmt->rowCount();
 
-		if ($affected > 0) {
+		if ($affected == -1) {
 			$resultSET = $stmt->fetchAll();
 			$affected =  $stmt->rowCount();
 		}
@@ -72,6 +71,7 @@ try {
 		return;
 	}
 
+	
 	//unicode
 	header("Content-Type: application/json", true);
 
@@ -82,10 +82,9 @@ try {
 		echo "Error: PHP json_last_error = " . json_last_error();
 		exit;
 	}
-	
+
 	send_to_client($output);
 	
-
 }
 catch (Exception $e) {
 	$returnVAR = "Error:"  . $e->getMessage(); 
@@ -113,32 +112,33 @@ function send_to_client($val)
 
 function dbschema($dbase){
 	
-	$stmt = $dbase->prepare("show tables");
+	$stmt = $dbase->prepare("SELECT sobjects.name FROM sysobjects sobjects WHERE sobjects.xtype = 'U' order by name");
 	$stmt->execute();
 	$tables = $stmt->fetchAll();
-	
+
 	$i = 0;
 	foreach($tables as $tbl) {
+	
 		//for each table, query the fields
-		$stmt = $dbase->prepare('SHOW COLUMNS FROM ' . current($tbl));
+		$stmt = $dbase->prepare('exec sp_Columns [' . $tbl['name'] .']');
+
 		$stmt->execute();
 		$fields = $stmt->fetchAll();
 		
 		//we dont need all the fields, construct a small array for each table field
 		$tbl_fields = array();
 		foreach($fields as $fld) {
-			$tbl_fields[] = array('Field' => $fld['Field'], 'Type' => $fld['Type'], 'Null' => $fld['Null'], 'Key' => $fld['Key'], 'Default' => $fld['Default'], 'Extra' => $fld['Extra']);
+			$tbl_fields[] = array('TYPE_NAME' => $fld['TYPE_NAME'], 'PRECISION' => $fld['PRECISION'], 'COLUMN_NAME' => $fld['COLUMN_NAME'], 'NULLABLE' => $fld['NULLABLE']);
 		}
 		
 		$tables[$i]['fields'] = $tbl_fields;
-		
+
 		$i+=1;
 	}
-	
+
 	return $tables;
-
 }
-
+	
 function _json_decode($string) {
 	if (get_magic_quotes_gpc()) {
 		$string = stripslashes($string);

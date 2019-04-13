@@ -38,21 +38,24 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Aga.Controls">
-      <HintPath>..\Aga.Controls.dll</HintPath>
+      <HintPath>bin\Aga.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.TextEditor">
-      <HintPath>..\ICSharpCode.TextEditor.dll</HintPath>
+      <HintPath>bin\ICSharpCode.TextEditor.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.JScript" />
     <Reference Include="MySql.Data">
-      <HintPath>..\MySql.Data.dll</HintPath>
+      <HintPath>bin\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="SQLite.NET">
-      <HintPath>..\SQLite.NET.dll</HintPath>
+      <HintPath>bin\SQLite.NET.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -79,6 +82,7 @@
     </Compile>
     <Compile Include="DBASES\ADOnet.cs" />
     <Compile Include="DBASES\ADOnetClass.cs" />
+    <Compile Include="DBASES\SQLServerTunnel.cs" />
     <Compile Include="DBASES\MySQLTunnel.cs" />
     <Compile Include="ErrorReporter.cs">
       <SubType>Form</SubType>
@@ -119,6 +123,12 @@
     </Compile>
     <Compile Include="frmJScustom.Designer.cs">
       <DependentUpon>frmJScustom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSQLServerTunnelServerConnection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSQLServerTunnelServerConnection.designer.cs">
+      <DependentUpon>frmSQLServerTunnelServerConnection.cs</DependentUpon>
     </Compile>
     <Compile Include="frmMySQLTunnelServerConnection.cs">
       <SubType>Form</SubType>
@@ -267,6 +277,9 @@
     <EmbeddedResource Include="frmMySQLServerConnection.resx">
       <DependentUpon>frmMySQLServerConnection.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmSQLServerTunnelServerConnection.resx">
+      <DependentUpon>frmSQLServerTunnelServerConnection.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMySQLTunnelServerConnection.resx">
       <DependentUpon>frmMySQLTunnelServerConnection.cs</DependentUpon>
     </EmbeddedResource>
@@ -355,6 +368,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="data.ico" />
+    <None Include="Resources\tunnelPHP_PDO_SQLServer.txt" />
     <None Include="Resources\tunnelPHP_PDO.txt" />
     <None Include="Resources\CRUDtemplate_save_dtptime_validation1.txt" />
     <None Include="Resources\CRUDtemplate_Control_DTPtime_init1.txt" />

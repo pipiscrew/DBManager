@@ -80,12 +80,12 @@ namespace DBManager
                 }
 
 
+              
 
                 TR.Model = General.DB.GetSchemaModel();
 
                 if (General.DB != null)
                 {
-
                     lst.Items.Clear();
                     ListViewItem[] procs = General.DB.GetProcedures();
 
@@ -250,6 +250,12 @@ namespace DBManager
                     ts.Text = item.filename;
                     toolStripMDB.DropDownItems.Add(ts);
                     ts.Click += new System.EventHandler(MDBConnect_Clicked);
+                }
+                else if ((General.dbTypes)item.TYPE == General.dbTypes.SQLSERVERtunnel)
+                {
+                    ts.Text = item.serverName + " " + item.dbaseName;
+                    toolStripSQLServerTunnel.DropDownItems.Add(ts);
+                    ts.Click += new System.EventHandler(SQLServerTunnelConnect_Clicked);
                 }
 
                 i += 1;
@@ -447,6 +453,43 @@ namespace DBManager
                 ToolStripMenuItem tmp = (sender as ToolStripMenuItem);
                 General.activeConnection = (int)tmp.Tag;
                 General.DB = new MySQLTunnel(General.activeConnection, imageList1);
+
+                Connect(false);
+
+
+                ////General.DB = new MySQL((int)tmp.Tag, imageList1);
+
+                ////General.Mes(General.DB.Connect(), MessageBoxIcon.Exclamation); //IF ERROR occured in class
+
+                ////TR.Model = General.DB.GetSchemaModel();
+            }
+            catch (Exception ex)
+            {
+                General.Mes(ex.Message);
+            }
+        }
+
+
+        private void SQLServerTunnelConnect_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                clearCTLS();
+
+                try
+                {
+                    if (General.DB != null)
+                    {
+                        General.DB.Disconnect();
+                        General.DB = null;
+                    }
+                }
+                catch { }
+
+
+                ToolStripMenuItem tmp = (sender as ToolStripMenuItem);
+                General.activeConnection = (int)tmp.Tag;
+                General.DB = new SQLServerTunnel(General.activeConnection, imageList1);
 
                 Connect(false);
 
@@ -2212,41 +2255,18 @@ namespace DBManager
 
         }
 
+        private void toolStripSQLServerTunnel_Click(object sender, EventArgs e)
+        {
+            frmSQLServerTunnelServerConnection frmS = new frmSQLServerTunnelServerConnection();
+            DialogResult s = frmS.ShowDialog();
+            frmS.Dispose();
 
+            if (s == System.Windows.Forms.DialogResult.OK)
+            {
+                General.DB = new SQLServerTunnel(General.Connections.Count - 1, imageList1);
 
-        //private void toolStripMenuItem3_Click(object sender, EventArgs e)
-        //{
-        //    List<treeItem2> tables = new List<treeItem2>();
-        //    treeItem2 table = null;
-        //    //treeItem2fields f = null;
-
-        //    bool add_field = false;
-        //    //TreeModel x = (TreeModel)TR.Model;
-        //    treeItem x=null;
-            
-        //    foreach (var node in TR.SelectedNode.Children)
-        //    {
-        //        table = new treeItem2((TR.SelectedNode.Tag as treeItem).nodeText);
-
-        //        x = (treeItem)TR.SelectedNode.Tag;
-
-        //        if (x.nodeCheck)
-        //        {
-        //            add_field = true;
-        //            table.table_fields.Add(new treeItem2fields(x.nodeText, x.fieldType, x.fieldSize, x.imageIndex == 2 ? true : false, x.allowNull));
-        //        }
-        //    }
-
-        //    if (add_field)
-        //     tables.Add(table);
-
-        //}
-
-
-
-
-
-
-
+                Connect(true);
+            }
+        }
     }
 }

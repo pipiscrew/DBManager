@@ -11,18 +11,18 @@ using System.Net;
 
 namespace DBManager
 {
-    public partial class frmMySQLTunnelServerConnection : BlueForm
+    public partial class frmSQLServerTunnelServerConnection : BlueForm
     {
         private bool importSchema;
         private List<string> tbls;
-        MySQLTunnel c = null;
+        SQLServerTunnel c = null;
 
-        public frmMySQLTunnelServerConnection()
+        public frmSQLServerTunnelServerConnection()
         {
             InitializeComponent();
         }
 
-        public frmMySQLTunnelServerConnection(bool importSchema, List<string> tbls)
+        public frmSQLServerTunnelServerConnection(bool importSchema, List<string> tbls)
         {
             InitializeComponent();
 
@@ -53,8 +53,8 @@ namespace DBManager
 
                 if (!txtURL.Text.ToLower().StartsWith("https"))
                 {
-                   if ( MessageBox.Show("Server must be https enabled, are you sure you want to continue ?", General.apTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) ==System.Windows.Forms.DialogResult.No)
-                    return;
+                    if (MessageBox.Show("Server must be https enabled, are you sure you want to continue ?", General.apTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == System.Windows.Forms.DialogResult.No)
+                        return;
                 }
             }
 
@@ -66,10 +66,9 @@ namespace DBManager
 
 
             Cursor = System.Windows.Forms.Cursors.WaitCursor;
-            //MySqlConnection objConn = null;
-            //bool errorOccured = false;
-            c = new MySQLTunnel();
-            c.isConnected += new MySQLTunnel.IsConnected(c_isConnected);
+
+            c = new SQLServerTunnel();
+            c.isConnected += new SQLServerTunnel.IsConnected(c_isConnected);
             try
             {
                 Cursor = System.Windows.Forms.Cursors.WaitCursor;
@@ -80,19 +79,16 @@ namespace DBManager
             catch (Exception ex)
             {
                 General.Mes(ex.Message);
-              
+
             }
             finally
             {
-                Cursor = System.Windows.Forms.Cursors.Default;
             }
-
-
         }
 
 
-        delegate void c_isConnectedCallback(bool isSuccess);
-        void c_isConnected(bool isSuccess)
+        delegate void c_isConnectedCallback(string isSuccess);
+        void c_isConnected(string isSuccess)
         {
             if (txtURL.InvokeRequired)
             {
@@ -102,7 +98,7 @@ namespace DBManager
 
             Cursor = System.Windows.Forms.Cursors.Default;
 
-            if (isSuccess)
+            if (isSuccess == "ok")
             {
                 General.Connections.Add(new dbConnection
                 {
@@ -111,7 +107,7 @@ namespace DBManager
                     password = txtPassword.Text,
                     port = "",
                     serverName = txtURL.Text,
-                    TYPE = (int)General.dbTypes.MySQLtunnel,
+                    TYPE = (int)General.dbTypes.SQLSERVERtunnel,
                     user = ""
                 });
 
@@ -120,19 +116,13 @@ namespace DBManager
 
             }
             else
-                General.Mes("Could not connect!");
+                General.Mes("Could not connect! due : " + isSuccess);
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            MessageBox.Show("mysqli script is broken, due new method of exchange (server -> client), use v2.3.9 instead.");
-            frmInformation i = new frmInformation(DBManager.Properties.Resources.tunnelPHP);
-            i.ShowDialog();
-        }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            frmInformation i = new frmInformation(DBManager.Properties.Resources.tunnelPHP_PDO);
+            frmInformation i = new frmInformation(DBManager.Properties.Resources.tunnelPHP_PDO_SQLServer);
             i.ShowDialog();
         }
     }

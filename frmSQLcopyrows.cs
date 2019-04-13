@@ -225,7 +225,6 @@ namespace DBManager
             else
             {
                 if (chkMYSQLtunnelBATCH.Checked)
-
                     result = WaitWindow.Show(mySQLtunnel_CopyRowsBATCH, "Init...", INSsql, sourceDT, sourceFields, destFields, cmbTO.Text, destDBtype);
                 else
                     result = WaitWindow.Show(mySQLtunnel_CopyRows, "Init...", INSsql, sourceDT, sourceFields, destFields, cmbTO.Text, destDBtype);
@@ -762,6 +761,8 @@ namespace DBManager
                     btnHelp.Visible = true;
                     btnHelp.Tag = DBManager.Properties.Resources.helpEXCEL;
                 }
+                else if ((General.dbTypes)General.Connections[cmbSourceServer.SelectedIndex].TYPE == General.dbTypes.SQLSERVERtunnel)
+                    sourceDB = new SQLServerTunnel(cmbSourceServer.SelectedIndex, null);
 
                 //   sourceDB.Connect();
 

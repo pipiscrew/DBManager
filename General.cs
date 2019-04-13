@@ -11,10 +11,15 @@ using System.Reflection;
 using System.Data;
 using System.Data.OleDb;
 using System.Web.Script.Serialization;
+using System.IO.Compression;
+using ICSharpCode.SharpZipLib.GZip;
+using System.Net;
+using System.Collections.Specialized;
+using ICSharpCode.SharpZipLib.BZip2;
 
 namespace DBManager
 {
-   public static class General
+    public static class General
     {
         public static string apTitle = "PipisCrew.DBManager v" + Application.ProductVersion;
 
@@ -28,6 +33,7 @@ namespace DBManager
             SQLite = 0x03,
             MySQL = 0x04,
             MySQLtunnel = 0x05,
+            SQLSERVERtunnel = 0x06,
         }
 
         public static List<dbConnection> Connections;
@@ -91,7 +97,7 @@ namespace DBManager
             }
             catch
             {
-                return false; 
+                return false;
             }
         }
 
@@ -187,7 +193,7 @@ namespace DBManager
             return char.ToUpper(s[0]) + s.Substring(1);
         }
 
-        #endregion 
+        #endregion
 
         public static string SafeJSON(string sIn)
         {
@@ -233,5 +239,62 @@ namespace DBManager
                 return "";
             }
         }
+
+        public static string Base64Encode(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
+        }
+
+        public static string Base64Decode(string base64EncodedData)
+        {
+            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+        }
+
+
+        public static string DecompressStringBZIP(string compressedText)
+              {
+                  //src - http://community.sharpdevelop.net/forums/t/11005.aspx
+                  Byte[] bytes = Convert.FromBase64String(compressedText);
+                  MemoryStream memStream = new MemoryStream(bytes);
+                  BZip2InputStream gzipStream = new BZip2InputStream(memStream);
+                  byte[] data = new byte[2048];
+                  char[] chars = new char[2048]; // must be at least as big as 'data'
+                  Decoder decoder = Encoding.UTF8.GetDecoder();
+                  StringBuilder sb = new StringBuilder();
+
+                  while (true)
+                  {
+                      int size = gzipStream.Read(data, 0, data.Length);
+                      if (size == 0)
+                          break;
+                      int n = decoder.GetChars(data, 0, size, chars, 0);
+                      sb.Append(chars, 0, n);
+                  }
+                  return sb.ToString();
+
+        }
+
+        public static string DecompressStringGZIP(string compressedText)
+        {
+            // src - https://stackoverflow.com/a/4080983
+            byte[] gZipBuffer = Convert.FromBase64String(compressedText); 
+
+            using (var mem = new MemoryStream())
+            {
+                mem.Write(new byte[] { 0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00 }, 0, 8);
+                mem.Write(gZipBuffer, 0, gZipBuffer.Length);
+
+                mem.Position = 0;
+
+                using (var gzip = new GZipStream(mem, CompressionMode.Decompress))
+                using (var reader = new StreamReader(gzip))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+        }
+
     }
 }

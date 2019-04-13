@@ -15,16 +15,16 @@ using System.Collections.Specialized;
 
 namespace DBManager.DBASES
 {
-    class MySQLTunnel : IdbType
+    class SQLServerTunnel : IdbType
     {
-        public delegate void IsConnected(bool isSuccess);
+        public delegate void IsConnected(string isSuccess);
         public event IsConnected isConnected;
 
         internal TreeModel TRmodel;
         internal ImageList imageList;
         internal int ConnIndex = 0;
 
-        public MySQLTunnel(int index, ImageList imageList)
+        public SQLServerTunnel(int index, ImageList imageList)
         {
             ConnIndex = index;
 
@@ -34,15 +34,11 @@ namespace DBManager.DBASES
                 ServicePointManager.SecurityProtocol = (SecurityProtocolType)(0xc0 | 0x300 | 0xc00);
             else
                 ServicePointManager.SecurityProtocol = (SecurityProtocolType)(48 | 192);
-  
-
-          
 
             this.imageList = imageList;
         }
 
-        public MySQLTunnel() { }
-
+        public SQLServerTunnel() { }
 
         public string ReadServer_and_Unwrap(string sql)
         {
@@ -61,16 +57,40 @@ namespace DBManager.DBASES
         public string GetString(string sql)
         {
             return ReadServer_and_Unwrap(General.SafeJSON(sql));
-            //using (var wb = new WebClient())
-            //{
-            //    var parameters = new NameValueCollection();
-            //    parameters["sql"] = "{\"q\": \"" + General.SafeJSON(sql) + "\"}";
-            //    parameters["p"] = General.Connections[ConnIndex].password;
 
-            //    var response = wb.UploadValues(General.Connections[ConnIndex].serverName, "POST", parameters);
-            //    return Encoding.UTF8.GetString(response);
-            //}
+        }
 
+
+        private string unwrap(string server_resp)
+        {
+            if (string.IsNullOrEmpty(server_resp))
+                return null;
+
+            if (server_resp.StartsWith("Error:"))
+            {
+                return server_resp;
+            }
+
+            JObject JData = JObject.Parse(server_resp);
+
+            if (JData == null)
+                return null;
+
+            if (JData["data"] == null)
+                return null;
+
+            if (JData["compression"] == null)
+                return null;
+
+            string output = "";
+            if (JData["compression"].ToString() == "bzip")
+                output = General.DecompressStringBZIP(JData["data"].ToString());
+            else if (JData["compression"].ToString() == "gzip")
+                output = General.DecompressStringGZIP(JData["data"].ToString());
+            else if (JData["compression"].ToString() == "none")
+                output = General.Base64Decode(JData["data"].ToString());
+
+            return output;
         }
 
         private DataTable parseJSON(string JSON, out string rowsaffected, out string err)
@@ -88,15 +108,15 @@ namespace DBManager.DBASES
             if (JData == null)
                 return null;
 
-            if (JData["result"] == null )
+            if (JData["result"] == null)
                 return null;
 
             if (JData["affected"] != null)
                 rowsaffected = JData["affected"].ToString();
-            
 
-            DataTable TBL=null;
-            DataColumn col=null;
+
+            DataTable TBL = null;
+            DataColumn col = null;
             DataRow TableRows;
             bool firstPass = true;
             foreach (var d in JData["result"])
@@ -108,51 +128,35 @@ namespace DBManager.DBASES
                 if (firstPass)
                 {
                     TBL = new DataTable("TBL");
-                    foreach(KeyValuePair<string,object> kvp in tmp)
+                    foreach (KeyValuePair<string, object> kvp in tmp)
                     {
-                            
-                            col = new DataColumn(kvp.Key.ToString(), Type.GetType("System.String"));
-                            TBL.Columns.Add(col);
-                            
-                        }
+
+                        col = new DataColumn(kvp.Key.ToString(), Type.GetType("System.String"));
+                        TBL.Columns.Add(col);
+
+                    }
                     TBL.AcceptChanges();
-                   
+
                     firstPass = false;
-                 }
+                }
 
                 TableRows = TBL.NewRow();
                 //add the rows!
                 foreach (KeyValuePair<string, object> kvp in tmp)
                 {
-                    
+
                     TableRows[kvp.Key.ToString()] = kvp.Value;
-                    
+
                 }
 
                 TBL.Rows.Add(TableRows);
-            
+
             }
 
-            //Console.WriteLine(TBL.Rows.Count.ToString());
             return TBL;
-            //Parse2(JData["result"].ToString());
-            //return null;
-            //foreach (var x in JData)
-            //{
-            //    string name = x.Key;
-            //    JToken value = x.Value;
-
-            //    //Console.WriteLine(name + " - " + value);
-
-            //    foreach (var d in value)
-            //    {
-            //        //Console.WriteLine(d);
-            //        Parse2(d.ToString());
-            //    }
-            //}
         }
 
-        public Dictionary<string, object> Parse2(string array, bool internCALL=false)
+        public Dictionary<string, object> Parse2(string array, bool internCALL = false)
         {
             Dictionary<string, object> result = new Dictionary<string, object>();
 
@@ -173,7 +177,7 @@ namespace DBManager.DBASES
             return result;
         }
 
-        public void testConnection(string url,string password)
+        public void testConnection(string url, string password)
         {
             using (var wb = new WebClient())
             {
@@ -187,13 +191,13 @@ namespace DBManager.DBASES
                 if (isConnected != null)
                 {
                     if (k != "true")
-                        isConnected(false);
+                        isConnected(k);
                     else
-                        isConnected(true);
+                        isConnected("ok");
 
                 }
                 else
-                    isConnected(false);
+                    isConnected(k);
             }
 
         }
@@ -206,7 +210,7 @@ namespace DBManager.DBASES
 
         public void Disconnect()
         {
-           
+
         }
 
         public string parseProcedure(string procName, bool replaceCreate)
@@ -222,24 +226,7 @@ namespace DBManager.DBASES
 
         public ListViewItem[] GetProcedures()
         {
-        
-            string k = GetString("SHOW PROCEDURE STATUS");
-            string affected,errorRESP="";
-            DataTable dT = parseJSON(k, out affected, out errorRESP);
-
-            if (dT == null)
-                return null;
-
-            ListViewItem[] procs = new ListViewItem[dT.Rows.Count];
-
-            for (int i = 0; i < dT.Rows.Count; i++)
-            {
-                procs[i] = new ListViewItem();
-                procs[i].Text = dT.Rows[i]["Name"].ToString();
-                procs[i].SubItems.Add(dT.Rows[i]["Modified"].ToString());
-            }
-
-            return procs;
+            return null;
         }
 
         public Aga.Controls.Tree.TreeModel GetSchemaModel()
@@ -265,14 +252,17 @@ namespace DBManager.DBASES
                 //    return null;
 
                 //GET ALL TABLES
-                string k = (GetString("dbschema"));
-                string errorRESP,affected = "";
+                //string k =  GetString("SELECT sobjects.name FROM sysobjects sobjects WHERE sobjects.xtype = 'U' order by name");
+                string k = GetString("dbschema");
+                string errorRESP, affected = "";
                 //Console.WriteLine(k);
-                t = parseJSON(k, out affected,out errorRESP);
+                t = parseJSON(k, out affected, out errorRESP);
                 //t = Connection.GetDATATABLE("show tables");
 
                 if (t == null)
                     return null;
+
+
 
                 //FOR EACH TABLE
                 foreach (DataRow item in t.Rows)
@@ -292,31 +282,18 @@ namespace DBManager.DBASES
                     //FOR EACH COLUMN
                     foreach (DataRow colItem in cols.Rows)
                     {
-                        fieldDelim = colItem["TYPE"].ToString().IndexOf("(");
-                        fieldDelimE = colItem["TYPE"].ToString().IndexOf(")");
 
-                        if (fieldDelim > -1 && fieldDelimE > fieldDelim)
-                        {
+                        fieldType = colItem["TYPE_NAME"].ToString();
+                        fieldSize = colItem["PRECISION"].ToString(); ;
 
-                            fieldType = colItem["TYPE"].ToString().Substring(0, fieldDelim);
-                            fieldDelim += 1;
-                            fieldSize = colItem["TYPE"].ToString().Substring(fieldDelim, fieldDelimE - fieldDelim); //colItem["TYPE"].ToString().Length - (fieldDelim + 2));
-                        }
-                        else
-                        {
-                            fieldType = colItem["TYPE"].ToString();
-                            fieldSize = "";
-                        }
-
-
-                        if (colItem["Key"].ToString().ToUpper() == "PRI")
-                        {
-                            table.Nodes.Add(new treeItem(colItem["Field"].ToString(), fieldType, fieldSize, colItem["Null"].ToString().Length > 2 ? true : false, false, ConvertMySQL2fieldType(fieldType), 2, imageList));
-                        }
-                        else if (colItem["Key"].ToString().ToUpper() == "MUL")
-                            table.Nodes.Add(new treeItem(colItem["Field"].ToString(), fieldType, fieldSize, colItem["Null"].ToString().Length > 2 ? true : false, false, ConvertMySQL2fieldType(fieldType), 3, imageList));
-                        else
-                            table.Nodes.Add(new treeItem(colItem["Field"].ToString(), fieldType, fieldSize, colItem["Null"].ToString().Length > 2 ? true : false, false, ConvertMySQL2fieldType(fieldType), 1, imageList));
+                        //if (colItem["Key"].ToString().ToUpper() == "PRI")
+                        //{
+                        //    table.Nodes.Add(new treeItem(colItem["Field"].ToString(), fieldType, fieldSize, colItem["Null"].ToString().Length > 2 ? true : false, false, ConvertMySQL2fieldType(fieldType), 2, imageList));
+                        //}
+                        //else if (colItem["Key"].ToString().ToUpper() == "MUL")
+                        //    table.Nodes.Add(new treeItem(colItem["Field"].ToString(), fieldType, fieldSize, colItem["Null"].ToString().Length > 2 ? true : false, false, ConvertMySQL2fieldType(fieldType), 3, imageList));
+                        //else
+                        table.Nodes.Add(new treeItem(colItem["COLUMN_NAME"].ToString(), fieldType, fieldSize, colItem["NULLABLE"].ToString() == "0" ? false : true, false, ConvertMySQL2fieldType(fieldType), 1, imageList));
                     }
 
                     //ADD TABLE INFO TO TREE
@@ -426,37 +403,6 @@ namespace DBManager.DBASES
             }
         }
 
-        private string unwrap(string server_resp)
-        {
-            if ( string.IsNullOrEmpty(server_resp))
-                return null;
-
-            if (server_resp.StartsWith("Error:"))
-            {
-                return null;
-            }
-
-            JObject JData = JObject.Parse(server_resp);
-
-            if (JData == null)
-                return null;
-
-            if (JData["data"] == null )
-                return null;
-
-            if (JData["compression"] == null)
-                return null;
-
-            string output="" ;
-            if (JData["compression"].ToString() == "bzip")
-                output = General.DecompressStringBZIP(JData["data"].ToString());
-            else if (JData["compression"].ToString() == "gzip")
-                output = General.DecompressStringGZIP(JData["data"].ToString());
-            else if (JData["compression"].ToString() == "none")
-                output = General.Base64Decode( JData["data"].ToString());
-
-            return output;
-        }
 
         public System.Data.DataTable ExecuteSQL(string sSQL, out string rowsAffected, out string error)
         {
@@ -465,7 +411,7 @@ namespace DBManager.DBASES
 
             rowsAffected = "";
             error = "";
-            
+
 
             try
             {
@@ -486,8 +432,8 @@ namespace DBManager.DBASES
                 string affected = "";
 
                 dataSet = parseJSON(k, out affected, out errorRESP);
-                
-                error=errorRESP;
+
+                error = errorRESP;
                 rowsAffected = affected;
 
                 return dataSet;
@@ -517,15 +463,15 @@ namespace DBManager.DBASES
 
         public string GenerateSelect100(string table)
         {
-            return "SELECT * FROM " + table + " LIMIT 100";
+            return "SELECT TOP 100 * FROM [" + table + "]";
         }
 
 
         public string ExecuteScalar(string SQL)
         {
-            string tmp="";
-            string err="";
-            DataTable dT= ExecuteSQL(SQL,out  tmp, out err);
+            string tmp = "";
+            string err = "";
+            DataTable dT = ExecuteSQL(SQL, out tmp, out err);
 
             if (dT != null && dT.Rows.Count > 0)
                 return dT.Rows[0][0].ToString();
@@ -608,7 +554,7 @@ namespace DBManager.DBASES
 
                     if (item.item2.ToLower().Contains("varchar") || item.item2.ToLower().Contains("nvarchar") || item.item2.ToLower().Contains("text"))
                         procParams += "IN `" + item.item1.ToLower() + "VAR` " + item.item2 + "  CHARSET utf8,";
-                    else 
+                    else
                         procParams += "IN `" + item.item1.ToLower() + "VAR` " + item.item2 + ",";
                     // CHARSET utf8
                 }
@@ -676,7 +622,7 @@ namespace DBManager.DBASES
 
             for (int i = 0; i < dT.Rows.Count; i++)
             {
-                tbls.Add( dT.Rows[i][0].ToString());
+                tbls.Add(dT.Rows[i][0].ToString());
 
             }
 
@@ -712,7 +658,7 @@ namespace DBManager.DBASES
 
         public string GenerateLast100(string table, string ID)
         {
-            return "SELECT * FROM " + table + " ORDER BY " + ID + " DESC LIMIT 100";
+            return "SELECT TOP 100 * FROM [" + table + "] ORDER BY " + ID + " DESC";
         }
 
 
@@ -744,7 +690,7 @@ namespace DBManager.DBASES
         {
             string tmp = "";
             string err = "";
-            DataTable dT = ExecuteSQL(q, out  tmp, out err);
+            DataTable dT = ExecuteSQL(q, out tmp, out err);
 
             if (dT != null && dT.Rows.Count > 0)
                 return dT;
