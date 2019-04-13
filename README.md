@@ -9,7 +9,7 @@
 <br><br>
 
 
-##Databases supported :
+# Databases supported :
 
  * SQL Server 2000 -2005-2008-2010-2012 + Azure!
  * Access 97-2012 (mdb/accdb)
@@ -17,13 +17,13 @@
  * SQLite v2.x – 3.x
  * MySQL v3.23 – v5.7.4
 
-##Tunnels supported :
+# Tunnels supported :
 
  * SQL Server 2000 -2005-2008-2010-2012 + Azure! (v2.40 datecode 20190413)
  * MySQL v3.23 – v5.7.4
 
 
-##features :
+# features :
 
  * CSharp Code Generation + Controls Generation
  * PHP / MySQL / Bootstrap / Login + Portal pages
@@ -39,7 +39,7 @@ last update done at 2014.
 
 <br><br>
 
-##This project uses the following 3rd-party dependencies :<br>
+# This project uses the following 3rd-party dependencies :<br>
 -[Aga.Controls.dll](https://sourceforge.net/projects/treeviewadv/)<br>
 -[ICSharpCode.TextEditor.dll](http://www.icsharpcode.net/)<br>
 -[MySql.Data.dll](https://dev.mysql.com)<br>
