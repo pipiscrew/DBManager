@@ -313,42 +313,42 @@
             // toolStripNewSQLSERVER
             // 
             this.toolStripNewSQLSERVER.Name = "toolStripNewSQLSERVER";
-            this.toolStripNewSQLSERVER.Size = new System.Drawing.Size(180, 22);
+            this.toolStripNewSQLSERVER.Size = new System.Drawing.Size(170, 22);
             this.toolStripNewSQLSERVER.Text = "SQL Server";
             this.toolStripNewSQLSERVER.Click += new System.EventHandler(this.toolStripNewSQLSERVER_Click);
             // 
             // toolStripMDB
             // 
             this.toolStripMDB.Name = "toolStripMDB";
-            this.toolStripMDB.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMDB.Size = new System.Drawing.Size(170, 22);
             this.toolStripMDB.Text = "Access";
             this.toolStripMDB.Click += new System.EventHandler(this.toolStripMDB_Click);
             // 
             // toolStripSQLITE
             // 
             this.toolStripSQLITE.Name = "toolStripSQLITE";
-            this.toolStripSQLITE.Size = new System.Drawing.Size(180, 22);
+            this.toolStripSQLITE.Size = new System.Drawing.Size(170, 22);
             this.toolStripSQLITE.Text = "SQLite";
             this.toolStripSQLITE.Click += new System.EventHandler(this.toolStripSQLITE_Click);
             // 
             // toolStripMYSQL
             // 
             this.toolStripMYSQL.Name = "toolStripMYSQL";
-            this.toolStripMYSQL.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMYSQL.Size = new System.Drawing.Size(170, 22);
             this.toolStripMYSQL.Text = "MySQL";
             this.toolStripMYSQL.Click += new System.EventHandler(this.toolStripMYSQL_Click);
             // 
             // toolStripMYSQLTunnel
             // 
             this.toolStripMYSQLTunnel.Name = "toolStripMYSQLTunnel";
-            this.toolStripMYSQLTunnel.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMYSQLTunnel.Size = new System.Drawing.Size(170, 22);
             this.toolStripMYSQLTunnel.Text = "MySQL Tunnel";
             this.toolStripMYSQLTunnel.Click += new System.EventHandler(this.toolStripMYSQLTunnel_Click);
             // 
             // toolStripSQLServerTunnel
             // 
             this.toolStripSQLServerTunnel.Name = "toolStripSQLServerTunnel";
-            this.toolStripSQLServerTunnel.Size = new System.Drawing.Size(180, 22);
+            this.toolStripSQLServerTunnel.Size = new System.Drawing.Size(170, 22);
             this.toolStripSQLServerTunnel.Text = "SQL Server Tunnel";
             this.toolStripSQLServerTunnel.Click += new System.EventHandler(this.toolStripSQLServerTunnel_Click);
             // 
@@ -423,6 +423,7 @@
             this.DG.Size = new System.Drawing.Size(590, 184);
             this.DG.TabIndex = 4;
             this.DG.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DG_CellMouseDoubleClick);
+            this.DG.ColumnAdded += new System.Windows.Forms.DataGridViewColumnEventHandler(this.DG_ColumnAdded);
             this.DG.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DG_DataError);
             this.DG.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DG_MouseClick);
             // 

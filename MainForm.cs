@@ -2268,5 +2268,11 @@ namespace DBManager
                 Connect(true);
             }
         }
+
+        private void DG_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
+        {
+            //https://stackoverflow.com/a/32105983/1320686 - fixes "Sum of the columns' FillWeight values cannot exceed 65535"
+            e.Column.FillWeight = 10; 
+        }
     }
 }
