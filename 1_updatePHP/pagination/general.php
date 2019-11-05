@@ -51,6 +51,9 @@ class dbase{
 			PDO::ATTR_EMULATE_PREPARES => false,
 			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC));
 		
+		//if dbase has FK, enable it
+		$this->executeSQL('PRAGMA foreign_keys = ON', NULL);
+		
 		//check if table has records, if not create table
 		$d = $this->getScalar("select count(*) from users",null);
 		if ($d==0)
