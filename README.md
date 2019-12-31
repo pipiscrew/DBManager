@@ -1,3 +1,6 @@
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/pipiscrew/DBManager.svg)](https://github.com/pipiscrew/DBManager/releases)
+[![GitHub All Releases](https://img.shields.io/github/downloads/pipiscrew/DBManager/total.svg)](https://github.com/pipiscrew/DBManager/releases)
+
 # DBManager
 
 ![alt text](http://www.pipiscrew.com/wp-content/uploads/2014/08/snap852.png "Screenshot")
