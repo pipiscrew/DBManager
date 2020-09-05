@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 
 public static class Extensions    
@@ -100,6 +101,44 @@ public static class Extensions
 	}
 	
 
+        #region " GenericToDataTable "
+        //https://stackoverflow.com/a/45138154
+		
+        public static DataTable ConvertTo<T>(this IList<T> lst)
+        {
+            DataTable tbl = CreateTable<T>();
+            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
+            foreach (T item in lst)
+            {
+                DataRow row = tbl.NewRow();
+                foreach (PropertyDescriptor prop in properties)
+                {
+                    if (!prop.PropertyType.IsGenericType || !(prop.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>)))
+                    {
+                        row[prop.Name] = prop.GetValue(item);
+                    }
+                }
+                tbl.Rows.Add(row);
+            }
+            return tbl;
+        }
+
+        private static DataTable CreateTable<T>()
+        {
+            Type expr_0A = typeof(T);
+            DataTable tbl = new DataTable(expr_0A.Name);
+            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(expr_0A))
+            {
+                if (!prop.PropertyType.IsGenericType || !(prop.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>)))
+                {
+                    tbl.Columns.Add(prop.Name, prop.PropertyType);
+                }
+            }
+            return tbl;
+        }
+
+        #endregion
+		
 	public static T ToEnum<T>(this object value)
 	{
 		return (T)((object)Enum.Parse(typeof(T), value.ToString(), true));
