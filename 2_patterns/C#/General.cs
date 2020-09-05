@@ -193,7 +193,18 @@ static class General
 		 */
 	}
 
+        public static string ExtractHtmlInnerText(string htmlText)
+        {
+            //Match any Html tag (opening or closing tags) 
+            // followed by any successive whitespaces
+            //consider the Html text as a single line
 
+            Regex regex = new Regex("(<.*?>\\s*)+", RegexOptions.Singleline);
+
+            string resultText = regex.Replace(htmlText, " ").Trim();
+
+            return resultText;
+        }
 
 	/*  Knowledge Base
 		Cursor = System.Windows.Forms.Cursors.WaitCursor;
