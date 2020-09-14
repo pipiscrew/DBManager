@@ -156,4 +156,17 @@ public static class Extensions
 
 		return string.IsNullOrEmpty(value.ToString());
 	}
+	
+        public static string JSONSerialize<T>(T obj)
+        { //https://stackoverflow.com/a/35452673
+            string retVal = String.Empty;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                DataContractJsonSerializer serializer = new DataContractJsonSerializer(obj.GetType());
+                serializer.WriteObject(ms, obj);
+                var byteArray = ms.ToArray();
+                retVal = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
+            }
+            return retVal;
+        }
 }
