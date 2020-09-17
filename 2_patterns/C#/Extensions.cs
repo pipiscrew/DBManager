@@ -201,4 +201,14 @@ public static class Extensions
 
 		return result;
 	}
+	
+	public static T DeepCopy<T>(this T source)
+	{ //https://stackoverflow.com/a/40017705 w/ Newtonsoft.Json.dll, you can achieve the same w/o.
+		return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(source));
+	}
+
+	public static IList<T> Clone<T>(this IList<T> listToClone) where T: ICloneable
+	{ //https://stackoverflow.com/a/222640
+		return listToClone.Select(item => (T)item.Clone()).ToList();
+	}
 }
