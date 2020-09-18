@@ -218,6 +218,8 @@ public static class Extensions
 			}
 
 			then use x.ToList().Clone(); will return an IList<T>
+			
+			more https://www.pipiscrew.com/2020/09/linq-clone-common-linq-mistakes/
 		*/
 	}
 }
