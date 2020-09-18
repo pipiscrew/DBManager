@@ -210,5 +210,14 @@ public static class Extensions
 	public static IList<T> Clone<T>(this IList<T> listToClone) where T: ICloneable
 	{ //https://stackoverflow.com/a/222640
 		return listToClone.Select(item => (T)item.Clone()).ToList();
+		/*
+			The class must implementing  : ICloneable
+			public object Clone()
+			{ //https://docs.microsoft.com/en-us/dotnet/api/system.object.memberwiseclone
+				return this.MemberwiseClone();
+			}
+
+			then use x.ToList().Clone(); will return an IList<T>
+		*/
 	}
 }
