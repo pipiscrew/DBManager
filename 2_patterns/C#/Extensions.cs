@@ -222,4 +222,16 @@ public static class Extensions
 			more https://www.pipiscrew.com/2020/09/linq-clone-common-linq-mistakes/
 		*/
 	}
+	
+        public static T Convert<T>(this string input)
+        {   //https://stackoverflow.com/a/26135533
+            //System.Int32, System.Boolean, System.DateTime
+            var converter = TypeDescriptor.GetConverter(typeof(T));
+            if (converter != null)
+            {
+                //Cast ConvertFromString(string text) : object to (T)
+                return (T)converter.ConvertFromString(input);
+            }
+            return default(T);
+        }
 }
