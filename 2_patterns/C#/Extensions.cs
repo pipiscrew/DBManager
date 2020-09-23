@@ -243,6 +243,7 @@ public static class Extensions
 	
         public static string RemoveDiacritics(this string text)
         {   //http://www.levibotelho.com/development/c-remove-diacritics-accents-from-a-string/
+	    //Doesnt work inside LINQ
             if (string.IsNullOrWhiteSpace(text))
                 return text;
 
