@@ -240,4 +240,14 @@ public static class Extensions
             var serializer = new JavaScriptSerializer { MaxJsonLength = int.MaxValue };
             return serializer.Serialize(obj);
         }
+	
+        public static string RemoveDiacritics(this string text)
+        {   //http://www.levibotelho.com/development/c-remove-diacritics-accents-from-a-string/
+            if (string.IsNullOrWhiteSpace(text))
+                return text;
+
+            text = text.Normalize(NormalizationForm.FormD);
+            var chars = text.Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark).ToArray();
+            return new string(chars).Normalize(NormalizationForm.FormC);
+        }
 }
