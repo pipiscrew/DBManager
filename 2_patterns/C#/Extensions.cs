@@ -234,4 +234,10 @@ public static class Extensions
             }
             return default(T);
         }
+	
+        public static string ToJson(this object obj)
+        {
+            var serializer = new JavaScriptSerializer { MaxJsonLength = int.MaxValue };
+            return serializer.Serialize(obj);
+        }
 }
