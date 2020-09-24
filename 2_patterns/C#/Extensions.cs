@@ -251,4 +251,61 @@ public static class Extensions
             var chars = text.Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark).ToArray();
             return new string(chars).Normalize(NormalizationForm.FormC);
         }
+	
+        /// <summary>
+        ///    EPPlus - Extracts the first ExcelWorksheet by ExcelPackage to DataTable.
+        /// </summary>
+        public static DataTable ToDataTable(this ExcelPackage package)
+        {   // https://stackoverflow.com/a/37795129
+            ExcelWorksheet workSheet = package.Workbook.Worksheets.First();
+            DataTable table = new DataTable();
+            foreach (var firstRowCell in workSheet.Cells[1, 1, 1, workSheet.Dimension.End.Column])
+            {
+                table.Columns.Add(firstRowCell.Text);
+            }
+
+            for (var rowNumber = 2; rowNumber <= workSheet.Dimension.End.Row; rowNumber++)
+            {
+                var row = workSheet.Cells[rowNumber, 1, rowNumber, workSheet.Dimension.End.Column];
+                var newRow = table.NewRow();
+                foreach (var cell in row)
+                {
+                    newRow[cell.Start.Column - 1] = cell.Text;
+                }
+                table.Rows.Add(newRow);
+            }
+            return table;
+        }
+		
+        /// <summary>
+        ///    EPPlus - Extracts a DataTable from the ExcelWorksheet.
+        /// </summary>
+        public static DataTable ToDataTable(this ExcelWorksheet worksheet, bool hasHeaderRow = true)
+        { // https://github.com/eraydin/EPPlus.Core.Extensions/blob/f220b5d6083ea5fc5c798aa9d54f50ff3b6a023e/src/EPPlus.Core.Extensions/ExcelWorksheetExtensions.cs
+            ExcelAddress dataBounds = worksheet.GetDataBounds(hasHeaderRow);
+
+            var dataTable = new DataTable(worksheet.Name);
+
+            if (dataBounds == null)
+            {
+                return dataTable;
+            }
+
+            IEnumerable<DataColumn> columns = worksheet.AsExcelTable(hasHeaderRow).Columns.Select(x => new DataColumn(!hasHeaderRow ? "Column" + x.Id : x.Name));
+
+            dataTable.Columns.AddRange(columns.ToArray());
+
+            for (int rowIndex = dataBounds.Start.Row; rowIndex <= dataBounds.End.Row; ++rowIndex)
+            {
+                ExcelRangeBase[] inputRow = worksheet.Cells[rowIndex, dataBounds.Start.Column, rowIndex, dataBounds.End.Column].ToArray();
+                DataRow row = dataTable.Rows.Add();
+
+                for (var j = 0; j < inputRow.Length; ++j)
+                {
+                    row[j] = inputRow[j].Value;
+                }
+            }
+
+            return dataTable;
+        }
 }
