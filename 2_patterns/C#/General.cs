@@ -218,6 +218,8 @@ static class General
 		Count nulls - .Where(r => string.IsNullOrEmpty(r.Cells["X"].Value)).Count()).ToInt()
 		-
 		Split enter - q.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+		-
+		new string[] { "99", "18", "11", "31", "14" }.Contains(resp.Body)
 	 */
 
 }
