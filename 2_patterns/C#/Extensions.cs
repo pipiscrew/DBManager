@@ -252,6 +252,14 @@ public static class Extensions
             return new string(chars).Normalize(NormalizationForm.FormC);
         }
 	
+        public static string LeaveOnlyDigits(this string s)
+        {
+            if (string.IsNullOrEmpty(s)) return s;
+		
+            Regex r = new Regex(@"[^\d]+");
+            return  r.Replace(s, "");
+        }
+	
         /// <summary>
         ///    EPPlus - Extracts the first ExcelWorksheet by ExcelPackage to DataTable.
         /// </summary>
