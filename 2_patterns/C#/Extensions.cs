@@ -260,6 +260,23 @@ public static class Extensions
             return  r.Replace(s, "");
         }
 	
+        public static string ExRemoveAccents(this string text)
+        {
+            if (text.Length == 0)
+            {
+                return string.Empty;
+            }
+            StringBuilder stringBuilder = new StringBuilder(text.Normalize(NormalizationForm.FormD));
+            for (int i = 0; i < stringBuilder.Length; i++)
+            {
+                if (CharUnicodeInfo.GetUnicodeCategory(stringBuilder[i]) == UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Remove(i, 1);
+                }
+            }
+            return stringBuilder.ToString();
+        }
+	
         /// <summary>
         ///    EPPlus - Extracts the first ExcelWorksheet by ExcelPackage to DataTable.
         /// </summary>
