@@ -304,6 +304,20 @@ public static class Extensions
             }
         }
 	
+        public static List<List<T>> SplitPer<T>(this List<T> collection, int size)
+        {   // https://codereview.stackexchange.com/a/90198 + https://codereview.stackexchange.com/a/90531
+            var chunks = new List<List<T>>();
+            var chunkCount = collection.Count() / size;
+
+            if (collection.Count % size > 0)
+                chunkCount++;
+
+            for (var i = 0; i < chunkCount; i++)
+                chunks.Add(collection.Skip(i * size).Take(size).ToList());
+
+            return chunks;
+        }
+	
         /// <summary>
         ///    EPPlus - Extracts the first ExcelWorksheet by ExcelPackage to DataTable.
         /// </summary>
