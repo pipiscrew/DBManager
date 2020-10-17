@@ -277,6 +277,23 @@ public static class Extensions
             return stringBuilder.ToString();
         }
 	
+        public static IEnumerable<string> TakeEvery(this string s, int count)
+        {   // src - https://stackoverflow.com/a/4926466
+            int index = 0;
+            while (index < s.Length)
+            {
+                if (s.Length - index >= count)
+                {
+                    yield return s.Substring(index, count);
+                }
+                else
+                {
+                    yield return s.Substring(index, s.Length - index);
+                }
+                index += count;
+            }
+        }
+	
         /// <summary>
         ///    EPPlus - Extracts the first ExcelWorksheet by ExcelPackage to DataTable.
         /// </summary>
