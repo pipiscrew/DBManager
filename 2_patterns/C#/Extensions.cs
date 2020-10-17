@@ -112,10 +112,9 @@ public static class Extensions
 	
 
         #region " GenericToDataTable "
-        //https://stackoverflow.com/a/45138154
 		
         public static DataTable ConvertTo<T>(this IList<T> lst)
-        {
+        { //https://stackoverflow.com/a/45138154
             DataTable tbl = CreateTable<T>();
             PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
             foreach (T item in lst)
@@ -134,7 +133,7 @@ public static class Extensions
         }
 
         private static DataTable CreateTable<T>()
-        {
+        {   
             Type expr_0A = typeof(T);
             DataTable tbl = new DataTable(expr_0A.Name);
             foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(expr_0A))
@@ -145,6 +144,26 @@ public static class Extensions
                 }
             }
             return tbl;
+        }
+	
+        public static DataTable ConvertToDataTableX<T>(this IList<T> data)
+        {   // the ConvertTo+CreateTable should deprecated
+            var properties = TypeDescriptor.GetProperties(typeof(T));
+
+            var dt = new DataTable();
+            foreach (PropertyDescriptor prop in properties)
+                dt.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+
+            foreach (var item in data)
+            {
+                var row = dt.NewRow();
+                foreach (PropertyDescriptor prop in properties)
+                    row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+
+                dt.Rows.Add(row);
+            }
+
+            return dt;
         }
 
         #endregion
