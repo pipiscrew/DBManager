@@ -3,6 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 
+/*
+
+LINQ to Objects is missing a few desirable features
+
+https://www.nuget.org/packages/morelinq/
+https://www.nuget.org/packages/MoreLinq.Portable
+https://github.com/morelinq/MoreLINQ
+
+*/
+
 public static class Extensions    
 {
 
