@@ -192,6 +192,55 @@ public static class Extensions
 		return string.IsNullOrEmpty(value.ToString());
 	}
 	
+        public static string Serialize<T>(T obj)
+        {
+            XmlSerializer xs = null;
+            StringWriter sw = null;
+            try
+            {
+                xs = new XmlSerializer(typeof(T));
+                sw = new StringWriter();
+                xs.Serialize(sw, obj);
+                return sw.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (sw != null)
+                {
+                    sw.Close();
+                    sw.Dispose();
+                }
+            }
+        }
+
+        public static T Deserialize<T>(string XML)
+        {
+            XmlSerializer xs = null;
+            StringReader sr = null;
+            try
+            {
+                xs = new XmlSerializer(typeof(T));
+                sr = new StringReader(XML);
+                return (T)xs.Deserialize(sr);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (sr != null)
+                {
+                    sr.Close();
+                    sr.Dispose();
+                }
+            }
+        }
+	
         public static string JSONSerialize<T>(T obj)
         { //https://stackoverflow.com/a/35452673
             string retVal = String.Empty;
