@@ -27,6 +27,7 @@ public static class Extensions
 
 
 	}
+	
 	public static int ToInt(this object value)
 	{
 		int number = 0;
@@ -36,6 +37,11 @@ public static class Extensions
 
 		return number;
 	}
+	
+        public static int ToInt(this char c)
+        { // https://stackoverflow.com/a/239109
+            return (int)(c - '0');
+        }
 
 	public static long ToLong(this object value)
 	{
