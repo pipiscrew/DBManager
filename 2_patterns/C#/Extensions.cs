@@ -103,6 +103,21 @@ public static class Extensions
 		return result;
 	}
 
+	public static string MakeSafeFilename(this string filename)
+	{
+	  Regex pattern = new Regex("[" + string.Join(",", Path.GetInvalidFileNameChars()) + "]");
+
+	  return pattern.Replace(filename, "_");
+	}
+
+	public static string ShorterExact(this string source, int maxLength)
+	{
+	  if ((!string.IsNullOrEmpty(source)) && (source.Length > maxLength))
+		  return source.Substring(0, maxLength);
+	  else
+		  return source;
+	}
+	
 	public static string ToRows2CSV(this DataTable dataTable,string delimeter)
 	{
 		IEnumerable<string> items = dataTable.AsEnumerable().Select(row => row.Field<string>(0)); ;
