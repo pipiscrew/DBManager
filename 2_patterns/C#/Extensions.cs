@@ -120,7 +120,7 @@ public static class Extensions
 	
 	public static bool StartsWithLetter(this string source)
 	{
-		if ((!string.IsNullOrEmpty(source)))
+		if (!string.IsNullOrEmpty(source))
 			return char.IsLetter(source[0]);
 		else
 			return false;
