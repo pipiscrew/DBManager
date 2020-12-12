@@ -118,6 +118,14 @@ public static class Extensions
 		  return source;
 	}
 	
+	public static bool StartsWithLetter(this string source)
+	{
+		if ((!string.IsNullOrEmpty(source)))
+			return char.IsLetter(source[0]);
+		else
+			return false;
+	}
+	
 	public static string Greek2Greeklish(this string source)
 	{
 	  var originalChar = new List<char> { 'ς', 'α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω', 'ά', 'έ', 'ή', 'ί', 'ό', 'ύ', 'ώ' };
