@@ -118,6 +118,15 @@ public static class Extensions
 		  return source;
 	}
 	
+	public static string Greek2Greeklish(this string source)
+	{
+	  var originalChar = new List<char> { 'ς', 'α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω', 'ά', 'έ', 'ή', 'ί', 'ό', 'ύ', 'ώ' };
+	  var replaceWith = new List<char> { 's', 'a', 'b', 'g', 'd', 'e', 'z', 'h', '8', 'i', 'k', 'l', 'm', 'n', '3', 'o', 'p', 'r', 's', 't', 'u', 'f', 'x', 'c', 'w', 'a', 'e', 'h', 'i', 'o', 'u', 'w' };
+	  originalChar.ForEach(x => source = source.Replace(x, replaceWith[originalChar.IndexOf(x)]));
+
+	  return source;
+	}
+	
 	public static string ToRows2CSV(this DataTable dataTable,string delimeter)
 	{
 		IEnumerable<string> items = dataTable.AsEnumerable().Select(row => row.Field<string>(0)); ;
