@@ -376,6 +376,11 @@ public static class Extensions
             return  r.Replace(s, "");
         }
 	
+	public static string LeaveOnlyAlphaNumeric(this string filename)
+	{ //AlphaNumeric space and dash
+	 return Regex.Replace(filename, @"[^\p{IsGreek}a-zA-Z0-9 -]", string.Empty);
+	}
+	
         public static string ExRemoveAccents(this string text)
         {
             if (text.Length == 0)
