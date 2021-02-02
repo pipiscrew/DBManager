@@ -23,6 +23,7 @@ class dbase{
 		 
 		$this->db = new PDO("mysql:host=$mysql_hostname;dbname=$mysql_database", $mysql_user, $mysql_password, 
 	  array(
+		//PDO::ATTR_PERSISTENT => true,  //https://www.pipiscrew.com/2021/02/mysql-persistent-connections-in-php/
 		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 		PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
 		PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC));
