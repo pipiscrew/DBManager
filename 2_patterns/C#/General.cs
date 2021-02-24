@@ -196,6 +196,7 @@ static class General
 	public static DataTable xml2datable()
 	{  //https://stackoverflow.com/a/7801673
 	   //get all records belong to EMEA, region field - xml2datable().AsEnumerable().Where(x => x.Field<string>("Region").Equals("EMEA")).ToList();
+	   //https://www.pipiscrew.com/2017/01/convert-excel-sheet-to-xml-elements-or-xml-attributes/
 		StringReader theReader = new StringReader(@"B:\countries.xml");
 		DataSet theDataSet = new DataSet();
 		theDataSet.ReadXml(theReader.ReadToEnd());
