@@ -193,6 +193,18 @@ static class General
 		 */
 	}
 
+	public static DataTable xml2datable()
+	{  //https://stackoverflow.com/a/7801673
+	   //get all records belong to EMEA, region field - xml2datable().AsEnumerable().Where(x => x.Field<string>("Region").Equals("EMEA")).ToList();
+		StringReader theReader = new StringReader(@"B:\countries.xml");
+		DataSet theDataSet = new DataSet();
+		theDataSet.ReadXml(theReader.ReadToEnd());
+
+		theReader.Dispose();
+
+		return theDataSet.Tables[0];
+	}
+	
         public static string ExtractHtmlInnerText(string htmlText)
         {
             //Match any Html tag (opening or closing tags) 
