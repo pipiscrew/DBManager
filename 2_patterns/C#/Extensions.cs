@@ -148,7 +148,17 @@ public static class Extensions
 		//v = .ToRows2CSV("','");, afterwards you need to adjust it v = string.Format("{0}{1}{0}", "'", v);
 	}
 	
+        public static DataTable ToDatatable(this List<string> list)
+        {
+            DataTable dtTable = new DataTable();
+            dtTable.Columns.Add("Name", typeof(string));
 
+            foreach (string row in list)
+                dtTable.Rows.Add(row);
+
+            return dtTable;
+        }
+	
         #region " GenericToDataTable "
 		
         public static DataTable ConvertTo<T>(this IList<T> lst)
