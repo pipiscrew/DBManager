@@ -4,13 +4,13 @@ using System.ComponentModel;
 using System.Data;
 
 /*
-
+references :
 LINQ to Objects is missing a few desirable features
-
 https://www.nuget.org/packages/morelinq/
 https://www.nuget.org/packages/MoreLinq.Portable
 https://github.com/morelinq/MoreLINQ
 
+https://www.extensionmethod.net/csharp
 */
 
 public static class Extensions    
