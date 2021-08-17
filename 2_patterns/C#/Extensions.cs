@@ -439,6 +439,14 @@ public static class Extensions
             return chunks;
         }
 	
+        public static string Replace(this Match match, string source, string replacement)
+        { //https://stackoverflow.com/a/44955641
+            return source.Substring(0, match.Index) + replacement + source.Substring(match.Index + match.Length);
+			
+            /* use as - for (int i = 0; i < m.Count; i++)
+				inputFormat = m[i].Replace(inputFormat, "{" + i.ToString() + "}"); */
+        }
+	
         /// <summary>
         ///    EPPlus - Extracts the first ExcelWorksheet by ExcelPackage to DataTable.
         /// </summary>
