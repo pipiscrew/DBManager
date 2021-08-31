@@ -166,6 +166,22 @@ class dbase{
 			return 0;
 	}
 	
+	function getIDs($sql, $field, $params) {
+		if ($stmt = $this->db -> prepare($sql)) {
+
+			$stmt->execute($params);
+	 
+			$set = $stmt->fetchAll();
+			
+			$arr = array();
+			foreach ( $set as $row ) 
+				$arr[] = ( $row[ $field ==null ? 'id' : $field ]);
+
+			return $arr;
+		} else
+			return 0;
+	}
+	
 	/* NEW FUNCTIONS */	
 	
     
