@@ -161,7 +161,7 @@ class dbase{
 		if ($stmt = $this->db -> prepare($parts[$i])) {
 			$stmt->execute($params);
 	 
-		  return $stmt->fetchAll();
+			return $stmt->fetchAll();
 		} else
 			return 0;
 	}
@@ -279,7 +279,7 @@ class dbase{
 }
 
 
-/* example, execute muultiple sql with variables. separate with symbol ^
+/* example, execute multiple sql with variables, separate with symbol ^
 
 $db = new dbase();
 
