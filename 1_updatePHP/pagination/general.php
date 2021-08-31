@@ -144,7 +144,28 @@ class dbase{
 			return false;
 	}
 
-    
+	//https://stackoverflow.com/a/24958578 - PDO can only execute one statement at a time. 
+	//https://www.mysqltutorial.org/mysql-select-into-variable/
+	//https://stackoverflow.com/a/68083231 - closing the session will clear all the session variables
+	function getSetWithVariables($sql, $params) {
+
+		$parts = explode('^', $sql);
+
+		for($i=0; $i<count($parts)-1;$i++) {
+			if ($stmt = $this->db -> prepare($parts[$i]))
+				$stmt->execute($params);
+			else 
+				return -1;
+		}
+		
+		if ($stmt = $this->db -> prepare($parts[$i])) {
+			$stmt->execute($params);
+	 
+		  return $stmt->fetchAll();
+		} else
+			return 0;
+	}
+	
 	/* NEW FUNCTIONS */	
 	
     
@@ -256,3 +277,27 @@ class dbase{
 		 return (substr($haystack, 0, $length) === $needle);
 	}
 }
+
+
+/* example, execute muultiple sql with variables. separate with symbol ^
+
+$db = new dbase();
+
+$db->connect_mysql();
+
+$r = $db->getSetWithVariables("SET @match = 7790;
+SET @champ = 0;
+SET @team1 = 0;
+SET @team2 = 0;
+^
+select w.champ_id, team1_id, team2_id 
+INTO @champ, @team1, @team2
+from table1 h
+left join table2 w on w.id = h.champ_id
+where match_id = @match;
+^
+select @champ, @team1, @team2;", null);
+
+var_dump($r);
+
+*/
