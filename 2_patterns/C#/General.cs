@@ -219,6 +219,136 @@ static class General
             return resultText;
         }
 
+        internal void ExportDG2XML(DataGridView dg,  string filepath)
+        {  //the file extension MUST be .xls
+
+            //false = overwrite the file if exists
+            using (var sw = new StreamWriter(filepath, false, System.Text.Encoding.UTF8))
+            {
+                StringBuilder sb = new StringBuilder();
+
+                //xls header
+                sb.AppendLine("<?xml version='1.0'?>");
+                sb.AppendLine("<?mso-application progid='Excel.Sheet'?>");
+                sb.AppendLine("<s:Workbook xmlns:x=\"urn:schemas-microsoft-com:office:excel\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:s=\"urn:schemas-microsoft-com:office:spreadsheet\">");
+                sb.AppendLine("  <s:Worksheet s:Name=\"export\">");
+                sb.AppendLine("    <s:Table>");
+
+                //columns row [start]
+                sb.AppendLine("      <s:Row>");
+
+                string cellTemplate = "        <s:Cell><s:Data s:Type=\"String\">{0}</s:Data></s:Cell>";
+                foreach (DataGridViewColumn col in dg.Columns)
+                {
+                    sb.AppendLine(string.Format(cellTemplate, col.Name));
+                }
+                sb.AppendLine("      </s:Row>");
+                //columns row [end]
+
+                //rows [start]
+                foreach (DataGridViewRow r in dg.Rows)
+                {
+
+                    sb.AppendLine("      <s:Row>");
+
+                    foreach (DataGridViewCell c in r.Cells)
+                    {
+                        sb.AppendLine(string.Format(cellTemplate, c.Value.ToStrinX()));
+                    }
+
+                    sb.Append("      </s:Row>");
+
+                    //write each row to StreamWriter (write to memory)
+                    if (sb.Length > 0)
+                    {
+                        sw.WriteLine(sb.ToString());
+                        sb.Length = 0;                  //empty stringbuilder
+                    }
+                }
+                //rows [end]
+
+                sb.AppendLine("    </s:Table>");
+                sb.AppendLine("  </s:Worksheet>");
+                sb.AppendLine("</s:Workbook>");
+
+                if (sb.Length > 0)
+                { //StreamWriter
+                    sw.WriteLine(sb.ToString());
+                    sb.Length = 0;
+                }
+            }
+        }
+
+        internal void ExportDG2CSV(DataGridView dg, string delimiter, string filepath)
+        {   //src - https://github.com/unvell/ReoGrid/blob/1bc1bf59432e2dadc5d23c1ab48c3ffb866ffbfc/ReoGrid/Core/CSV.cs
+            // EXCEL default delimiter ;
+
+            //false = overwrite the file if exists
+            using (var sw = new StreamWriter(filepath, false, System.Text.Encoding.Default))
+            {
+                StringBuilder sb = new StringBuilder();
+
+                foreach (DataGridViewColumn col in dg.Columns)
+                {
+                    if (sb.Length > 0)
+                    {
+                        sb.Append(delimiter);
+                    }
+                    sb.Append(col.Name);
+                }
+
+                if (sb.Length > 0)
+                {
+                    sw.WriteLine(sb.ToString());    //streamWriter - write to memory
+                    sb.Length = 0;                  //empty stringbuilder
+                }
+
+                foreach (DataGridViewRow r in dg.Rows)
+                {   // rows [start]
+
+                    foreach (DataGridViewCell c in r.Cells)
+                    {
+                        if (sb.Length > 0)
+                        {
+                            sb.Append(delimiter);
+                        }
+
+                        string cell = c.Value.ToStrinX();
+
+                        if (string.IsNullOrEmpty(cell))
+                            continue;
+
+                        bool quota = false;
+
+                        if (cell.IndexOf(delimiter) >= 0 || cell.IndexOf('"') >= 0
+                                    || cell.StartsWith(" ") || cell.EndsWith(" "))
+                        {
+                            quota = true;
+                        }
+
+                        if (quota)
+                        {
+                            sb.Append('"');
+                            sb.Append(cell.Replace("\"", "\"\""));
+                            sb.Append('"');
+                        }
+                        else
+                        {
+                            sb.Append(cell);
+                        }
+                    }
+
+                    //write each row to StreamWriter (write to memory)
+                    if (sb.Length > 0)
+                    {
+                        sw.WriteLine(sb.ToString());    
+                        sb.Length = 0;                  //empty stringbuilder
+                    }
+
+                } // rows [end]
+
+            } //write the file
+        }
 	/*  Knowledge Base
 		Cursor = System.Windows.Forms.Cursors.WaitCursor;
 		Cursor = System.Windows.Forms.Cursors.Default;
