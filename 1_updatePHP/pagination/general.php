@@ -1,7 +1,23 @@
 <?php
+
 class dbase{
+
 	private $db;
 
+	function connect_mysql() {
+		$mysql_hostname = "localhost";
+		$mysql_user = "root";
+		$mysql_password = "password";
+		$mysql_database = "test"; 
+		 
+		$this->db = new PDO("mysql:host=$mysql_hostname;dbname=$mysql_database", $mysql_user, $mysql_password, 
+	  array(
+		//PDO::ATTR_PERSISTENT => true,  //https://www.pipiscrew.com/2021/02/mysql-persistent-connections-in-php/
+		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+		PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+		PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC));
+	}
+	
 	function connect_postgre() {
 		$postgre_hostname = "localhost";
 		$postgre_user = "root";
@@ -15,20 +31,6 @@ class dbase{
 		PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC));
 	}
 	
-	function connect_mysql() {
-		$mysql_hostname = "localhost";
-		$mysql_user = "root";
-		$mysql_password = "password";
-		$mysql_database = "x"; 
-		 
-		$this->db = new PDO("mysql:host=$mysql_hostname;dbname=$mysql_database", $mysql_user, $mysql_password, 
-	  array(
-		//PDO::ATTR_PERSISTENT => true,  //https://www.pipiscrew.com/2021/02/mysql-persistent-connections-in-php/
-		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-		PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
-		PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC));
-	}
-    
 	function connect_oracle() {
 		$server         = "x";
 		$db_username    = "x";
@@ -175,7 +177,7 @@ class dbase{
 			
 			$arr = array();
 			foreach ( $set as $row ) 
-				$arr[] = ( $row[ $field ==null ? 'id' : $field ]);
+				$arr[] = ( $row[ $field == null ? 'id' : $field ]);
 
 			return $arr;
 		} else
@@ -193,14 +195,34 @@ class dbase{
         return str_replace($search, $replace, $value);
     }
 
-    function write_log($user_id, $ip, $log){
+    // function write_log($user_id, $ip, $log){
         
-        $sql = "INSERT INTO `log` (user_id, ip, log_txt, date_rec) VALUES (:user_id, :ip, :log_txt, :date_rec)";
-        $stmt = $this->db ->prepare($sql);
+    //     $sql = "INSERT INTO `log` (user_id, ip, log_txt, date_rec) VALUES (:user_id, :ip, :log_txt, :date_rec)";
+    //     $stmt = $this->db ->prepare($sql);
         
-        $stmt->bindValue(':user_id' , $user_id);
-        $stmt->bindValue(':ip' , $ip);
-        $stmt->bindValue(':log_txt' , $log);
+    //     $stmt->bindValue(':user_id' , $user_id);
+    //     $stmt->bindValue(':ip' , $ip);
+    //     $stmt->bindValue(':log_txt' , $log);
+    //     $stmt->bindValue(':date_rec' , date("Y-m-d H:i:s"));
+
+    //     $stmt->execute();
+
+    //     $res = $stmt->rowCount();
+
+    //     if($res != 1)
+    //         die("error when inserting log");
+        
+    // }
+    
+    function write_log($entity, $action, $isError, $decription){
+        
+        $sql = "INSERT INTO `logger` (entity, action, error, description, date_rec) VALUES (:entity, :action, :error, :description, :date_rec)";
+        $stmt = $this->db->prepare($sql);
+        
+		$stmt->bindValue(':entity' , $entity);
+		$stmt->bindValue(':action' , $action);
+		$stmt->bindValue(':error' , $isError);
+		$stmt->bindValue(':description' , $decription);
         $stmt->bindValue(':date_rec' , date("Y-m-d H:i:s"));
 
         $stmt->execute();
@@ -211,7 +233,7 @@ class dbase{
             die("error when inserting log");
         
     }
-    
+
 	function getSet_with_types($sql, $params) {
 		if ($stmt = $this->db ->prepare($sql)) {
 	 
@@ -268,32 +290,7 @@ class dbase{
 		
 		return $assoc;
 	}
-	function str2date($src_val, $date_format = "Y-m-d H:i:s"){
-		if ($src_val==null || startsWith($src_val, "0000")) //the date is null (aka SQL - date NULL) OR is empty (aka year is 0000)
-		   return null;
-		//
-		$src_val = trim($src_val);
-		
-		if (strpos($src_val, ' ')==0){
-			//occur when the date_format doesnt contain H:i:s - PHP automatically adds the current time!!
-			$src_val .= " 00:00:00";
-		}
-		//
-		
-		$d = DateTime::createFromFormat($date_format, $src_val);
-		if (!$d)
-		   throw new Exception("string cant be converted to date >> ".$src_val);
-		else
-			return $d;
-	}
-	
-	function startsWith($haystack, $needle)
-	{
-		 $length = strlen($needle);
-		 return (substr($haystack, 0, $length) === $needle);
-	}
 }
-
 
 /* example, execute multiple sql with variables, separate with symbol ^
 
@@ -317,3 +314,138 @@ select @champ, @team1, @team2;", null);
 var_dump($r);
 
 */
+
+//////////// GENERAL STATIC
+function str2date($src_val, $date_format = "Y-m-d H:i:s"){
+	if ($src_val==null || startsWith($src_val, "0000")) //the date is null (aka SQL - date NULL) OR is empty (aka year is 0000)
+	   return null;
+	//
+	$src_val = trim($src_val);
+	
+	if (strpos($src_val, ' ')==0){
+		//occur when the date_format doesnt contain H:i:s - PHP automatically adds the current time!!
+		$src_val .= " 00:00:00";
+	}
+	//
+	
+	$d = DateTime::createFromFormat($date_format, $src_val);
+	if (!$d)
+	   throw new Exception("string cant be converted to date >> ".$src_val);
+	else
+		return $d;
+}
+
+function startsWith($haystack, $needle)
+{
+	 $length = strlen($needle);
+	 return (substr($haystack, 0, $length) === $needle);
+}
+
+function ReportJS($code, $message)
+{
+	echo json_encode(array('code'=> $code, 'message' => $message));
+}
+
+function FillGridRows($tableColumnsArr, $sql, $sqlCount, $isPost)
+{	
+	if ($isPost)
+	{
+		$limit = isset($_POST['limit']) ? $_POST['limit'] : null;
+		$offset = isset($_POST['offset']) ? $_POST['offset'] : null;
+		$search = isset($_POST['search']) ? $_POST['search'] : null;
+		$sortCol = isset($_POST['sort']) ? $_POST['sort'] : null;
+		$order = isset($_POST['order']) ? $_POST['order'] : null;
+	}
+	else
+	{
+		$limit = isset($_GET['limit']) ? $_GET['limit'] : null;
+		$offset = isset($_GET['offset']) ? $_GET['offset'] : null;
+		$search = isset($_GET['search']) ? $_GET['search'] : null;
+		$sortCol = isset($_GET['sort']) ? $_GET['sort'] : null;
+		$order = isset($_GET['order']) ? $_GET['order'] : null;
+	}
+
+	if (!is_numeric($limit) || !is_numeric($offset))
+	{
+		ReportJS(5, 'No valid parameters for FillGridRows!');
+		exit;
+	}
+	
+	//connect to database
+	$db = new dbase();
+	$db->connect_mysql();
+	
+	//////////////////////////////////////WHEN SEARCH TEXT SPECIFIED
+	if ($search)
+	{
+		$search = $db->escape_str($search);
+
+		$where = ' 0=1 ';
+	
+		foreach($tableColumnsArr as $col)
+		{
+			//when we have joins, we have to exclude the fields on search. Workaround use table.fieldname
+			// if ($col=='category_name' || $col=='question_id' || $col=='category_id' || $col=='subcategory_id' || $col=='language_id' || $col=='subcategory_name')
+			// 	continue;
+			
+			$where.= " or {$col} like :searchTerm";
+		}
+	
+		//when the #where# defined on main query use 'and', otherwise 'where'
+		$sql.= ' where '. $where;
+		$sqlCount.= ' where '. $where;
+	}
+	
+	//////////////////////////////////////WHEN SORT COLUMN NAME SPECIFIED
+	if ($sortCol && $order)
+	{
+		$sortCol = $db->escape_str($sortCol);
+		$order = $db->escape_str($order);
+		
+		if ($order=='asc' || $order=='desc'){
+						
+			//validation, if col provided exists
+			$key = array_search($sortCol, $tableColumnsArr);
+			
+			$sortCol = $tableColumnsArr[$key];
+	
+			$sql.= " order by {$sortCol} {$order}";		
+		}
+	}
+	
+	
+	//////////////////////////////////////PREPARE
+	$stmt = $db->getConnection()->prepare($sql.' limit :offset,:limit');
+	
+	
+	//////////////////////////////////////WHEN SEARCH TEXT SPECIFIED *BIND*
+	if ($search)
+		$stmt->bindValue(':searchTerm', '%'.$search.'%');
+	
+	
+	
+	//////////////////////////////////////PAGINATION SETTINGS
+	$stmt->bindValue(':offset' , intval($offset), PDO::PARAM_INT);
+	$stmt->bindValue(':limit' , intval($limit), PDO::PARAM_INT);
+	// $stmt->bindValue(':browsertime' , intval($_SESSION['timezone']), PDO::PARAM_INT);
+		
+	//////////////////////////////////////FETCH ROWS
+	$stmt->execute();
+	$rows = $stmt->fetchAll();
+	
+	
+	//////////////////////////////////////COUNT TOTAL 
+	if ($search)
+		$rowsCount = $db->getScalar($sqlCount, array(':searchTerm' => '%'.$search.'%'));
+	else
+		$rowsCount = $db->getScalar($sqlCount, null);
+	
+	
+	//////////////////////////////////////JSON ENCODE
+	$arr = array('total'=> $rowsCount, 'rows' => $rows);
+	
+	header('Content-Type: application/json', true);
+	
+	echo json_encode($arr);
+}
+
