@@ -310,4 +310,40 @@
   <data name="tunnelPHP_PDO_SQLServer" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tunnelPHP_PDO_SQLServer.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="templateCRUDbootstraptable5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\templateCRUDbootstraptable5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CRUD3template_helper" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD3template_helper.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD3template_helper_GetRecordDetails" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD3template_helper_GetRecordDetails.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD3template_helper_Switch_GetRecordDetails" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD3template_helper_Switch_GetRecordDetails.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD3template_index" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD3template_index.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD3template_index_JS_gridload" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD3template_index_JS_gridload.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD3template_index_tab" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD3template_index_tab.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD3template_index_tab_content" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD3template_index_tab_content.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD3template_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD3template_page.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD3template_page_w_subtable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD3template_page_w_subtable.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD3template_helper_AfterBaseRecordInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD3template_helper_AfterBaseRecordInsert.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="PHPtemplateAPIbootstraptable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PHPtemplateAPIbootstraptable.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

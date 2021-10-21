@@ -1,0 +1,3 @@
+        <li class="nav-item">
+          <button class="nav-link{0}" data-bs-toggle="tab" data-bs-target="#{1}" type="button" role="tab">{1}</button>
+        </li>

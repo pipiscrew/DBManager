@@ -48,8 +48,10 @@ namespace DBManager
 
             if (cmbTemplate.SelectedIndex == 0)
                 do_template_adminLTE();
-            else
+            else if (cmbTemplate.SelectedIndex == 1)
                 do_template_bootstraptable();
+            else
+                do_template_bootstraptable5();
 
             Process.Start(exportDIR);
         }
@@ -58,23 +60,233 @@ namespace DBManager
         {
             try
             {
+                string f = string.Empty;
+
                 if (cmbTemplate.SelectedIndex == 0)
                 {
-                    File.WriteAllBytes("c:\\PHPtemplateCRUD.zip", DBManager.Properties.Resources.PHPtemplateCRUD);
-                    General.Mes(@"Successfully extracted to 'c:\PHPtemplateCRUD.zip'");
+                    f = Path.Combine(Application.StartupPath, "PHPtemplateCRUD.zip");
+                    File.WriteAllBytes(f, DBManager.Properties.Resources.PHPtemplateCRUD);
                 }
-                else  if (cmbTemplate.SelectedIndex == 1)
+                else if (cmbTemplate.SelectedIndex == 1)
                 {
-                    File.WriteAllBytes("c:\\PHPtemplateCRUDbootstraptable.zip", DBManager.Properties.Resources.PHPtemplateCRUDbootstraptable);
-                    General.Mes(@"Successfully extracted to 'c:\PHPtemplateCRUDbootstraptable.zip'");
+                    f = Path.Combine(Application.StartupPath, "PHPtemplateCRUDbootstraptable.zip");
+                    File.WriteAllBytes(f, DBManager.Properties.Resources.PHPtemplateCRUDbootstraptable);
+                }
+                else if (cmbTemplate.SelectedIndex == 2)
+                {
+                    f = Path.Combine(Application.StartupPath, "PHPtemplateAPIbootstraptable.zip");
+                    File.WriteAllBytes(Path.Combine(Application.StartupPath, "PHPtemplateAPIbootstraptable.zip"), DBManager.Properties.Resources.PHPtemplateAPIbootstraptable);
                 }
 
-
+                General.Mes(string.Format("Successfully extracted to '{0}'", f));
             }
             catch (Exception ex)
             {
                 General.Mes(ex.Message, MessageBoxIcon.Error);
             }
+        }
+
+        private void do_template_bootstraptable5()
+        {
+            string table_name;
+            string index_tabTemplate = DBManager.Properties.Resources.CRUD3template_index_tab;
+            string index_content_tabTemplate = DBManager.Properties.Resources.CRUD3template_index_tab_content;
+            string index_JSbTemplate = DBManager.Properties.Resources.CRUD3template_index_JS_gridload;
+            string indexTemplate = DBManager.Properties.Resources.CRUD3template_index;
+            string index_tabs = "";
+            string index_contents = "";
+            string index_JS = "";
+            string index = "";
+
+            string pageTemplate = DBManager.Properties.Resources.CRUD3template_page;
+            string page = "";
+            string page_JS_wo_SubTable = "	    $(\"#table{tbl}\").bootstrapTable();";
+            string page_JS_w_SubTable = DBManager.Properties.Resources.CRUD3template_page_w_subtable;
+            //string page_HTML_tbl_properties = ""; // data-toggle="table" data-detail-view="true"
+            string page_table_trID = "				<th data-field=\"{colname}\" data-visible=\"false\">{colname}</th>\n";
+            string page_table_trOther = "				<th data-field=\"{colname}\" data-sortable=\"true\">{colname}</th>\n";
+
+            //sub table
+            string refTableMySQL = @"SELECT 
+                                            TABLE_NAME,COLUMN_NAME,CONSTRAINT_NAME, REFERENCED_TABLE_NAME,REFERENCED_COLUMN_NAME
+                                        FROM
+                                            INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+                                        WHERE
+                                            REFERENCED_TABLE_NAME = '{0}'"; //https://stackoverflow.com/a/201678
+            string refTable = "";
+            string refTableField = "";
+            string refFieldsCSV = "";
+            string refFieldsBind = "";
+            string refinsertSQLFields= "";
+            string refinsertSQLFieldsTemplate = "        '{0}' => array('JSONprop{0}'),\n";
+            //sub table
+
+            string helperTemplate = DBManager.Properties.Resources.CRUD3template_helper;
+            string helperTemplateGetRecordDetails = DBManager.Properties.Resources.CRUD3template_helper_GetRecordDetails;
+            //string helperGetRecordDetails = "";
+            string helperTemplateSwitchGetRecordDetails = DBManager.Properties.Resources.CRUD3template_helper_Switch_GetRecordDetails;
+            string helperTemplaterefAfterBaseRecordInsert = DBManager.Properties.Resources.CRUD3template_helper_AfterBaseRecordInsert;
+            string helper = "";
+
+
+            string appDIR = Path.Combine(Application.StartupPath, txtFolder.Text);
+            string pagesDIR = Path.Combine(appDIR, "pages");
+            Directory.CreateDirectory(pagesDIR);
+            string helperDIR = Path.Combine(appDIR, "entities");
+            Directory.CreateDirectory(helperDIR);
+
+
+
+
+            bool isFirstTable = true;
+            foreach (treeItem2 tbl in tables)
+            {
+                table_name = tbl.table_name.Capitalize();
+
+                bool hasSubTable = false;
+                refinsertSQLFields = "";
+
+                //find table reference to current table - [CREATE SUB TABLE]
+                if (General.DB is MySQL)
+                {
+                    string dummy;
+                    DataTable r = General.DB.ExecuteSQL(string.Format(refTableMySQL, table_name), out dummy, out dummy);
+
+                    if (r != null && r.Rows.Count > 0)
+                    {
+                        refTable = r.Rows[0][0].ToStrinX();
+                        refTableField = r.Rows[0][1].ToStrinX();
+
+                        if (!string.IsNullOrEmpty(refTable) && !string.IsNullOrEmpty(refTable))
+                        {
+                            hasSubTable = true;
+                            DataTable refField = General.DB.ExecuteSQL(string.Format("SHOW COLUMNS FROM {0}", refTable), out dummy, out dummy);
+                            var refFieldsCSVpre = refField.AsEnumerable().Select(x => x.Field<string>("Field")).ToList();
+                            refFieldsCSV = string.Join(", ", refFieldsCSVpre.Skip(1));
+                            refFieldsBind = string.Join(", :", refFieldsCSVpre.Skip(1));
+
+                            foreach (var refCol in refFieldsCSVpre.Skip(1))
+	                        {
+                                if (!refCol.Equals( refTableField))
+                                    refinsertSQLFields+= string.Format(refinsertSQLFieldsTemplate, refCol);
+	                        }
+
+                            lst.Items.Add("At " + table_name + " found reference with table : " + refTable);
+                            lst.Items.Add("ref field is : " + refTableField);
+                            lst.Items.Add("~~Table referenced~~");
+                            lst.Items.Add("");
+                        }
+                    }
+                }
+
+                
+
+                //index.php
+                index_tabs += string.Format(index_tabTemplate, (index_tabs.Length > 0 ? "" : " active"), table_name);
+                index_contents += string.Format(index_content_tabTemplate, (index_contents.Length > 0 ? "" : " show active"), table_name);
+                index_JS += string.Format(index_JSbTemplate, table_name);
+
+
+                string pageTableCOLS = "";
+                string helperTableCOLScsv = "";
+                string helperTableCOLSbind = "";
+                string helperTableCOLSfillGrid = "";
+                string helperTableCOLSvendorGetterInsertArr = "";
+                foreach (treeItem2fields fields in tbl.table_fields)
+                {
+                    ////check for tie table
+                    //string[] returnVAL = check4tie(fields.field_name);
+                    ////0 - ID // 1 - TXT // 2 - TABLE // 3 - DEST TABLE FIELDS COUNT
+
+                    //////////////////////////////page ENTITY accessory
+                    if (fields.field_PK)
+                        pageTableCOLS += page_table_trID.Replace("{colname}", fields.field_name);
+                    else
+                        pageTableCOLS += page_table_trOther.Replace("{colname}", fields.field_name);
+
+                    /////////////////////////////helper accessory
+                    helperTableCOLScsv += (helperTableCOLScsv.Length > 0 ? ", " : "") + fields.field_name;
+                    helperTableCOLSbind += (helperTableCOLSbind.Length > 0 ? ", :" : ":") + fields.field_name;
+                    helperTableCOLSfillGrid += string.Format("								'{0}',", fields.field_name) + "\n";
+
+                    helperTableCOLSvendorGetterInsertArr += string.Format("        '{0}' => array('JSONArrName', '{0}'),", fields.field_name) + "\n";
+                }
+
+                //////////////////////////////////////////page ENTITY
+                if (hasSubTable)
+                    page = pageTemplate.Replace("{transformJS}", page_JS_w_SubTable).Replace("{tbl}", table_name);
+                else
+                    page = pageTemplate.Replace("{transformJS}", page_JS_wo_SubTable).Replace("{tbl}", table_name);
+
+
+                //{tblprops}
+                string tblprops = isFirstTable ? "		data-toggle=\"table\"" : "";
+                if (hasSubTable)
+                    tblprops += (tblprops.Length > 0 ? "\n" : "") + "		data-detail-view=\"true\"";
+
+                //cols 
+                page = page.Replace("{tblprops}", tblprops).Replace("{cols}", pageTableCOLS);
+
+                File.WriteAllText(Path.Combine(pagesDIR, table_name + ".php"), page, outputEnc);
+
+
+                //////////////////////////////////////////page HELPER
+                if (hasSubTable)
+                {
+                   // helperGetRecordDetails = helperTemplateGetRecordDetails.Replace("{tblREF}", refTable);
+
+                    helper = helperTemplate.Replace("{swGetRecordDetails}", helperTemplateSwitchGetRecordDetails);
+
+                    helper = helper.Replace("{GetRecordDetails}", helperTemplateGetRecordDetails.Replace("{tbl}", table_name)
+                        .Replace("{tblREF}", refTable)
+                        .Replace("{pk}", refTableField));
+                     
+                    helper = helper.Replace("{AfterBaseRecordInsert}", 
+                                            helperTemplaterefAfterBaseRecordInsert.Replace("{tblREF}", refTable)
+                                            .Replace("{helperTableCOLScsv}", refFieldsCSV)
+                                            .Replace("{helperTableCOLSbind}", refFieldsBind)
+                                            .Replace("{vendorGetterBeforeInsertArr}", refinsertSQLFields)
+                                            .Replace("{pk}", refTableField)
+                                            .Replace("{tblref}", refTable)
+                                            );
+
+                    //helper = helper.Replace("{vendorGetterInsertArr}", helperTableCOLSvendorGetterInsertArr);
+                    //helper = helper.Replace("{AfterBaseRecordInsert}", "");
+                    helper = helper.Replace("{callback}", ", null, '{tbl}AfterBaseRecordInsert'");
+                    helper = helper.Replace("{vendorGetterInsertArr}", helperTableCOLSvendorGetterInsertArr);
+                    helper = helper.Replace("{tbl}", table_name);
+                    helper = helper.Replace("{csv}", helperTableCOLScsv);
+                    helper = helper.Replace("{bind}", helperTableCOLSbind);
+                    helper = helper.Replace("{fillGrid}", helperTableCOLSfillGrid);
+                }
+                else {
+                    helper = helperTemplate.Replace("{GetRecordDetails}","")
+                                            .Replace("{vendorGetterInsertArr}",helperTableCOLSvendorGetterInsertArr)
+                                            .Replace("{AfterBaseRecordInsert}", "")
+                                            .Replace("{swGetRecordDetails}","");
+
+                    //helper = helper.Replace("{vendorGetterInsertArr}", helperTableCOLSvendorGetterInsertArr);
+
+                    helper = helper.Replace("{callback}", "");
+                    helper = helper.Replace("{tbl}", table_name);
+                    helper = helper.Replace("{csv}", helperTableCOLScsv);
+                    helper = helper.Replace("{bind}", helperTableCOLSbind);
+                    helper = helper.Replace("{fillGrid}", helperTableCOLSfillGrid);
+                }
+
+                File.WriteAllText(Path.Combine(helperDIR, table_name + "Helper.php"), helper, outputEnc);
+
+
+                isFirstTable = false;
+            }
+
+
+
+
+            index = indexTemplate.Replace("{0}", index_tabs).Replace("{1}", index_contents).Replace("{2}", index_JS);
+
+
+            File.WriteAllText(Path.Combine(appDIR, "index.php"), index, outputEnc);
         }
 
         private void do_template_bootstraptable()
@@ -85,12 +297,12 @@ namespace DBManager
             string top_item = "";
 
             //table cols
-            string CRUD2template_main_TABLE_Item_template =  DBManager.Properties.Resources.CRUD2template_main_TABLE_Item;
+            string CRUD2template_main_TABLE_Item_template = DBManager.Properties.Resources.CRUD2template_main_TABLE_Item;
             string CRUD2template_main_TABLE_Item = DBManager.Properties.Resources.CRUD2template_main_TABLE_Item;
 
             //pagination
             string CRUD2template_pagination_template = DBManager.Properties.Resources.CRUD2template_pagination;
-            string CRUD2template_pagination= "";
+            string CRUD2template_pagination = "";
 
             //fetch record for edit
             string CRUD2template_fetch_template = DBManager.Properties.Resources.CRUD2template_fetch;
@@ -113,7 +325,7 @@ namespace DBManager
             string jsonValidator_template = "				             *field* : { required : true },";
             string jsonValidator = "";
 
-                        string jsonValidator_message_template = "				            *field* : 'Required Field',";
+            string jsonValidator_message_template = "				            *field* : 'Required Field',";
             string jsonValidator_message = "";
 
             //classic control (aka input)
@@ -142,7 +354,7 @@ namespace DBManager
             string CRUDtemplate_Control_DTPmalot_init_template = DBManager.Properties.Resources.CRUDtemplate_Control_DTPmalot;
             //string CRUDtemplate_Control_DTPmalot_init = "";
 
-            
+
 
             //form-control templates
             string PHPSelectDetailTemplateCOL_COMBO = DBManager.Properties.Resources.PHPpagesSELECTdetailCOL_COMBO;
@@ -161,7 +373,7 @@ namespace DBManager
             string CRUDtemplate_SAVE_DTPmalot_validation_template = DBManager.Properties.Resources.CRUDtemplate_save_dtpmalot_validation;
             //string CRUDtemplate_SAVE_DTPmalot_validation = "";
 
-            
+
 
             string col_names = "";
 
@@ -183,13 +395,13 @@ namespace DBManager
 
                 joins = select_fields = select_fields_wo_joins = fieldnames = PK = dbase2form = rows = insertFields = insertVAL = updateVAL = post_validation = save_prepared =
      CRUDtemplate_FK_Control_FILL = CRUDtemplate_FK_Control_FILL_COMBO = CRUDtemplate_FK_Control_FILL_CHECKinit = CRUDtemplate_SAVE_CHECK_validation =
-     CRUDtemplate_SAVE_CHECK_validation = CRUDtemplate_FK_Control_FILL_DTPinit = col_names = CRUD2template_main_TABLE_Item = CRUD2template_delete=CRUD2template_fetch =
-     jsonValidator = CRUD2template_pagination = jsonValidator_message = first_field = CRUDtemplate_Control_DTPtime_init = CRUDtemplate_SAVE_DTPTime_validation  = "";
-     //CRUDtemplate_SAVE_DTPmalot_validation=CRUDtemplate_Control_DTPmalot_init
+     CRUDtemplate_SAVE_CHECK_validation = CRUDtemplate_FK_Control_FILL_DTPinit = col_names = CRUD2template_main_TABLE_Item = CRUD2template_delete = CRUD2template_fetch =
+     jsonValidator = CRUD2template_pagination = jsonValidator_message = first_field = CRUDtemplate_Control_DTPtime_init = CRUDtemplate_SAVE_DTPTime_validation = "";
+                //CRUDtemplate_SAVE_DTPmalot_validation=CRUDtemplate_Control_DTPmalot_init
 
                 foreach (treeItem2fields fields in tbl.table_fields)
                 {
-                    col_names += "'" + fields.field_name +"',\r\n";
+                    col_names += "'" + fields.field_name + "',\r\n";
 
                     if (fields.field_PK)
                     {
@@ -214,7 +426,7 @@ namespace DBManager
                         if (fields.field_type.ToLower() == "bit" && chkBIT.Checked)
                         {
 
-                            
+
                             save_prepared += "$stmt->bindValue(':" + fields.field_name + "' , $" + fields.field_name + ", PDO::PARAM_INT);\r\n";
                             dbase2form += PHPSelectDetailTemplateDB2FORMcheck.Replace("*field*", fields.field_name) + "\r\n";
                         }
@@ -236,104 +448,104 @@ namespace DBManager
                             dbase2form += PHPSelectDetailTemplateDB2FORM.Replace("*field*", fields.field_name) + "\r\n";
                         }
 
-                            string[] returnVAL = check4tie(fields.field_name);
-                            //0 - ID // 1 - TXT // 2 - TABLE
+                        string[] returnVAL = check4tie(fields.field_name);
+                        //0 - ID // 1 - TXT // 2 - TABLE
 
-                            if (returnVAL[0] != null && returnVAL[1] != null && returnVAL[2] != null)
-                            {
-                                //PHP - read values from original tables (aka FOREIGN)
-                                CRUDtemplate_FK_Control_FILL += CRUDtemplate_FK_Control_FILL_template.Replace("#table#", returnVAL[2]).Replace("#txt#", returnVAL[1]);
-                                //CRUDtemplate_FK_Control_FILL += CRUDtemplate_FK_Control_FILL.Replace("#txt#", returnVAL[1]);
+                        if (returnVAL[0] != null && returnVAL[1] != null && returnVAL[2] != null)
+                        {
+                            //PHP - read values from original tables (aka FOREIGN)
+                            CRUDtemplate_FK_Control_FILL += CRUDtemplate_FK_Control_FILL_template.Replace("#table#", returnVAL[2]).Replace("#txt#", returnVAL[1]);
+                            //CRUDtemplate_FK_Control_FILL += CRUDtemplate_FK_Control_FILL.Replace("#txt#", returnVAL[1]);
 
-                                //JS - store it to COMBO
-                                CRUDtemplate_FK_Control_FILL_COMBO += CRUDtemplate_FK_Control_FILL_COMBO_template.Replace("#table#", returnVAL[2]).Replace("#TXT#", returnVAL[1]).Replace("#PK#", returnVAL[0]).Replace("#FK_NAME#", fields.field_name);
+                            //JS - store it to COMBO
+                            CRUDtemplate_FK_Control_FILL_COMBO += CRUDtemplate_FK_Control_FILL_COMBO_template.Replace("#table#", returnVAL[2]).Replace("#TXT#", returnVAL[1]).Replace("#PK#", returnVAL[0]).Replace("#FK_NAME#", fields.field_name);
 
-                                joins += "\r\n LEFT JOIN " + returnVAL[2] + " ON " + returnVAL[2] + "." + returnVAL[0] + " = " + table_name + "." + fields.field_name;
+                            joins += "\r\n LEFT JOIN " + returnVAL[2] + " ON " + returnVAL[2] + "." + returnVAL[0] + " = " + table_name + "." + fields.field_name;
 
-                                //add select element when foreign key found!
-                                rows += PHPSelectDetailTemplateCOL_COMBO.Replace("*field*", fields.field_name) + "\r\n";
+                            //add select element when foreign key found!
+                            rows += PHPSelectDetailTemplateCOL_COMBO.Replace("*field*", fields.field_name) + "\r\n";
 
-                                select_fields += returnVAL[2] + "." + returnVAL[1] + " as " + fields.field_name + ", ";
-                                select_fields_wo_joins += fields.field_name + ", ";
-                            }
-                            else if (fields.field_type.ToLower() == "bit" && chkBIT.Checked)
-                            {
-                                rows += PHPSelectDetailTemplateCOL_CHECK.Replace("*field*", fields.field_name) + "\r\n";
-                                select_fields += fields.field_name + ", ";
-                                select_fields_wo_joins += fields.field_name + ", ";
+                            select_fields += returnVAL[2] + "." + returnVAL[1] + " as " + fields.field_name + ", ";
+                            select_fields_wo_joins += fields.field_name + ", ";
+                        }
+                        else if (fields.field_type.ToLower() == "bit" && chkBIT.Checked)
+                        {
+                            rows += PHPSelectDetailTemplateCOL_CHECK.Replace("*field*", fields.field_name) + "\r\n";
+                            select_fields += fields.field_name + ", ";
+                            select_fields_wo_joins += fields.field_name + ", ";
 
-                                CRUDtemplate_FK_Control_FILL_CHECKinit += CRUDtemplate_FK_Control_FILL_CHECKinit_template.Replace("*field*", fields.field_name);
+                            CRUDtemplate_FK_Control_FILL_CHECKinit += CRUDtemplate_FK_Control_FILL_CHECKinit_template.Replace("*field*", fields.field_name);
 
 
-                                CRUDtemplate_SAVE_CHECK_validation += CRUDtemplate_SAVE_CHECK_validation_template.Replace("*field*", fields.field_name).Replace("*0var*", "0");
-                            }
-                            else if (fields.field_type.ToLower() == "tinyint" && chkTINYINT.Checked)
-                            {
-                                rows += PHPSelectDetailTemplateCOL_CHECK.Replace("*field*", fields.field_name) + "\r\n";
-                                select_fields += fields.field_name + ", ";
-                                select_fields_wo_joins += fields.field_name + ", ";
+                            CRUDtemplate_SAVE_CHECK_validation += CRUDtemplate_SAVE_CHECK_validation_template.Replace("*field*", fields.field_name).Replace("*0var*", "0");
+                        }
+                        else if (fields.field_type.ToLower() == "tinyint" && chkTINYINT.Checked)
+                        {
+                            rows += PHPSelectDetailTemplateCOL_CHECK.Replace("*field*", fields.field_name) + "\r\n";
+                            select_fields += fields.field_name + ", ";
+                            select_fields_wo_joins += fields.field_name + ", ";
 
-                                CRUDtemplate_FK_Control_FILL_CHECKinit += CRUDtemplate_FK_Control_FILL_CHECKinit_template.Replace("*field*", fields.field_name);
+                            CRUDtemplate_FK_Control_FILL_CHECKinit += CRUDtemplate_FK_Control_FILL_CHECKinit_template.Replace("*field*", fields.field_name);
 
-                                CRUDtemplate_SAVE_CHECK_validation += CRUDtemplate_SAVE_CHECK_validation_template.Replace("*field*", fields.field_name).Replace("*0var*", "\"0\"");
-                            }
-                            else if (chkDATE.Checked && fields.field_type.ToLower() == "date")
-                            {
-                                rows += PHPSelectDetailTemplateCOL_DTP.Replace("*field*", fields.field_name) + "\r\n";
-                                select_fields += fields.field_name + ", ";
-                                select_fields_wo_joins += fields.field_name + ", ";
+                            CRUDtemplate_SAVE_CHECK_validation += CRUDtemplate_SAVE_CHECK_validation_template.Replace("*field*", fields.field_name).Replace("*0var*", "\"0\"");
+                        }
+                        else if (chkDATE.Checked && fields.field_type.ToLower() == "date")
+                        {
+                            rows += PHPSelectDetailTemplateCOL_DTP.Replace("*field*", fields.field_name) + "\r\n";
+                            select_fields += fields.field_name + ", ";
+                            select_fields_wo_joins += fields.field_name + ", ";
 
-                                CRUDtemplate_FK_Control_FILL_DTPinit += CRUDtemplate_FK_Control_FILL_DTPinit_template.Replace("*field*", fields.field_name);
-                            }
-                            else if (chkDATEmalot.Checked && fields.field_type.ToLower() == "date")
-                            {
-                                rows += PHPSelectDetailTemplateCOL_DTPmalot.Replace("*field*", fields.field_name) + "\r\n";
-                                select_fields += "DATE_FORMAT(" + fields.field_name + ",'%d-%m-%Y') as " + fields.field_name + ", ";
-                                select_fields_wo_joins += "DATE_FORMAT(" + fields.field_name + ",'%d-%m-%Y') as " + fields.field_name + ", ";
+                            CRUDtemplate_FK_Control_FILL_DTPinit += CRUDtemplate_FK_Control_FILL_DTPinit_template.Replace("*field*", fields.field_name);
+                        }
+                        else if (chkDATEmalot.Checked && fields.field_type.ToLower() == "date")
+                        {
+                            rows += PHPSelectDetailTemplateCOL_DTPmalot.Replace("*field*", fields.field_name) + "\r\n";
+                            select_fields += "DATE_FORMAT(" + fields.field_name + ",'%d-%m-%Y') as " + fields.field_name + ", ";
+                            select_fields_wo_joins += "DATE_FORMAT(" + fields.field_name + ",'%d-%m-%Y') as " + fields.field_name + ", ";
 
-                                CRUDtemplate_Control_DTPtime_init += CRUDtemplate_Control_DTPmalot_init_template.Replace("*field*", fields.field_name);
+                            CRUDtemplate_Control_DTPtime_init += CRUDtemplate_Control_DTPmalot_init_template.Replace("*field*", fields.field_name);
 
-                                CRUDtemplate_SAVE_DTPTime_validation += CRUDtemplate_SAVE_DTPmalot_validation_template.Replace("*field*", fields.field_name);
+                            CRUDtemplate_SAVE_DTPTime_validation += CRUDtemplate_SAVE_DTPmalot_validation_template.Replace("*field*", fields.field_name);
 
-                                save_prepared += "$stmt->bindValue(':" + fields.field_name + "' , $" + fields.field_name + ");\r\n";
+                            save_prepared += "$stmt->bindValue(':" + fields.field_name + "' , $" + fields.field_name + ");\r\n";
 
-                            }
-                            else if (chkDATETIME.Checked && fields.field_type.ToLower() == "datetime")
-                            {
-                                rows += PHPSelectDetailTemplateCOL_DTPtime.Replace("*field*", fields.field_name) + "\r\n";
-                                select_fields += "DATE_FORMAT(" + fields.field_name + ",'%d-%m-%Y %H:%i') as " + fields.field_name + ", ";
-                                select_fields_wo_joins += "DATE_FORMAT(" + fields.field_name + ",'%d-%m-%Y %H:%i') as " + fields.field_name + ", ";
+                        }
+                        else if (chkDATETIME.Checked && fields.field_type.ToLower() == "datetime")
+                        {
+                            rows += PHPSelectDetailTemplateCOL_DTPtime.Replace("*field*", fields.field_name) + "\r\n";
+                            select_fields += "DATE_FORMAT(" + fields.field_name + ",'%d-%m-%Y %H:%i') as " + fields.field_name + ", ";
+                            select_fields_wo_joins += "DATE_FORMAT(" + fields.field_name + ",'%d-%m-%Y %H:%i') as " + fields.field_name + ", ";
 
-                                CRUDtemplate_Control_DTPtime_init += CRUDtemplate_Control_DTPtime_init_template.Replace("*field*", fields.field_name);
+                            CRUDtemplate_Control_DTPtime_init += CRUDtemplate_Control_DTPtime_init_template.Replace("*field*", fields.field_name);
 
-                                CRUDtemplate_SAVE_DTPTime_validation += CRUDtemplate_SAVE_DTPTime_validation_template.Replace("*field*", fields.field_name);
+                            CRUDtemplate_SAVE_DTPTime_validation += CRUDtemplate_SAVE_DTPTime_validation_template.Replace("*field*", fields.field_name);
 
-                                //if (chkDATETIME.Checked && fields.field_type.ToLower() == "datetime")
-                                    save_prepared += "$stmt->bindValue(':" + fields.field_name + "' , $" + fields.field_name + ");\r\n";
-                            }
-                            else
-                            {
-                                if (first_field.Length == 0)
-                                    first_field = fields.field_name;
+                            //if (chkDATETIME.Checked && fields.field_type.ToLower() == "datetime")
+                            save_prepared += "$stmt->bindValue(':" + fields.field_name + "' , $" + fields.field_name + ");\r\n";
+                        }
+                        else
+                        {
+                            if (first_field.Length == 0)
+                                first_field = fields.field_name;
 
-                                
-                                rows += PHPSelectDetailTemplateCOL.Replace("*field*", fields.field_name).Replace("*fieldsize*",fields.field_size) + "\r\n";
-                                select_fields += fields.field_name + ", ";
-                                select_fields_wo_joins += fields.field_name + ", ";
 
-                                jsonValidator += jsonValidator_template.Replace("*field*", fields.field_name) + "\r\n";
-                                jsonValidator_message += jsonValidator_message_template.Replace("*field*", fields.field_name) + "\r\n";
+                            rows += PHPSelectDetailTemplateCOL.Replace("*field*", fields.field_name).Replace("*fieldsize*", fields.field_size) + "\r\n";
+                            select_fields += fields.field_name + ", ";
+                            select_fields_wo_joins += fields.field_name + ", ";
 
-                            }
+                            jsonValidator += jsonValidator_template.Replace("*field*", fields.field_name) + "\r\n";
+                            jsonValidator_message += jsonValidator_message_template.Replace("*field*", fields.field_name) + "\r\n";
 
-                            //countDetail += 1;
                         }
 
+                        //countDetail += 1;
+                    }
 
-                        //tab_customers.php
-                        fieldnames += "	'" + fields.field_name + "',\r\n";
 
-                    
+                    //tab_customers.php
+                    fieldnames += "	'" + fields.field_name + "',\r\n";
+
+
 
                 }//table fields end
 
@@ -342,7 +554,7 @@ namespace DBManager
                 top_item = top_item.Replace("#ltable#", table_name.ToLower());
                 top_item = top_item.Replace("#PK#", PK.ToLower());
                 top_item = top_item.Replace("#table_cols#", CRUD2template_main_TABLE_Item);
-                top_item = top_item.Replace("#controls#", rows.Replace("<div class=\"col-xs-6 col-md-4\">","").Replace("</div>\r\n			</div>","</div>"));
+                top_item = top_item.Replace("#controls#", rows.Replace("<div class=\"col-xs-6 col-md-4\">", "").Replace("</div>\r\n			</div>", "</div>"));
                 top_item = top_item.Replace("#first_field#", first_field);
                 top_item = top_item.Replace("#dbase2form#", dbase2form);
                 top_item = top_item.Replace("#jsonValidator_template#", jsonValidator);
@@ -353,16 +565,16 @@ namespace DBManager
                 File.WriteAllText(apppath + "tab_" + table_name + ".php", top_item, outputEnc);
 
 
-               //_pagination.php
+                //_pagination.php
                 if (select_fields.Length > 2)
                 {
                     select_fields = select_fields.Substring(0, select_fields.Length - 2);
                     select_fields_wo_joins = select_fields_wo_joins.Substring(0, select_fields_wo_joins.Length - 2);
                 }
 
-                CRUD2template_pagination=                 CRUD2template_pagination_template.Replace("#cols#",col_names);
-                CRUD2template_pagination=                 CRUD2template_pagination.Replace("#select_cols#",select_fields);
-                CRUD2template_pagination=                 CRUD2template_pagination.Replace("#table#",table_name);
+                CRUD2template_pagination = CRUD2template_pagination_template.Replace("#cols#", col_names);
+                CRUD2template_pagination = CRUD2template_pagination.Replace("#select_cols#", select_fields);
+                CRUD2template_pagination = CRUD2template_pagination.Replace("#table#", table_name);
                 CRUD2template_pagination = CRUD2template_pagination.Replace("#joins#", joins);
                 File.WriteAllText(apppath + "tab_" + table_name + "_pagination.php", CRUD2template_pagination, outputEnc);
 
@@ -383,7 +595,7 @@ namespace DBManager
                     insertVAL = insertVAL.Substring(0, insertVAL.Length - 2);
                     updateVAL = updateVAL.Substring(0, updateVAL.Length - 2);
 
-                    if (post_validation.Length>4)
+                    if (post_validation.Length > 4)
                         post_validation = post_validation.Substring(0, post_validation.Length - 4);
 
 
@@ -584,12 +796,12 @@ namespace DBManager
                         {
                             rows += PHPSelectDetailTemplateCOL_DTPmalot.Replace("*field*", fields.field_name) + "\r\n";
                             select_fields += "DATE_FORMAT(" + fields.field_name + ",'%d-%m-%Y') as " + fields.field_name + ", ";
-                            
+
                             CRUDtemplate_Control_DTPtime_init += CRUDtemplate_Control_DTPmalot_init_template.Replace("*field*", fields.field_name);
 
                             CRUDtemplate_SAVE_DTPTime_validation += CRUDtemplate_SAVE_DTPmalot_validation_template.Replace("*field*", fields.field_name);
 
-                            
+
 
                         }
                         else if (chkDATETIME.Checked && fields.field_type.ToLower() == "datetime")
@@ -689,7 +901,7 @@ namespace DBManager
 
         private string[] check4tie(string field_name)
         {
-            string[] returnVAL = { null, null, null };
+            string[] returnVAL = { null, null, null, null };
 
             if (field_name.ToLower().EndsWith("_id"))
             {
@@ -748,7 +960,7 @@ namespace DBManager
                         {
                             lst.Items.Add("TextField is : " + i.field_name);
                             returnVAL[1] = i.field_name;
-
+                            returnVAL[3] = tables[res].table_fields.Count.ToString();
                             lst.Items.Add("~~Table referenced~~");
                             lst.Items.Add("");
 
@@ -784,19 +996,20 @@ namespace DBManager
                 img_template_preview.Image = DBManager.Properties.Resources.templateCRUDadminLTE;
             else if (cmbTemplate.SelectedIndex == 1)
                 img_template_preview.Image = DBManager.Properties.Resources.templateCRUDbootstraptable;
-
+            else if (cmbTemplate.SelectedIndex == 2)
+                img_template_preview.Image = DBManager.Properties.Resources.templateCRUDbootstraptable5;
         }
 
         private void chkDATE_CheckedChanged(object sender, EventArgs e)
         {
             if (chkDATE.Checked)
-            chkDATEmalot.Checked = !chkDATE.Checked;
+                chkDATEmalot.Checked = !chkDATE.Checked;
         }
 
         private void chkDATEmalot_CheckedChanged(object sender, EventArgs e)
         {
             if (chkDATEmalot.Checked)
-            chkDATE.Checked = !chkDATEmalot.Checked;
+                chkDATE.Checked = !chkDATEmalot.Checked;
         }
 
 

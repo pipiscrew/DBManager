@@ -339,6 +339,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\PHPtemplate.zip" />
+    <None Include="Resources\PHPtemplateAPIbootstraptable.zip" />
     <None Include="Resources\PHPtemplateCRUD.zip" />
     <None Include="Resources\PHPtemplateCRUDbootstraptable.zip" />
     <None Include="Resources\text_marked.png" />
@@ -367,6 +368,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="data.ico" />
+    <None Include="Resources\CRUD3template_helper_AfterBaseRecordInsert.txt" />
+    <None Include="Resources\CRUD3template_helper_Switch_GetRecordDetails.txt" />
+    <None Include="Resources\CRUD3template_helper_GetRecordDetails.txt" />
+    <None Include="Resources\CRUD3template_helper.txt" />
+    <None Include="Resources\CRUD3template_page_w_subtable.txt" />
+    <None Include="Resources\CRUD3template_page.txt" />
+    <None Include="Resources\CRUD3template_index.txt" />
+    <None Include="Resources\CRUD3template_index_JS_gridload.txt" />
+    <None Include="Resources\CRUD3template_index_tab_content.txt" />
+    <None Include="Resources\CRUD3template_index_tab.txt" />
+    <None Include="Resources\templateCRUDbootstraptable5.png" />
     <None Include="Resources\tunnelPHP_PDO_SQLServer.txt" />
     <None Include="Resources\tunnelPHP_PDO.txt" />
     <None Include="Resources\CRUDtemplate_save_dtptime_validation1.txt" />

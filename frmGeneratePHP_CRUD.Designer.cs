@@ -53,7 +53,7 @@
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(65)))), ((int)(((byte)(160)))));
             this.label3.Location = new System.Drawing.Point(505, 177);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(114, 17);
+            this.label3.Size = new System.Drawing.Size(113, 17);
             this.label3.TabIndex = 43;
             this.label3.Text = "Template Name :";
             // 
@@ -64,7 +64,8 @@
             this.cmbTemplate.FormattingEnabled = true;
             this.cmbTemplate.Items.AddRange(new object[] {
             "AdminLTE",
-            "bootstrap-table by wenzhixin"});
+            "bootstrap-table by wenzhixin",
+            "bootstrap-table for b5"});
             this.cmbTemplate.Location = new System.Drawing.Point(620, 175);
             this.cmbTemplate.Name = "cmbTemplate";
             this.cmbTemplate.Size = new System.Drawing.Size(191, 24);

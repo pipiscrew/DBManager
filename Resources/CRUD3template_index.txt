@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>PipisCrew</title>
+
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
+		<link rel="stylesheet" href="assets/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/bootstrap-table.min.css">
+		<link rel="stylesheet" href="assets/fontawessome.css">
+
+		<script src="assets/jquery.min.js"> </script>
+		<script src="assets/bootstrap.bundle.min.js"> </script> <!-- bootstrap.min.js OR bundle.min.js -->
+		<script src="assets/bootstrap-table.min.js"> </script>
+
+	</head>
+	<body>
+
+		<!-- TABS [START] -->
+		<ul class="nav nav-tabs" role="tablist">
+
+{0}
+
+		</ul>
+		<!-- TABS [END] -->
+
+
+		<!-- TABS Content [START] -->
+		<div id="tabsContent" class="tab-content">
+
+{1}
+
+		</div>
+		<!-- TABS Content [END] -->
+
+
+		<script>
+
+			$('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (event) {
+				//table-bordered - if the table already transformed
+				//resetView - https://bootstrap-table.com/docs/api/methods/#resetview
+
+				switch ($(event.currentTarget).data('bsTarget')){
+
+{2}
+					default :
+					break;
+				}
+
+			})
+
+		</script>
+
+	</body>
+</html>

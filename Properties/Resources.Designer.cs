@@ -19,7 +19,7 @@ namespace DBManager.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -188,7 +188,7 @@ namespace DBManager.Properties {
         ///		&lt;/title&gt;
         ///		&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
         ///		&lt;link rel=&quot;stylesheet&quot; href=&quot;css/bootstrap.min.css&quot;&gt;
-        ///		&lt;link rel=&quot;stylesheet&quot; hr [rest of string was truncated]&quot;;.
+        ///		 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CRUD2template_main {
             get {
@@ -242,7 +242,7 @@ namespace DBManager.Properties {
         ///$count_query_sql = &quot;select count(*) from #table#&quot;;
         ///
         ///
-        /////////////////////////////////////////WHEN [rest of string was truncated]&quot;;.
+        ///////////// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CRUD2template_pagination {
             get {
@@ -277,13 +277,203 @@ namespace DBManager.Properties {
         ///{
         ///	$sql = &quot;UPDATE #tblname# set #updateVAL# where #updateWhere#=:#updateWhere#&quot;;
         ///	$stmt = $db-&gt;prepare($sql);
-        ///	$stmt-&gt;bindValue(&apos;:#updateWhere#&apos; , $_POST[&apos;#tblname#FORM_updateID&apos;]);
-        ///}
-        ///else [rest of string was truncated]&quot;;.
+        ///	$stmt-&gt;bindValue(&apos;:#updateWhere#&apos; , $_POST[&apos;#tblnam [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CRUD2template_save {
             get {
                 return ResourceManager.GetString("CRUD2template_save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?php
+        ///
+        ///require_once &apos;../vendor/general.php&apos;;
+        ///require_once &apos;../vendor/VendorGetter.php&apos;;
+        ///
+        ///if (!isset($_POST[&apos;action&apos;])){
+        ///	ReportJS(1, &apos;No valid parameter!&apos;);
+        ///	exit;
+        ///}
+        ///
+        ///////////////////ACTIONS
+        ///$action = $_POST[&apos;action&apos;];
+        ///
+        ///switch ($action) {
+        ///	case &apos;GetVendor{tbl}JS&apos; :
+        ///		GetVendor{tbl}JS();
+        ///		break;
+        ///{swGetRecordDetails}
+        ///	case &apos;GetVendor{tbl}CRON&apos; :
+        ///		//todo
+        ///		break;
+        ///	case &apos;FillGrid&apos; :
+        ///		FillGrid();
+        ///		break;
+        ///	default :
+        ///		ReportJS(2, &apos;No action defined!&apos;);
+        ///		exit;
+        ///}
+        ///
+        ///{GetRecordDetails [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CRUD3template_helper {
+            get {
+                return ResourceManager.GetString("CRUD3template_helper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to //this function gets executed after base record inserted
+        ///function {tbl}AfterBaseRecordInsert($db, $baseTableID, $data){
+        ///
+        ///    if ($data == null)
+        ///        return;
+        ///
+        ///    $ignored = 0;
+        ///    $failed = 0;
+        ///    $nullrec = 0;
+        ///    $added = 0;
+        ///
+        ///    $insertSQL = &apos;INSERT INTO `{tblREF}` ({helperTableCOLScsv}) VALUES (:{helperTableCOLSbind})&apos;;
+        ///
+        ///	//unlimited depth &apos;x&apos; =&gt; array(&apos;coverage&apos;, &apos;fixtures&apos;, &apos;x&apos;),
+        ///	//key = dbase field, array = object direction to JSON field
+        ///    $insertSQLFields = array(
+        ///{vendorGetter [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CRUD3template_helper_AfterBaseRecordInsert {
+            get {
+                return ResourceManager.GetString("CRUD3template_helper_AfterBaseRecordInsert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to function GetRecordDetails{tbl}JS(){
+        ///
+        ///    $recID = $_POST[&apos;recID&apos;];
+        ///
+        ///    $db = new dbase();
+        ///    $db-&gt;connect_mysql();
+        ///
+        ///    echo json_encode($db-&gt;getSet(&quot;select * from {tblREF} where {pk}=$recID&quot;, null));
+        ///}.
+        /// </summary>
+        internal static string CRUD3template_helper_GetRecordDetails {
+            get {
+                return ResourceManager.GetString("CRUD3template_helper_GetRecordDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to     case &apos;GetRecordDetails{tbl}JS&apos; :
+        ///        GetRecordDetails{tbl}JS();
+        ///        break;.
+        /// </summary>
+        internal static string CRUD3template_helper_Switch_GetRecordDetails {
+            get {
+                return ResourceManager.GetString("CRUD3template_helper_Switch_GetRecordDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;!DOCTYPE html&gt;
+        ///&lt;html lang=&quot;en&quot;&gt;
+        ///	&lt;head&gt;
+        ///		&lt;meta charset=&quot;utf-8&quot;&gt;
+        ///		&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+        ///		&lt;title&gt;PipisCrew&lt;/title&gt;
+        ///
+        ///		&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback&quot;&gt;
+        ///
+        ///		&lt;link rel=&quot;stylesheet&quot; href=&quot;assets/bootstrap.min.css&quot;&gt;
+        ///		&lt;link rel=&quot;stylesheet&quot; href=&quot;assets/bootstrap-table.min.css&quot;&gt;
+        ///		&lt;link rel=&quot;stylesheet&quot; href=&quot;assets/fontawessome.css&quot;&gt;
+        ///
+        ///		&lt;script src=&quot;assets/jquery.m [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CRUD3template_index {
+            get {
+                return ResourceManager.GetString("CRUD3template_index", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to       case &apos;#{0}&apos; :
+        ///      if (!$(&quot;#table{0}&quot;).hasClass(&apos;table-bordered&apos;))
+        ///            RefreshGrid{0}();
+        ///      else 
+        ///            $(&apos;#table{0}&apos;).bootstrapTable(&apos;resetView&apos;);
+        ///      break;
+        ///.
+        /// </summary>
+        internal static string CRUD3template_index_JS_gridload {
+            get {
+                return ResourceManager.GetString("CRUD3template_index_JS_gridload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to         &lt;li class=&quot;nav-item&quot;&gt;
+        ///          &lt;button class=&quot;nav-link{0}&quot; data-bs-toggle=&quot;tab&quot; data-bs-target=&quot;#{1}&quot; type=&quot;button&quot; role=&quot;tab&quot;&gt;{1}&lt;/button&gt;
+        ///        &lt;/li&gt;
+        ///.
+        /// </summary>
+        internal static string CRUD3template_index_tab {
+            get {
+                return ResourceManager.GetString("CRUD3template_index_tab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;div class=&quot;tab-pane fade{0}&quot; role=&quot;tabpanel&quot; id=&quot;{1}&quot;&gt;
+        ///&lt;?php include (&quot;pages/{1}.php&quot;); ?&gt;
+        ///&lt;/div&gt;
+        ///.
+        /// </summary>
+        internal static string CRUD3template_index_tab_content {
+            get {
+                return ResourceManager.GetString("CRUD3template_index_tab_content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;!-- ====================================================================================== {tbl} ====================================================================================== --&gt;
+        ///&lt;script&gt;
+        ///
+        ///    function RefreshGrid{tbl}(){
+        ///{transformJS}
+        ///    }
+        ///	
+        ///	//Bootstrap table - #extra parameter# to identify is going for pagination
+        ///	function queryParams(params) {
+        ///		// ref - https://examples.bootstrap-table.com/index.html#options/query-params.html#view-source
+        ///		params.action = &apos;FillGrid&apos;;
+        ///		return para [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CRUD3template_page {
+            get {
+                return ResourceManager.GetString("CRUD3template_page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to             $(&quot;#table{tbl}&quot;).bootstrapTable({
+        ///
+        ///                onExpandRow: function (index, row, $detail) {
+        ///
+        ///                    $.ajax({
+        ///                            url : &apos;entities/{tbl}Helper.php&apos;,
+        ///                            dataType : &apos;json&apos;,
+        ///                            type : &apos;POST&apos;,
+        ///                            data : { &apos;action&apos; : &apos;GetRecordDetails{tbl}JS&apos;, &apos;recID&apos; : row.id },
+        ///                            success : function(data) {
+        ///                                
+        ///                            [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CRUD3template_page_w_subtable {
+            get {
+                return ResourceManager.GetString("CRUD3template_page_w_subtable", resourceCulture);
             }
         }
         
@@ -434,8 +624,7 @@ namespace DBManager.Properties {
         ///if($g == 1)
         ///	header(&quot;Location: tab_#table#.php?isdelete=1&quot;);
         ///else
-        ///	header(&quot;Location: tab_#table#.php?iserror=1&quot;);
-        ///?&gt;.
+        ///	header(&quot;Location: tab_#table#.php?i [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CRUDtemplate_delete {
             get {
@@ -472,9 +661,7 @@ namespace DBManager.Properties {
         ///	$stmt-&gt;bindValue(&apos;:id&apos;, $_GET[&quot;id&quot;]);
         ///	
         ///	$stmt-&gt;execute();
-        ///	$row = $stmt-&gt;fetchAll();
-        ///}
-        ///////// [rest of string was truncated]&quot;;.
+        ///	$row = [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CRUDtemplate_detail {
             get {
@@ -513,7 +700,7 @@ namespace DBManager.Properties {
         ///	}
         ///
         ///	$(&quot;[name=#FK_NAME#]&quot;).html(combo_#table#_rows);
-        ///	$(&quot;[name=#FK_NAME#]&quot;).change(); //select row 0 - no conflict on POST validation @ P [rest of string was truncated]&quot;;.
+        ///	$(&quot;[name=#FK_NAME#]&quot;).change(); //select row 0 - no conflict on POST val [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CRUDtemplate_FK_Control_FILL_COMBO {
             get {
@@ -550,8 +737,7 @@ namespace DBManager.Properties {
         ///if(isset($_POST[&apos;#tblname#FORM_updateID&apos;]) &amp;&amp; !empty($_POST[&apos;#tblname#FORM_updateID&apos;]))
         ///{
         ///	$sql = &quot;UPDATE `#tblname#` set #updateVAL# WHERE #updateWhere#=:#updateWhere#&quot;;
-        ///	$stmt = $db-&gt;prepare($sql);
-        ///	$stmt-&gt;bindValue(&apos; [rest of string was truncated]&quot;;.
+        ///	$stmt = $db-&gt;prepar [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CRUDtemplate_save {
             get {
@@ -644,7 +830,7 @@ namespace DBManager.Properties {
         ///$rows_sql = $stmt-&gt;fetchAll();
         ///$rows= array();
         ///
-        ///foreach($rows_sql as $row_key =&gt; $row [rest of string was truncated]&quot;;.
+        ///forea [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CRUDtemplate_table {
             get {
@@ -665,7 +851,7 @@ namespace DBManager.Properties {
         ///		&lt;!-- Theme style --&gt;
         ///		&lt;link href=&quot;css/AdminLTE.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;
         ///		&lt;!-- Datatables style --&gt;
-        ///		&lt;link href=&quot;css/datatables/dataTables.b [rest of string was truncated]&quot;;.
+        ///		&lt;link href=&quot;css/datatables/ [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CRUDtemplate_top {
             get {
@@ -681,7 +867,7 @@ namespace DBManager.Properties {
         ///									&lt;a href=&quot;tab_#table#.php&quot; style=&quot;margin-left: 10px;&quot;&gt;&lt;i class=&quot;glyphicon glyphicon-list&quot;&gt;&lt;/i&gt; List&lt;/a&gt;
         ///								&lt;/li&gt;
         ///								&lt;li &gt;
-        ///									&lt;a href=&quot;tab_#table#_details.php&quot; style [rest of string was truncated]&quot;;.
+        ///									&lt;a href=&quot;tab_#table#_details.php [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CRUDtemplate_top_item {
             get {
@@ -774,9 +960,7 @@ namespace DBManager.Properties {
         /////close the statement
         ///$stmt -&gt; close();
         ///
-        ///$db -&gt; close();
-        ///
-        ///?&gt;.
+        ///$db  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string mySQLtunnelPHPproc_save {
             get {
@@ -811,10 +995,7 @@ namespace DBManager.Properties {
         ///else
         ///{
         ///	$sql = &quot;INSERT INTO `#tblname#` (#insertFields#) VALUES (#insertVAL#)&quot;;
-        ///	$stmt = $db-&gt;prepare($sql);
-        ///}
-        ///
-        ///# [rest of string was truncated]&quot;;.
+        ///	$stmt = $db-&gt;pre [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string PDOprepared {
             get {
@@ -864,8 +1045,7 @@ namespace DBManager.Properties {
         ///		&lt;link href=&quot;css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;
         /// 
         ///		&lt;script type=&apos;text/javascript&apos; src=&quot;js/jquery-1.10.2.min.js&quot;&gt;&lt;/script&gt;
-        ///		&lt;script type=&apos;text/javascript&apos; src=&quot;js/bootstrap.min.js&quot;&gt;&lt;/script&gt;
-        ///		&lt;!-- &lt;scrip [rest of string was truncated]&quot;;.
+        ///		&lt;script type=&apos;text/javascript&apos; src=&quot;js/bootstrap.min.js&quot;&gt;&lt;/sc [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string PHPpagesPORTALexample {
             get {
@@ -904,10 +1084,7 @@ namespace DBManager.Properties {
         ///
         ///	$g = $stmt -&gt; affected_rows;
         ///
-        ///	if ($g == -1)
-        ///		echo &quot;error&quot;;
-        ///	else
-        ///		 [rest of string was truncated]&quot;;.
+        ///	if ($g = [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string PHPpagesPORTALprocedureDELETE_callexample {
             get {
@@ -919,7 +1096,7 @@ namespace DBManager.Properties {
         ///   Looks up a localized string similar to &lt;?php
         ///
         ///
-        ///if (!isset($_POST[&apos;comp_title&apos;]) || !isset($_POST[&apos;comp_name&apos;]) || !isset($_POST[&apos;cmp_password&apos;]) || !isset($_POST[&apos;page_editor&apos;]) || !isset($_POST[&apos;admin_name&apos;]) || !isset($_POST[&apos;comp_address&apos;]) || !isset($_POST[&apos;zipcode&apos;]) || !isset($_POST[&apos;area&apos;]) || !isset($_POST[&apos;phone_old&apos;]) || !isset($_POST[&apos;fax&apos;]) || !isset($_POST[&apos;email&apos;]) || !isset($_POST[&apos;url&apos;]) || !isset($_POST[&apos;member_group&apos;]) || !isset($_POST[&apos;member_international&apos;]) || !isset($_POST[&apos;member_syndicate&apos;]) || !isset($_POST[&apos;media_unit&apos;] [rest of string was truncated]&quot;;.
+        ///if (!isset($_POST[&apos;comp_title&apos;]) || !isset($_POST[&apos;comp_name&apos;]) || !isset($_POST[&apos;cmp_password&apos;]) || !isset($_POST[&apos;page_editor&apos;]) || !isset($_POST[&apos;admin_name&apos;]) || !isset($_POST[&apos;comp_address&apos;]) || !isset($_POST[&apos;zipcode&apos;]) || !isset($_POST[&apos;area&apos;]) || !isset($_POST[&apos;phone_old&apos;]) || !isset($_POST[&apos;fax&apos;]) || !isset($_POST[&apos;email&apos;]) || !isset($_POST[&apos;url&apos;]) || !isset($_POST[&apos;member_group&apos;]) || !isset($_POST[&apos;member_international&apos;]) || !isset($_POST[&apos;member_syndicate&apos;]) || !isset($_POST[&apos;media_uni [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string PHPpagesPORTALprocedureSAVE_callexample {
             get {
@@ -945,7 +1122,7 @@ namespace DBManager.Properties {
         ///
         ///BEGIN
         ///
-        ///IF rec_idVAR=0 TH [rest of string was truncated]&quot;;.
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string PHPpagesPORTALprocedureSAVEexample {
             get {
@@ -979,8 +1156,7 @@ namespace DBManager.Properties {
         ///			data : {
         ///				page : page,
         ///				where : $(&quot;#**table**_search_combo&quot;).val(),
-        ///				where_val : $(&quot;#**table**_search_txt&quot;).val(),
-        ///				sort_val : [rest of string was truncated]&quot;;.
+        ///				where_val : $(&quot;#**table**_search_tx [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string PHPpagesSELECT {
             get {
@@ -1013,8 +1189,7 @@ namespace DBManager.Properties {
         ///// $categories;
         ///// $x = 0;
         ///// 
-        ///// while ($row = $result -&gt; fetch_assoc()) {
-        ///	// $categori [rest of string was truncated]&quot;;.
+        ///// while ($row = $result -&gt; fetch_ [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string PHPpagesSELECTdetail {
             get {
@@ -1145,8 +1320,7 @@ namespace DBManager.Properties {
         /// */
         /// 
         ///$where = &quot;&quot;;
-        ///if (isset($_GET[&apos;where&apos;]) &amp;&amp; isset($_GET[&apos;where_val&apos;])) {
-        /////	if ( [rest of string was truncated]&quot;;.
+        ///if (isset($_GET[&apos;where&apos;]) &amp;&amp; isset($_GET [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string PHPpagesSELECTpagination {
             get {
@@ -1160,6 +1334,16 @@ namespace DBManager.Properties {
         internal static byte[] PHPtemplate {
             get {
                 object obj = ResourceManager.GetObject("PHPtemplate", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] PHPtemplateAPIbootstraptable {
+            get {
+                object obj = ResourceManager.GetObject("PHPtemplateAPIbootstraptable", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -1237,6 +1421,16 @@ namespace DBManager.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap templateCRUDbootstraptable5 {
+            get {
+                object obj = ResourceManager.GetObject("templateCRUDbootstraptable5", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap text_marked {
             get {
                 object obj = ResourceManager.GetObject("text_marked", resourceCulture);
@@ -1260,7 +1454,7 @@ namespace DBManager.Properties {
         ///
         ////////////////////////////////////////////////////////////////////////////////////////
         ///// 			SETUP MYSQL CONNECTION [START]
-        //////////////////////////////////////////////////////////////////////// [rest of string was truncated]&quot;;.
+        ///////////////////////////////////////////////////////// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string tunnelPHP {
             get {
@@ -1271,19 +1465,19 @@ namespace DBManager.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?php
         ///if (!isset($_POST[&quot;sql&quot;]) || !isset($_POST[&quot;p&quot;])) {
-        ///	// if(!isset($_POST[&quot;sql&quot;]) || !isset($_POST[&quot;p&quot;])){
         ///	echo json_encode(&quot;Error: no token1&quot;);
         ///	return;
-        ///	// }
         ///} else if ($_POST[&quot;p&quot;] != **password entered at desktop program**) {
         ///	echo json_encode(&quot;Error: no token2&quot;);
         ///	return;
         ///}
         ///
-        /////on old server something wrong with json_decode, use also the same function &apos;_json_decode&apos;, on transfer batch functions
-        ///$x = _json_decode($_POST[&quot;sql&quot;]);
+        ///try {
+        ///	//on old server something wrong with json_decode, use also the same function &apos;_json_decode&apos;, on transfer batch functions
+        ///	$x = _json_decode($_POST[&quot;sql&quot;]);
         ///
-        /////////////////////////////////////////////////////////// [rest of string was truncated]&quot;;.
+        ///	/////////////////////////////////////////////////////////////////////////////////////
+        ///	// 			SETUP MYSQL CO [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string tunnelPHP_PDO {
             get {
@@ -1294,19 +1488,19 @@ namespace DBManager.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?php
         ///if (!isset($_POST[&quot;sql&quot;]) || !isset($_POST[&quot;p&quot;])) {
-        ///	// if(!isset($_POST[&quot;sql&quot;]) || !isset($_POST[&quot;p&quot;])){
         ///	echo json_encode(&quot;Error: no token1&quot;);
         ///	return;
-        ///	// }
         ///} else if ($_POST[&quot;p&quot;] != **password entered at desktop program**) {
         ///	echo json_encode(&quot;Error: no token2&quot;);
         ///	return;
         ///}
         ///
-        /////on old server something wrong with json_decode, use also the same function &apos;_json_decode&apos;, on transfer batch functions
-        ///$x = _json_decode($_POST[&quot;sql&quot;]);
+        ///try {
+        ///	//on old server something wrong with json_decode, use also the same function &apos;_json_decode&apos;, on transfer batch functions
+        ///	$x = _json_decode($_POST[&quot;sql&quot;]);
         ///
-        ///////////////////////////////////////////////////////////////////////// [rest of string was truncated]&quot;;.
+        ///	/////////////////////////////////////////////////////////////////////////////////////
+        ///	// 			SETUP SQLSERVE [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string tunnelPHP_PDO_SQLServer {
             get {
@@ -1337,9 +1531,7 @@ namespace DBManager.Properties {
         ///
         ///
         ///$params=array();
-        ///$x=0;
-        ///
-        /////fields to arra [rest of string was truncated]&quot;;.
+        ///$ [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string tunnelPHPtrans {
             get {
@@ -1367,7 +1559,7 @@ namespace DBManager.Properties {
         ///
         ///$json = json_decode($_POST[&apos;records&apos;], TRUE);
         ///
-        ////////////////////////////////// [rest of string was truncated]&quot;;.
+        /////////////// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string tunnelPHPtransBATCH {
             get {

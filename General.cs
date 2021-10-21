@@ -296,5 +296,29 @@ namespace DBManager
             }
         }
 
+        public static string Capitalize(this string word)
+        {
+            return word.Substring(0, 1).ToUpper() + word.Substring(1).ToLower();
+        }
+
+        public static int ToInt(this object value)
+        {
+            int number = 0;
+
+            if (value != null)
+                int.TryParse(value.ToString(), out number);
+
+            return number;
+        }
+
+        public static string ToStrinX(this object value)
+        {
+            string retvalue = "";
+
+            if (value != null)
+                retvalue = value.ToString();
+
+            return retvalue;
+        }
     }
 }

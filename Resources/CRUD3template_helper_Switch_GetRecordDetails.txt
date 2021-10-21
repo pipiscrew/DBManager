@@ -1,0 +1,3 @@
+    case 'GetRecordDetails{tbl}JS' :
+        GetRecordDetails{tbl}JS();
+        break;

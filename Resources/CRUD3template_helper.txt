@@ -1,0 +1,75 @@
+<?php
+
+require_once '../vendor/general.php';
+require_once '../vendor/VendorGetter.php';
+
+if (!isset($_POST['action'])){
+	ReportJS(1, 'No valid parameter!');
+	exit;
+}
+
+////////////////ACTIONS
+$action = $_POST['action'];
+
+switch ($action) {
+	case 'GetVendor{tbl}JS' :
+		GetVendor{tbl}JS();
+		break;
+{swGetRecordDetails}
+	case 'GetVendor{tbl}CRON' :
+		//todo
+		break;
+	case 'FillGrid' :
+		FillGrid();
+		break;
+	default :
+		ReportJS(2, 'No action defined!');
+		exit;
+}
+
+{GetRecordDetails}
+
+//FrontEnd - exports response for JS
+function GetVendor{tbl}JS()
+{
+	$result = GetVendorRecords();
+
+	ReportJS($result[0], $result[1]);
+}
+
+//unique for JS & CRON
+function GetVendorRecords(){
+	//unlimited depth 'x' => array('coverage', 'fixtures', 'x'),
+	//key = dbase field, array = object direction to JSON field
+    $insertArr = array(
+{vendorGetterInsertArr}
+    );
+
+	//object direction to JSON field
+    $validationArr = array(
+            array('JSONArrName', 'fieldname'),
+			array('JSONArrName', 'fieldname')
+    );
+
+	//when needed to add the page number to URL ex https://x.com/page/1 , use https://x.com/page/{page}
+	//see the function parameters
+	return GetVendorData2DB('https://api.io/{tbl}/{page}', 
+					'{tbl}',
+					'INSERT INTO `{tbl}` ({csv}) VALUES ({bind})',
+					$insertArr, $validationArr, 1{callback});
+}
+
+{AfterBaseRecordInsert}
+
+function FillGrid(){
+
+		FillGridRows(array(
+{fillGrid}
+							), 
+		'select {csv} from {tbl}',
+		'select count(*) from {tbl}', true);
+
+}
+
+
+?>

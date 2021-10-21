@@ -1,0 +1,80 @@
+<!-- ====================================================================================== {tbl} ====================================================================================== -->
+<script>
+
+    function RefreshGrid{tbl}(){
+{transformJS}
+    }
+	
+	//Bootstrap table - #extra parameter# to identify is going for pagination
+	function queryParams(params) {
+		// ref - https://examples.bootstrap-table.com/index.html#options/query-params.html#view-source
+		params.action = 'FillGrid';
+		return params
+	}
+
+	//refresh database records from API
+	function GetVendor{tbl}(){
+
+		if (!confirm("WARNING\n\nThis operation will download data by Vendor API.\n\nDo you want to continue ?"))
+			return;
+
+		$.ajax({
+			url : 'entities/{tbl}Helper.php',
+			dataType : 'json',
+			type : 'POST',
+			data : { 'action' : 'GetVendor{tbl}JS' },
+			success : function(data) {
+
+				if (data['code']!= 0)
+				{
+					alert("ERROR : \n\n" + data['message']);
+					return;
+				}
+
+				alert (data['message']);
+
+				$('#table{tbl}').bootstrapTable('refresh');
+			},
+			error : function(data) {
+				if (data)
+					alert(data.responseText);
+			}
+		});
+	}
+</script>
+
+<div class="container-fluid">
+	<br>
+	<button type="button" style="width:200px;float:left" class="btn btn-block btn-outline-primary btn-sm" onclick="GetVendor{tbl}()" >Get API {tbl}</button>
+
+	<!-- data-height="400" 
+		search - https://examples.bootstrap-table.com/index.html#options/table-search.html#view-source
+		server side - https://examples.bootstrap-table.com/index.html#options/server-side-pagination.html#view-source
+		post needs adjust contenttype- https://examples.bootstrap-table.com/index.html#options/table-method.html#view-source
+		Content Type - https://examples.bootstrap-table.com/index.html#options/content-type.html#view-source
+		page size - https://examples.bootstrap-table.com/index.html#options/page-size.html
+		Page List (not working, somthing wrong with CSS) - https://examples.bootstrap-table.com/index.html#options/page-list.html#view-source
+		server totalNotFiltered (no big deal) - https://github.com/wenzhixin/bootstrap-table/issues/5255#issuecomment-674134011
+	-->
+	<table
+		id="table{tbl}"
+		data-height="700"
+		data-page-size="25"
+{tblprops}
+		data-search="true"
+		data-method="post"
+		data-content-type="application/x-www-form-urlencoded"
+		data-url="entities/{tbl}Helper.php"
+		data-side-pagination="server"
+		data-page-list="[10, 25, 50, 100, 200, All]"
+		data-query-params="queryParams"
+		data-pagination="true"
+		class="table-striped">
+		<thead>
+			<tr>
+{cols}
+			</tr>
+		</thead>
+	</table>
+
+</div>

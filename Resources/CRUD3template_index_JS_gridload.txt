@@ -1,0 +1,6 @@
+      case '#{0}' :
+      if (!$("#table{0}").hasClass('table-bordered'))
+            RefreshGrid{0}();
+      else 
+            $('#table{0}').bootstrapTable('resetView');
+      break;

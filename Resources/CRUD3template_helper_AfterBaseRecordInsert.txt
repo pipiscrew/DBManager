@@ -1,0 +1,52 @@
+//this function gets executed after base record inserted
+function {tbl}AfterBaseRecordInsert($db, $baseTableID, $data){
+
+    if ($data == null)
+        return;
+
+    $ignored = 0;
+    $failed = 0;
+    $nullrec = 0;
+    $added = 0;
+
+    $insertSQL = 'INSERT INTO `{tblREF}` ({helperTableCOLScsv}) VALUES (:{helperTableCOLSbind})';
+
+	//unlimited depth 'x' => array('coverage', 'fixtures', 'x'),
+	//key = dbase field, array = object direction to JSON field
+    $insertSQLFields = array(
+{vendorGetterBeforeInsertArr}
+    );
+
+    if ($stmt = $db->getConnection()->prepare($insertSQL))
+    {
+        //for JSON row
+        foreach($data->JSONArrName as $row) 
+        {
+            $stmt->bindValue(':{pk}', $baseTableID);
+
+            foreach($insertSQLFields as $key => $fieldArr) 
+            {
+                $stmt->bindValue(":$key" , BindBlind($row, $fieldArr));
+            }
+
+        try {
+
+            if ( $stmt->execute() )
+                  $added++;
+            else 
+                  $failed++;
+
+          } catch (Exception $ex){
+
+              if ($stmt->errorCode()=='23000') //integrity check because of field UNIQUE property
+                  $ignored++;	
+              else  {
+                    $db->write_log('{tblref}', 'INSERT', 1, "baseID : $baseTableID - ErrorCode : ". $stmt->errorCode().' ErroDescription : '.$ex->getMessage());
+                //   return array(5, 'Error : ' . $stmt->errorCode());
+              }
+          }
+        }
+    }
+
+    $db->write_log('{tblref}', 'INSERT', 0, "baseID: $baseTableID - $added records added - $failed records failed - $ignored ignored for duplicity - $nullrec records found null");
+}

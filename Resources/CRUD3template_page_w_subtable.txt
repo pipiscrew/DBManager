@@ -1,0 +1,57 @@
+            $("#table{tbl}").bootstrapTable({
+
+                onExpandRow: function (index, row, $detail) {
+
+                    $.ajax({
+                            url : 'entities/{tbl}Helper.php',
+                            dataType : 'json',
+                            type : 'POST',
+                            data : { 'action' : 'GetRecordDetails{tbl}JS', 'recID' : row.id },
+                            success : function(data) {
+                                
+                                if (!data)
+                                {
+                                    alert("Error on fetching the child grid!");
+                                    return;
+                                }
+
+                                //get key names (used as columns)
+                                var JSONFields = Object.keys(data[1]);
+
+                                var columns = []
+                                var rows = []
+                                var row, i, j;
+
+                                for (i = 0; i < JSONFields.length; i++) {
+                                    columns.push({
+                                        field: JSONFields[i],
+                                        title: JSONFields[i],
+                                        sortable: true
+                                    })
+                                }
+
+                                for (i = 0; i < data.length; i++)
+                                {
+                                    row = {};
+
+                                    for (j = 0; j < JSONFields.length; j++) {
+                                        row[JSONFields[j]] = data[i][JSONFields[j]];
+                                    }
+
+                                    rows.push(row);
+                                }
+
+                                //transform
+                                $detail.html('<table></table>')
+                                $detail.find('table').bootstrapTable({
+                                    columns: columns,
+                                    data: rows
+                                });
+
+                            },
+                            error : function(data) {
+                                if (data)
+                                    alert(data.responseText);
+                            }
+                    });
+                }});
