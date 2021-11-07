@@ -37,6 +37,7 @@
 <br><br>
 
 version history:<br>
+2021 - v2.4.3 (adding template on CRUD 'PHPtemplateVue2')  
 2021 - v2.4.2 (adding template on CRUD 'PHPtemplateAPIbootstraptable')  
 2019 - v2.4.1 (fixes "Sum of the columns' FillWeight values cannot exceed 65535")<br>
 2019 - v2.4.0 (sqlserver tunnel support added)<br>
