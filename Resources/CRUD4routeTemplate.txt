@@ -1,0 +1,25 @@
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import pagenotfound from './components/page-not-found';
+
+Vue.use(VueRouter);
+
+const routes = [
+  {
+    path: '/',
+    redirect: '/{0}',
+  },
+{1}
+  {
+    path: '*',
+    component: pagenotfound,
+  },
+]
+
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.VUE_APP_BASE_URL,
+  routes
+})
+
+export default router;

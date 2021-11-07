@@ -1,0 +1,23 @@
+
+      single-expand 
+      show-expand
+    @item-expanded="loadDetails">
+      <!-- expanded -->
+      <template v-slot:expanded-item="{ headers, item }">
+          <td :colspan="headers.length" style="padding:15px">
+              <v-simple-table dense>
+                <template v-slot:default>
+                  <thead>
+                      <tr>
+{0}
+                      </tr>
+                  </thead>
+                  <tbody>
+                  <tr v-for="rec in item.details" :key="rec.dummy">
+{1}
+                   </tr>
+                  </tbody>
+                  </template>
+              </v-simple-table>
+          </td>
+      </template>

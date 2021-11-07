@@ -1,0 +1,8 @@
+
+<style scoped>
+  /* Remove Box Shadow from Expandable - https://stackoverflow.com/questions/65699775/remove-box-shadow-from-expandable-data-table-in-vuetify */
+  .v-data-table >>> .v-data-table__wrapper tbody tr.v-data-table__expanded__content {
+    box-shadow: none;
+  }
+</style>
+

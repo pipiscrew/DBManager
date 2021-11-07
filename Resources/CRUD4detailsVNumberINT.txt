@@ -1,0 +1,5 @@
+              <vnumber
+                v-model="privateRecord.{0}"
+                caption="{0}"
+                :value.sync="privateRecord.{0}"
+              ></vnumber>

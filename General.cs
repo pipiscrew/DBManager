@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using DBManager.DBASES;
@@ -8,13 +7,8 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Drawing;
 using System.Reflection;
-using System.Data;
-using System.Data.OleDb;
 using System.Web.Script.Serialization;
 using System.IO.Compression;
-using ICSharpCode.SharpZipLib.GZip;
-using System.Net;
-using System.Collections.Specialized;
 using ICSharpCode.SharpZipLib.BZip2;
 
 namespace DBManager
@@ -320,5 +314,7 @@ namespace DBManager
 
             return retvalue;
         }
+
+       
     }
 }

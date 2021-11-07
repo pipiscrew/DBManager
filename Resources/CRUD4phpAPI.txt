@@ -1,0 +1,135 @@
+<?php
+/*
+@session_start();
+
+if (!isset($_SESSION['id']) || empty($_POST['id'])) {
+	echo json_encode(null);
+	exit ;
+}
+*/
+
+require_once 'general.php';
+
+if (!isset($_POST['action'])){
+	ReportJS(1, 'No valid parameter!');
+	exit;
+}
+
+////////////////ACTIONS
+$action = $_POST['action'];
+
+switch ($action) {
+	case 'FillGrid{0}' :
+		FillGrid{0}();
+		break;
+	case 'GetRecord{0}':
+		GetRecord{0}();
+		break;	
+	case 'SaveRecord{0}':
+		SaveRecord{0}();
+		break;
+	case 'DeleteRecord{0}':
+		DeleteRecord{0}();
+		break;
+{10}
+{12}
+	default :
+		ReportJS(2, 'No action defined!');
+		exit;
+}
+
+function SaveRecord{0}(){
+
+	if ({11}){
+		ReportJS(2, 'Not found required fields!');
+		return;
+	}
+
+    $recID = $_POST['{1}'];
+	
+	if (!isset($recID))
+	{
+		ReportJS(2, 'No id defined!');
+		exit;
+	}
+		
+    $db = new dbase();
+    $db->connect_mysql();
+	
+{2}
+	
+	if (intval($recID) > 0)
+	{
+		$sql = '{3}';
+		$stmt = $db->getConnection()->prepare($sql);
+		$stmt->bindValue(':{1}', $recID);
+	} else {
+		$sql = '{4}';
+		$stmt = $db->getConnection()->prepare($sql);
+	}
+
+{5}
+
+	try {
+
+		if ($stmt->execute())
+		{
+			ReportJS(0, 'Record Saved!');
+			exit;
+		} else {
+			ReportJS(3, 'Error occurred during saving');
+			exit;
+		}
+	}
+	catch (Exception $e) {
+		ReportJS(99, $e->getMessage());
+	}
+}
+
+function GetRecord{0}(){
+
+    $recID = $_POST['{1}'];
+
+    $db = new dbase();
+    $db->connect_mysql();
+
+    echo json_encode( $db->getRow("select * from {0} where {1}=?", array($recID)));
+}
+
+function DeleteRecord{0}(){
+	
+    $recID = $_POST['{1}'];
+	
+	if (!isset($recID) || intval($recID) == 0)
+	{
+		ReportJS(2, 'No id defined!');
+		exit;
+	}
+		
+    $db = new dbase();
+    $db->connect_mysql();
+	
+	$res = $db->executeSQL("delete from {0} where {1}=?", array($recID));
+	
+	if ($res == 1)
+		ReportJS(0, 'Record deleted!');
+	else 
+		ReportJS(1, 'No action performed to server!');
+}
+
+{13}
+
+{6}
+
+function FillGrid{0}(){
+
+		FillGridRows(array(
+{7}
+							), 
+		'{8}',
+		'{9}', true);
+
+}
+
+
+?>

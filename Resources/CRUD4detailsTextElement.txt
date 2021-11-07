@@ -1,0 +1,7 @@
+              <v-text-field
+                v-model="privateRecord.{0}"
+                label="{0}"
+                counter="{1}"
+                :rules="[() => !!( {2}privateRecord.{0}.length <= {1} ) || '{0} must be less than {1} characters',]"
+                {3}
+              ></v-text-field>

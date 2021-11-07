@@ -346,4 +346,76 @@
   <data name="PHPtemplateAPIbootstraptable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PHPtemplateAPIbootstraptable.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="CRUD4phpGetRecodsFK" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4phpGetRecodsFK.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD4phpAPI" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4phpAPI.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD4entityJS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4entityJS.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD4details" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4details.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD4detailsAutoCompleteElement" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4detailsAutoCompleteElement.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD4detailsGetRefTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4detailsGetRefTable.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD4detailsREFTablesPromise" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4detailsREFTablesPromise.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD4detailsSwitchElement" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4detailsSwitchElement.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD4detailsTextElement" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4detailsTextElement.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD4detailsVDateElement" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4detailsVDateElement.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD4detailsVNumberDEC" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4detailsVNumberDEC.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD4detailsVNumberINT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4detailsVNumberINT.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD4phpGetRecodsFKcall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4phpGetRecodsFKcall.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD4entityVUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4entityVUE.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD4entityVUEexpandableCode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4entityVUEexpandableCode.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD4entityVUEexpandableElement" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4entityVUEexpandableElement.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD4phpGetRecordDetails" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4phpGetRecordDetails.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD4phpGetRecordDetailsCall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4phpGetRecordDetailsCall.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD4appVueMain" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4appVueMain.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD4entityVUEexpandableCSS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4entityVUEexpandableCSS.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD4route" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4route.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="CRUD4routeTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CRUD4routeTemplate.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="PHPtemplateVue2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PHPtemplateVue2.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="templateCRUDvue2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\templateCRUDvue2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

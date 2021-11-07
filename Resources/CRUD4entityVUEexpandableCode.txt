@@ -1,0 +1,32 @@
+    ////////////////////////////////// EXPAND FUNCTIONS //////////////////////////////////
+    async ApiChildFillGrid(item) {
+      let formData = new FormData();
+      formData.append("action", "GetRecordDetails{0}");
+      formData.append("{4}", item.{1});
+
+      const items = await general.GetData("/api/{0}API.php", formData);
+           
+      if (!items || items.error) {
+        alert("Error in communication with the Server!");
+        return null;
+      }
+
+      return items;
+    },
+    loadDetails({item}) {
+
+        if (item.details != 0) //child already loaded
+            return;
+
+        this.loading = true;
+
+        this.ApiChildFillGrid(item).then(data => {
+            this.loading = false;
+
+            if (!data)
+              return;
+            
+            item.details = data;
+        })
+
+    },

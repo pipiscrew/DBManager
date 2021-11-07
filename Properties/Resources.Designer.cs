@@ -478,6 +478,450 @@ namespace DBManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;template&gt;
+        ///  &lt;v-app&gt;
+        ///    &lt;v-app-bar app color=&quot;primary&quot; dark&gt;
+        ///      &lt;v-tabs align-with-title&gt;
+        ///{0}
+        ///      &lt;/v-tabs&gt;
+        ///    &lt;/v-app-bar&gt;
+        ///    &lt;v-main&gt;
+        ///      &lt;v-container fluid&gt;
+        ///        &lt;div id=&quot;app&quot;&gt;
+        ///          &lt;router-view /&gt;
+        ///        &lt;/div&gt;
+        ///      &lt;/v-container&gt;
+        ///    &lt;/v-main&gt;
+        ///  &lt;/v-app&gt;
+        ///&lt;/template&gt;
+        ///
+        ///&lt;style&gt;
+        ///#app {
+        ///  font-family: Avenir, Helvetica, Arial, sans-serif;
+        ///  -webkit-font-smoothing: antialiased;
+        ///  -moz-osx-font-smoothing: grayscale;
+        ///  text-align: center;
+        ///  color: #2c3e50;
+        ///}
+        ///
+        ///#nav  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CRUD4appVueMain {
+            get {
+                return ResourceManager.GetString("CRUD4appVueMain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;template&gt;
+        ///  &lt;v-dialog
+        ///    v-model=&quot;showModal&quot;
+        ///    fullscreen
+        ///    hide-overlay
+        ///    transition=&quot;dialog-bottom-transition&quot;
+        ///  &gt;
+        ///    &lt;v-container
+        ///      v-if=&quot;loading&quot;
+        ///      fluid
+        ///      fill-height
+        ///      style=&quot;background-color: rgba(255, 255, 255, 0.5)&quot;
+        ///    &gt;
+        ///      &lt;v-layout justify-center align-center&gt;
+        ///        &lt;v-progress-circular indeterminate color=&quot;primary&quot;&gt;
+        ///        &lt;/v-progress-circular&gt;
+        ///      &lt;/v-layout&gt;
+        ///    &lt;/v-container&gt;
+        ///    &lt;v-card&gt;
+        ///      &lt;v-toolbar dark color=&quot;primary&quot;&gt;
+        ///        &lt;v- [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CRUD4details {
+            get {
+                return ResourceManager.GetString("CRUD4details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to               &lt;v-autocomplete
+        ///                v-model=&quot;privateRecord.{0}&quot;
+        ///                :items=&quot;{0}Items&quot;
+        ///                :rules=&quot;[() =&gt; !!privateRecord.{0} || &apos;This field is required&apos;]&quot;
+        ///                item-text=&quot;{1}&quot;
+        ///                item-value=&quot;{2}&quot;
+        ///                label=&quot;Select&quot;
+        ///                single-line
+        ///                required
+        ///              &gt;&lt;/v-autocomplete&gt;.
+        /// </summary>
+        internal static string CRUD4detailsAutoCompleteElement {
+            get {
+                return ResourceManager.GetString("CRUD4detailsAutoCompleteElement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to     get{0}() {
+        ///      let formData = new FormData();
+        ///      formData.append(&quot;action&quot;, &quot;GetRecords{0}&quot;);
+        ///
+        ///      const requestOptions = {
+        ///        method: &quot;POST&quot;,
+        ///        cache: &quot;no-cache&quot;,
+        ///        body: formData,
+        ///      };
+        ///
+        ///      return fetch(&quot;/api/{1}API.php&quot;, requestOptions);
+        ///    },
+        ///.
+        /// </summary>
+        internal static string CRUD4detailsGetRefTable {
+            get {
+                return ResourceManager.GetString("CRUD4detailsGetRefTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to           this.{0}Items = r[0].map((item) =&gt; {
+        ///            return { ...new {1}(item) };
+        ///          });.
+        /// </summary>
+        internal static string CRUD4detailsREFTablesPromise {
+            get {
+                return ResourceManager.GetString("CRUD4detailsREFTablesPromise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to               &lt;v-switch
+        ///                v-model=&quot;privateRecord.{0}&quot;
+        ///                label=&quot;{0}&quot;
+        ///              &gt;&lt;/v-switch&gt;.
+        /// </summary>
+        internal static string CRUD4detailsSwitchElement {
+            get {
+                return ResourceManager.GetString("CRUD4detailsSwitchElement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to               &lt;v-text-field
+        ///                v-model=&quot;privateRecord.{0}&quot;
+        ///                label=&quot;{0}&quot;
+        ///                counter=&quot;{1}&quot;
+        ///                :rules=&quot;[() =&gt; !!( {2}privateRecord.{0}.length &lt;= {1} ) || &apos;{0} must be less than {1} characters&apos;,]&quot;
+        ///                {3}
+        ///              &gt;&lt;/v-text-field&gt;.
+        /// </summary>
+        internal static string CRUD4detailsTextElement {
+            get {
+                return ResourceManager.GetString("CRUD4detailsTextElement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to               &lt;vdatepickerex
+        ///                caption=&quot;{0}&quot;
+        ///                :required=&quot;{1}&quot;
+        ///                :setTodayWhenNew=&quot;true&quot;
+        ///                v-model=&quot;privateRecord.{0}&quot;
+        ///                :value.sync=&quot;privateRecord.{0}&quot;
+        ///              /&gt;.
+        /// </summary>
+        internal static string CRUD4detailsVDateElement {
+            get {
+                return ResourceManager.GetString("CRUD4detailsVDateElement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to               &lt;vnumber
+        ///                v-model=&quot;privateRecord.{0}&quot;
+        ///                caption=&quot;{0}&quot;
+        ///                :dec=&quot;true&quot;
+        ///                :value.sync=&quot;privateRecord.{0}&quot;
+        ///              &gt;&lt;/vnumber&gt;.
+        /// </summary>
+        internal static string CRUD4detailsVNumberDEC {
+            get {
+                return ResourceManager.GetString("CRUD4detailsVNumberDEC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to               &lt;vnumber
+        ///                v-model=&quot;privateRecord.{0}&quot;
+        ///                caption=&quot;{0}&quot;
+        ///                :value.sync=&quot;privateRecord.{0}&quot;
+        ///              &gt;&lt;/vnumber&gt;.
+        /// </summary>
+        internal static string CRUD4detailsVNumberINT {
+            get {
+                return ResourceManager.GetString("CRUD4detailsVNumberINT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to import general from &quot;@/general&quot;;
+        ///
+        ///class {0} {
+        ///
+        /////PHP PDO, always returns string for all dbase column types. So here user, must cast it, if he like it to use as for example on checkbox
+        ///
+        ///  constructor(data) {
+        ///    
+        ///    if (data != null) {
+        ///{1}
+        ///    }
+        ///    else {
+        ///{2}
+        ///	//new Date().toISOString().substr(0, 10);
+        ///    }
+        ///  }
+        ///
+        ///}
+        ///
+        ///export default {0}.
+        /// </summary>
+        internal static string CRUD4entityJS {
+            get {
+                return ResourceManager.GetString("CRUD4entityJS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;template&gt;
+        ///  &lt;v-card&gt;
+        ///    &lt;v-snackbar v-model=&quot;snackbar&quot; timeout=&quot;2500&quot;&gt;
+        ///      {{snackbarMessage}}
+        ///    &lt;/v-snackbar&gt;
+        ///    &lt;v-card-title&gt;
+        ///      &lt;v-btn elevation=&quot;1&quot; @click=&quot;show{0}Detail=true&quot;&gt;add new&lt;/v-btn&gt;
+        ///      &lt;v-spacer&gt;&lt;/v-spacer&gt;
+        ///      &lt;v-text-field
+        ///        v-model=&quot;search&quot;
+        ///        append-icon=&quot;mdi-magnify&quot;
+        ///        @click:append=&quot;FillGrid{0}()&quot;
+        ///        label=&quot;Search&quot;
+        ///        single-line
+        ///        hide-details
+        ///        v-on:keyup.13=&quot;FillGrid{0}()&quot;        
+        ///        class=&quot;shrink&quot;
+        ///      &gt;&lt;/v [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CRUD4entityVUE {
+            get {
+                return ResourceManager.GetString("CRUD4entityVUE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to     ////////////////////////////////// EXPAND FUNCTIONS //////////////////////////////////
+        ///    async ApiChildFillGrid(item) {
+        ///      let formData = new FormData();
+        ///      formData.append(&quot;action&quot;, &quot;GetRecordDetails{0}&quot;);
+        ///      formData.append(&quot;{4}&quot;, item.{1});
+        ///
+        ///      const items = await general.GetData(&quot;/api/{0}API.php&quot;, formData);
+        ///           
+        ///      if (!items || items.error) {
+        ///        alert(&quot;Error in communication with the Server!&quot;);
+        ///        return null;
+        ///      }
+        ///
+        ///      return items;
+        ///    },
+        ///    [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CRUD4entityVUEexpandableCode {
+            get {
+                return ResourceManager.GetString("CRUD4entityVUEexpandableCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///&lt;style scoped&gt;
+        ///  /* Remove Box Shadow from Expandable - https://stackoverflow.com/questions/65699775/remove-box-shadow-from-expandable-data-table-in-vuetify */
+        ///  .v-data-table &gt;&gt;&gt; .v-data-table__wrapper tbody tr.v-data-table__expanded__content {
+        ///    box-shadow: none;
+        ///  }
+        ///&lt;/style&gt;
+        ///
+        ///.
+        /// </summary>
+        internal static string CRUD4entityVUEexpandableCSS {
+            get {
+                return ResourceManager.GetString("CRUD4entityVUEexpandableCSS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///      single-expand 
+        ///      show-expand
+        ///    @item-expanded=&quot;loadDetails&quot;&gt;
+        ///      &lt;!-- expanded --&gt;
+        ///      &lt;template v-slot:expanded-item=&quot;{ headers, item }&quot;&gt;
+        ///          &lt;td :colspan=&quot;headers.length&quot; style=&quot;padding:15px&quot;&gt;
+        ///              &lt;v-simple-table dense&gt;
+        ///                &lt;template v-slot:default&gt;
+        ///                  &lt;thead&gt;
+        ///                      &lt;tr&gt;
+        ///{0}
+        ///                      &lt;/tr&gt;
+        ///                  &lt;/thead&gt;
+        ///                  &lt;tbody&gt;
+        ///                  &lt;tr v-for=&quot;rec in item.details&quot; :key=&quot;rec.du [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CRUD4entityVUEexpandableElement {
+            get {
+                return ResourceManager.GetString("CRUD4entityVUEexpandableElement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?php
+        ////*
+        ///@session_start();
+        ///
+        ///if (!isset($_SESSION[&apos;id&apos;]) || empty($_POST[&apos;id&apos;])) {
+        ///	echo json_encode(null);
+        ///	exit ;
+        ///}
+        ///*/
+        ///
+        ///require_once &apos;general.php&apos;;
+        ///
+        ///if (!isset($_POST[&apos;action&apos;])){
+        ///	ReportJS(1, &apos;No valid parameter!&apos;);
+        ///	exit;
+        ///}
+        ///
+        ///////////////////ACTIONS
+        ///$action = $_POST[&apos;action&apos;];
+        ///
+        ///switch ($action) {
+        ///	case &apos;FillGrid{0}&apos; :
+        ///		FillGrid{0}();
+        ///		break;
+        ///	case &apos;GetRecord{0}&apos;:
+        ///		GetRecord{0}();
+        ///		break;	
+        ///	case &apos;SaveRecord{0}&apos;:
+        ///		SaveRecord{0}();
+        ///		break;
+        ///	case &apos;DeleteRecord{0}&apos;:
+        ///		DeleteReco [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CRUD4phpAPI {
+            get {
+                return ResourceManager.GetString("CRUD4phpAPI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to function GetRecords{0}(){
+        ///
+        ///    $db = new dbase();
+        ///    $db-&gt;connect_mysql();
+        ///
+        ///    echo json_encode( $db-&gt;getSet(&quot;select {1},{2} from {0}&quot;, null));
+        ///}.
+        /// </summary>
+        internal static string CRUD4phpGetRecodsFK {
+            get {
+                return ResourceManager.GetString("CRUD4phpGetRecodsFK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 	case &apos;GetRecords{0}&apos;:
+        ///		GetRecords{0}();
+        ///		break;.
+        /// </summary>
+        internal static string CRUD4phpGetRecodsFKcall {
+            get {
+                return ResourceManager.GetString("CRUD4phpGetRecodsFKcall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to function GetRecordDetails{3}(){
+        ///
+        ///    $recID = $_POST[&apos;{0}&apos;];
+        ///
+        ///    $db = new dbase();
+        ///    $db-&gt;connect_mysql();
+        ///
+        ///    echo json_encode($db-&gt;getSet(&quot;select {1} from {2} where {0}=?&quot;, array($recID)));
+        ///}.
+        /// </summary>
+        internal static string CRUD4phpGetRecordDetails {
+            get {
+                return ResourceManager.GetString("CRUD4phpGetRecordDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 	case &apos;GetRecordDetails{0}&apos;:
+        ///		GetRecordDetails{0}();
+        ///		break;.
+        /// </summary>
+        internal static string CRUD4phpGetRecordDetailsCall {
+            get {
+                return ResourceManager.GetString("CRUD4phpGetRecordDetailsCall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to   {
+        ///    path: &apos;/{0}&apos;,
+        ///    name: &apos;{0}&apos;,
+        ///    component: () =&gt;
+        ///      import(/* webpackChunkName: &quot;bundle.{0}&quot; */ &apos;./components/{1}.vue&apos;),
+        ///  },
+        ///.
+        /// </summary>
+        internal static string CRUD4route {
+            get {
+                return ResourceManager.GetString("CRUD4route", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to import Vue from &apos;vue&apos;;
+        ///import VueRouter from &apos;vue-router&apos;;
+        ///import pagenotfound from &apos;./components/page-not-found&apos;;
+        ///
+        ///Vue.use(VueRouter);
+        ///
+        ///const routes = [
+        ///  {
+        ///    path: &apos;/&apos;,
+        ///    redirect: &apos;/{0}&apos;,
+        ///  },
+        ///{1}
+        ///  {
+        ///    path: &apos;*&apos;,
+        ///    component: pagenotfound,
+        ///  },
+        ///]
+        ///
+        ///const router = new VueRouter({
+        ///  mode: &apos;history&apos;,
+        ///  base: process.env.VUE_APP_BASE_URL,
+        ///  routes
+        ///})
+        ///
+        ///export default router;.
+        /// </summary>
+        internal static string CRUD4routeTemplate {
+            get {
+                return ResourceManager.GetString("CRUD4routeTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;?php
         ///function connect() {
         ///	$mysql_hostname = &quot;localhost&quot;;  //your mysql host name
@@ -1369,6 +1813,16 @@ namespace DBManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] PHPtemplateVue2 {
+            get {
+                object obj = ResourceManager.GetObject("PHPtemplateVue2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap refresh {
@@ -1424,6 +1878,16 @@ namespace DBManager.Properties {
         internal static System.Drawing.Bitmap templateCRUDbootstraptable5 {
             get {
                 object obj = ResourceManager.GetObject("templateCRUDbootstraptable5", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap templateCRUDvue2 {
+            get {
+                object obj = ResourceManager.GetObject("templateCRUDvue2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

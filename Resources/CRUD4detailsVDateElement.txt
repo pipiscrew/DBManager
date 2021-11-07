@@ -1,0 +1,7 @@
+              <vdatepickerex
+                caption="{0}"
+                :required="{1}"
+                :setTodayWhenNew="true"
+                v-model="privateRecord.{0}"
+                :value.sync="privateRecord.{0}"
+              />

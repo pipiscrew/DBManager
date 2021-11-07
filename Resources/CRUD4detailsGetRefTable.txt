@@ -1,0 +1,12 @@
+    get{0}() {
+      let formData = new FormData();
+      formData.append("action", "GetRecords{0}");
+
+      const requestOptions = {
+        method: "POST",
+        cache: "no-cache",
+        body: formData,
+      };
+
+      return fetch("/api/{1}API.php", requestOptions);
+    },

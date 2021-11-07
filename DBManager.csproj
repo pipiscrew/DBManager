@@ -342,6 +342,7 @@
     <None Include="Resources\PHPtemplateAPIbootstraptable.zip" />
     <None Include="Resources\PHPtemplateCRUD.zip" />
     <None Include="Resources\PHPtemplateCRUDbootstraptable.zip" />
+    <None Include="Resources\PHPtemplateVue2.zip" />
     <None Include="Resources\text_marked.png" />
   </ItemGroup>
   <ItemGroup>
@@ -367,7 +368,31 @@
     <EmbeddedResource Include="ResourceSQLServer\proc_node.dbaseJS_declaration.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\templateCRUDvue2.png" />
+    <None Include="Resources\CRUD4appVueMain.txt" />
+    <None Include="Resources\CRUD4routeTemplate.txt" />
+    <None Include="Resources\CRUD4route.txt" />
+    <None Include="Resources\CRUD4entityVUEexpandableCSS.txt" />
+    <None Include="Resources\CRUD4entityVUEexpandableCode.txt" />
+    <None Include="Resources\CRUD4entityVUEexpandableElement.txt" />
+    <None Include="Resources\CRUD4entityVUE.txt" />
+    <None Include="Resources\CRUD4phpGetRecordDetailsCall.txt" />
+    <None Include="Resources\CRUD4phpGetRecordDetails.txt" />
+    <None Include="Resources\CRUD4phpGetRecodsFKcall.txt" />
+    <None Include="Resources\CRUD4phpGetRecodsFK.txt" />
+    <None Include="Resources\CRUD4details.txt" />
+    <None Include="Resources\CRUD4detailsGetRefTable.txt" />
+    <None Include="Resources\CRUD4detailsREFTablesPromise.txt" />
+    <None Include="Resources\CRUD4detailsVDateElement.txt" />
+    <None Include="Resources\CRUD4detailsVNumberDEC.txt" />
+    <None Include="Resources\CRUD4detailsSwitchElement.txt" />
+    <None Include="Resources\CRUD4detailsVNumberINT.txt" />
+    <None Include="Resources\CRUD4detailsAutoCompleteElement.txt" />
+    <None Include="Resources\CRUD4detailsTextElement.txt" />
+    <None Include="Resources\CRUD4entityJS.txt" />
+    <None Include="bin\Debug\a\api\CRUD4phpGetRecodsFKcall.txt" />
     <Content Include="data.ico" />
+    <None Include="Resources\CRUD4phpAPI.txt" />
     <None Include="Resources\CRUD3template_helper_AfterBaseRecordInsert.txt" />
     <None Include="Resources\CRUD3template_helper_Switch_GetRecordDetails.txt" />
     <None Include="Resources\CRUD3template_helper_GetRecordDetails.txt" />

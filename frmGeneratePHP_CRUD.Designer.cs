@@ -65,7 +65,8 @@
             this.cmbTemplate.Items.AddRange(new object[] {
             "AdminLTE",
             "bootstrap-table by wenzhixin",
-            "bootstrap-table for b5"});
+            "bootstrap-table b5 for API",
+            "vue2 with vuetify"});
             this.cmbTemplate.Location = new System.Drawing.Point(620, 175);
             this.cmbTemplate.Name = "cmbTemplate";
             this.cmbTemplate.Size = new System.Drawing.Size(191, 24);

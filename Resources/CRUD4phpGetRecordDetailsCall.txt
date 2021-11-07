@@ -1,0 +1,3 @@
+	case 'GetRecordDetails{0}':
+		GetRecordDetails{0}();
+		break;

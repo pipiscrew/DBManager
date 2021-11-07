@@ -1,0 +1,205 @@
+<template>
+  <v-card>
+    <v-snackbar v-model="snackbar" timeout="2500">
+      {{snackbarMessage}}
+    </v-snackbar>
+    <v-card-title>
+      <v-btn elevation="1" @click="show{0}Detail=true">add new</v-btn>
+      <v-spacer></v-spacer>
+      <v-text-field
+        v-model="search"
+        append-icon="mdi-magnify"
+        @click:append="FillGrid{0}()"
+        label="Search"
+        single-line
+        hide-details
+        v-on:keyup.13="FillGrid{0}()"        
+        class="shrink"
+      ></v-text-field>
+    </v-card-title>
+    <v-data-table
+      :headers="headers"
+      :items="records"
+      :options.sync="options"
+      :server-items-length="totalRecords"
+      :loading="loading"
+      :search="search"
+      disable-pagination
+      hide-default-footer
+      item-key="{1}"
+      class="elevation-1"
+      @dblclick:row="editRow{0}"{2}
+    </v-data-table>
+
+    <v-col cols="12">
+      <v-row>
+        <v-col cols="1">
+          <v-label>
+            Total records : {{ recordsinfo }}
+          </v-label>
+        </v-col>
+
+        <v-col cols="9">
+          <v-pagination
+            v-model="page"
+            :length="pagesCount"
+            total-visible="7"
+            next-icon="mdi-menu-right"
+            prev-icon="mdi-menu-left"
+            @input="FillGrid{0}"
+          ></v-pagination>
+        </v-col>
+
+        <v-col cols="2">
+          <v-select
+            v-model="pageSize"
+            :items="pageSizes"
+            label="Items per Page"
+            @change="handlePageSizeChange"
+          ></v-select>
+        </v-col>
+        
+      </v-row>
+    </v-col>
+          <!-- v-if offers completely add & remove the Detail view (each time) thats has created & destroyed events, smile ;) -->	
+          <{0}Detail 
+            v-if="show{0}Detail"
+            :showModal.sync="show{0}Detail"
+            :record.sync="dialog{0}Item"
+            @childToParentCancel="dialog{0}ItemCancel"
+            @childToParentRefresh="dialog{0}ItemRefresh"
+            @childToParentSuccess="dialog{0}ItemSuccess"
+          />
+  </v-card>
+ 
+</template>
+{4}
+<script>
+import general from '@/general';
+import {0}Detail from '@/components/{0}Detail';
+
+export default {
+  components: {{0}Detail},
+  data() {
+    return {
+      snackbar: false,
+      snackbarMessage:'',
+      options: {},
+      records: [],
+      pagesCount: 1,
+      page: 1,
+      pageSize: 10,
+      pageSizes: [10, 25, 50, 100, 200],
+      search: "",
+      totalRecords: 0,
+      recordsinfo: "",
+      loading: true,
+      headers: [
+{3}
+      ],
+      show{0}Detail: false,
+      dialog{0}Item: null,
+    }
+  },
+  watch: {
+    options: {
+      handler() {
+        this.page = 1; //needed when COLUMN SORT, nevertheless play well if user is on ex. pg3 and sort a field, still show the shorted on pg3
+
+        // this run on startup (can be also on mounted event), also needed for the COLUMN SORT, is the only point fired
+        this.FillGrid{0}();
+      },
+      // deep: true,
+    },
+  },
+    methods: {
+        handlePageSizeChange(size) {
+            this.pageSize = size;
+            this.page = 1;
+            this.FillGrid{0}();
+        },
+        FillGrid{0}() {
+            this.loading = true;
+
+            this.ApiFillGrid{0}().then((data) => {
+                this.loading = false;
+
+                if (!data)
+                  return;
+
+                //set pagination, pages buttons
+                this.pagesCount = Math.ceil(data.total / this.pageSize);
+
+                //the actual dbase recordset rows on table
+                // this.records = data.data; -- https://www.codeply.com/p/d5XibmqjUh
+                this.records = data.data.map(record => {
+                            return {
+                                details: 0,   //when EXPANDABLE - the items MUST have this property by default, otherwise there is a confilct when inject it on loadDetails
+                                ...record
+                            }
+                        })  
+
+                //grid wants to know the total records
+                this.totalRecords = data.total;
+
+                //label total records
+                this.recordsinfo =  data.total;
+            });
+        },
+        async ApiFillGrid{0}() {
+            let formData = new FormData();
+            formData.append("action", "FillGrid{0}");
+            formData.append("limit", this.pageSize);
+            formData.append("offset", (this.page - 1) * this.pageSize);
+
+            if (this.search) { //when search
+                formData.append("search", this.search);
+            }
+
+            if (this.options.sortBy.length > 0) { //when column sort
+                formData.append("sort", this.options.sortBy[0]);
+                formData.append("order", this.options.sortDesc[0] == true ? "desc" : "asc");
+            }
+
+            const items = await general.GetData("/api/{0}API.php", formData);
+
+            if (!items || items.error) {
+                alert("Error in communication with the Server!");
+                return null;
+            }
+
+            return items;
+        },
+        editRow{0}(target, row){
+          // if (target)
+            {
+                this.dialog{0}Item = row.item;
+                this.show{0}Detail = true;
+            }
+        },
+        dialog{0}ItemRefresh(value){
+            this.snackbarMessage = value;
+            this.snackbar = true;
+            this.page = 1;
+            this.FillGrid{0}();
+        },
+        dialog{0}ItemSuccess(value, id){
+
+          if (id) //logic for delete only, useful when you have search datatable
+          {
+            this.records.splice(this.records.findIndex(c => c.{1} == id), 1);
+            this.recordsinfo = this.recordsinfo -1;
+          }
+
+          this.snackbarMessage = value;
+          this.snackbar = true;
+        },
+        dialog{0}ItemCancel(value){
+            this.snackbarMessage = value;
+            this.snackbar = true;
+        },
+{5}
+    },
+}
+
+</script>
