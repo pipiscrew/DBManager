@@ -111,6 +111,12 @@
     <Compile Include="frmGeneratePHP_CRUD.Designer.cs">
       <DependentUpon>frmGeneratePHP_CRUD.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmGeneratePHP_CRUDexpandable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGeneratePHP_CRUDexpandable.Designer.cs">
+      <DependentUpon>frmGeneratePHP_CRUDexpandable.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmInformation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -257,6 +263,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmGeneratePHP_CRUD.resx">
       <DependentUpon>frmGeneratePHP_CRUD.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGeneratePHP_CRUDexpandable.resx">
+      <DependentUpon>frmGeneratePHP_CRUDexpandable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmGenerator.resx">
       <DependentUpon>frmGenerator.cs</DependentUpon>

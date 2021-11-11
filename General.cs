@@ -315,6 +315,13 @@ namespace DBManager
             return retvalue;
         }
 
-       
+        public static bool ToBool(this object value)
+        {
+            bool result = false;
+            if (value != null)
+                bool.TryParse(value.ToString(), out result);
+
+            return result;
+        }
     }
 }

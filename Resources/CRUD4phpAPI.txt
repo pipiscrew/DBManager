@@ -93,7 +93,7 @@ function GetRecord{0}(){
     $db = new dbase();
     $db->connect_mysql();
 
-    echo json_encode( $db->getRow("select * from {0} where {1}=?", array($recID)));
+    echo json_encode( $db->getRow('select * from {0} where {1}=?', array($recID)));
 }
 
 function DeleteRecord{0}(){
@@ -109,7 +109,7 @@ function DeleteRecord{0}(){
     $db = new dbase();
     $db->connect_mysql();
 	
-	$res = $db->executeSQL("delete from {0} where {1}=?", array($recID));
+	$res = $db->executeSQL('delete from {0} where {1}=?', array($recID));
 	
 	if ($res == 1)
 		ReportJS(0, 'Record deleted!');

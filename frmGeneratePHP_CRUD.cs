@@ -136,12 +136,12 @@ namespace DBManager
             string appVue = "";
 
             string CRUD4appVueMainTemplate = DBManager.Properties.Resources.CRUD4appVueMain;
-            
+
 
             string CRUD4routeTemplate = DBManager.Properties.Resources.CRUD4route;
             string CRUD4route = "";
             string CRUD4routeMainTemplate = DBManager.Properties.Resources.CRUD4routeTemplate;
-            string firstTable = ""; 
+            string firstTable = "";
 
             foreach (treeItem2 tbl in tables)
             {
@@ -186,9 +186,14 @@ namespace DBManager
                 string templatePlain = "        { text: \"{0}\", value: \"{0}\" },\n";
                 string entinyVueHeaders = "";
 
-                DataTable refTables = General.DB.ExecuteSQL(string.Format(refTableSQL, table_name), out dummy, out dummy);
-                if (refTables == null || refTables.Rows.Count == 0)
-                    refTables = null;
+                DataTable refTables = null;
+
+                if (General.DB is MySQL)
+                {
+                    refTables = General.DB.ExecuteSQL(string.Format(refTableSQL, table_name), out dummy, out dummy);
+                    if (refTables == null || refTables.Rows.Count == 0)
+                        refTables = null;
+                }
 
                 ///////////////////////////////////////////   TABLE API  ///////////////////////////////////////////   
                 foreach (treeItem2fields field in tbl.table_fields)
@@ -282,10 +287,22 @@ namespace DBManager
                 string subTable = "";
                 if (r != null && r.Rows.Count > 0)
                 {
-                    subTable = r.Rows[0][0].ToStrinX();
-                    subPK = r.Rows[0][1].ToStrinX();
+                    int tableIndex = 0;
+                    if (r.Rows.Count > 1)
+                    {
+                        int frmExpandSelectionRET = -1;
+                        frmGeneratePHP_CRUDexpandable frmExpandSelection = new frmGeneratePHP_CRUDexpandable(table_name, r.AsEnumerable().Select(x => x.Field<string>(0)).ToArray());
+                        frmExpandSelection.ShowDialog(out frmExpandSelectionRET);
+                        tableIndex = frmExpandSelectionRET;
+                    }
 
-                    if (!string.IsNullOrEmpty(subTable) && !string.IsNullOrEmpty(subTable))
+                    if (tableIndex > -1) //when multiFK && user selected a table, otherwise when signleFK get 0
+                    {
+                        subTable = r.Rows[tableIndex][0].ToStrinX();
+                        subPK = r.Rows[tableIndex][1].ToStrinX();
+                    }
+
+                    if (tableIndex > -1 && !string.IsNullOrEmpty(subTable) && !string.IsNullOrEmpty(subTable))
                     {
                         hasSubTable = true;
                         DataTable refField = General.DB.ExecuteSQL(string.Format("SHOW COLUMNS FROM {0}", subTable), out dummy, out dummy);
@@ -310,7 +327,7 @@ namespace DBManager
 
                 // [EXPANDABLE] functions [start]
 
-                
+
                 string CRUD4phpGetRecordDetailsCall = "";
                 string CRUD4phpGetRecordDetails = "";
                 string CRUD4entityVUE = "";
@@ -401,7 +418,7 @@ namespace DBManager
 
                 ///////////////////////////////////////////Entity Vue
                 File.WriteAllText(Path.Combine(compDIR, string.Format("{0}.vue", table_name)), CRUD4entityVUE, outputEnc);
-                
+
                 ////////////////////////////////// DETAILS COMPONENT ////////////////////////////////// 
                 string componentDetail = helper_template_vuetify_details_component(refTables, tbl);
                 File.WriteAllText(Path.Combine(compDIR, string.Format("{0}Detail.vue", table_name)), componentDetail, outputEnc);
@@ -439,6 +456,7 @@ namespace DBManager
             string CRUD4detailsGetRefTable = DBManager.Properties.Resources.CRUD4detailsGetRefTable;
             string dataItemsTemplate = "{0}Items: [],\n";
             string importTemplate = "import {0} from \"@/entities/{0}\";\n";
+            string importElementsTemplate = "import {0} from \"@/elements/{0}\";\n";
             string promiseTemplate = "this.get{0}(),\n";
 
 
@@ -455,7 +473,7 @@ namespace DBManager
 
             //generate markup
             object[] g = helper_template_vuetify_details_component4elements(refTables, tbl.table_fields);
-            //0 - markup // 1 - list of REFTABLES // 2 - list of FK key
+            //0 - markup // 1 - list of REFTABLES // 2 - list of FK key // 3 - bool vnumber import // 4 - bool vdate import
 
             /////////////////////////////////// REFERENCE TABLES [ START ]                
             List<string> allREFtables = (List<string>)g[1];
@@ -474,18 +492,32 @@ namespace DBManager
                     dataItems += dataItemsTemplate.Replace("{0}", allREFtablesFK[i]);
                     imports += importTemplate.Replace("{0}", allREFtables[i]);
                     promises += promiseTemplate.Replace("{0}", allREFtables[i]);
-                    promisesLoad += CRUD4detailsREFTablesPromise.Replace("{0}", allREFtablesFK[i]).Replace("{1}", allREFtables[i]);
+                    promisesLoad += CRUD4detailsREFTablesPromise.Replace("{0}", allREFtablesFK[i]).Replace("{1}", allREFtables[i]).Replace("{2}", i.ToString());
                     refTableRecordsLoad += CRUD4detailsGetRefTable.Replace("{0}", allREFtables[i]).Replace("{1}", table_name);
                 }
             }
             /////////////////////////////////// REFERENCE TABLES [ END ]
+
+            List<string> componentsList = new List<string>();
+            if (g[3].ToBool())
+            {
+                componentsList.Add("vnumber");
+                imports += importElementsTemplate.Replace("{0}", "vnumber");
+            }
+
+            if (g[4].ToBool())
+            {
+                componentsList.Add("vdatepickerex");
+                imports += importElementsTemplate.Replace("{0}", "vdatepickerex");
+            }
+
 
             item = CRUD4detailsTemplate.Replace("{0}", pk).Replace("{1}", (string)g[0]);
             item = item.Replace("{2}", imports).Replace("{3}", dataItems);
             item = item.Replace("{4}", promises).Replace("{5}", promisesLoad);
             item = item.Replace("{6}", i.ToString()).Replace("{7}", table_name);
             item = item.Replace("{8}", "import " + table_name + " from \"@/entities/" + table_name + "\";").Replace("{9}", table_name);
-            item = item.Replace("{10}", refTableRecordsLoad);
+            item = item.Replace("{10}", refTableRecordsLoad).Replace("{11}", string.Join(", ", componentsList));
 
 
             return item;
@@ -508,7 +540,8 @@ namespace DBManager
 
             List<string> refTablesImport = new List<string>();
             List<string> refFKfield = new List<string>();
-
+            bool vnumberImport = false;
+            bool vdateImport = false;
             foreach (treeItem2fields field in fields)
             {
                 if (field.field_PK)
@@ -545,9 +578,9 @@ namespace DBManager
                             //0 - ID // 1 - TXT // 2 - TABLE // 3 - DEST TABLE FIELDS COUNT
                             if (returnVAL[0] != null && returnVAL[1] != null && returnVAL[2] != null)
                             {
-                                refTable = returnVAL[2];
                                 refTableID = returnVAL[0];
                                 refTableTXT = returnVAL[1];
+                                refTable = returnVAL[2];
                                 tieExists = true;
                             }
                         }
@@ -567,6 +600,7 @@ namespace DBManager
                         }
                         else
                         {//otherwise vnumber
+                            vnumberImport = true;
                             all += CRUD4detailsVNumberINT.Replace("{0}", field.field_name);
                         }
                         break;
@@ -582,6 +616,7 @@ namespace DBManager
                         break;
                     case "date":
                     case "datetime":
+                        vdateImport = true;
                         all += CRUD4detailsVDateElement.Replace("{0}", field.field_name).Replace("{1}", field.field_allow_null ? "false" : "true");
                         break;
                     case "varchar":
@@ -614,7 +649,7 @@ namespace DBManager
                 all += "            </v-col>\n";
             }
 
-            return new object[] { all, refTablesImport, refFKfield };
+            return new object[] { all, refTablesImport, refFKfield, vnumberImport, vdateImport };
         }
 
         private string helper_template_vuetify_entityJS(string tablename, List<treeItem2fields> fields)

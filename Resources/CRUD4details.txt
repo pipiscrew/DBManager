@@ -50,11 +50,9 @@
 import general from "@/general";
 {8}
 {2}
-import vdatepickerex from "@/elements/vdatepickerex";
-import vnumber from "@/elements/vnumber";
 
 export default {
-  components: { vdatepickerex, vnumber },
+  components: { {11} },
   created: function () {
     //layer to avoid null binding error
     this.privateRecord = new {9}();

@@ -3,5 +3,5 @@ function GetRecords{0}(){
     $db = new dbase();
     $db->connect_mysql();
 
-    echo json_encode( $db->getSet("select {1},{2} from {0}", null));
+    echo json_encode( $db->getSet('select {1},{2} from {0}', null));
 }
