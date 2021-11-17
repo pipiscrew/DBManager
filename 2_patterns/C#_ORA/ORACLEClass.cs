@@ -105,7 +105,7 @@ namespace CHelper
         public bool IsConnected()
         {
 
-            if (objConn == null | objConn.State != ConnectionState.Open)
+            if (objConn == null || objConn.State != ConnectionState.Open)
                 return false;
             else
                 return true;
