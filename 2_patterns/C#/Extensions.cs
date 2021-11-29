@@ -159,6 +159,19 @@ public static class Extensions
             return dtTable;
         }
 	
+        public static string FormatSize(this Int64 bytes)
+        {
+            string[] suffixes = { "Bytes", "KB", "MB", "GB", "TB", "PB" };
+            int counter = 0;
+            decimal number = (decimal)bytes;
+            while (Math.Round(number / 1024) >= 1)
+            {
+                number = number / 1024;
+                counter++;
+            }
+            return string.Format("{0:n1}{1}", number, suffixes[counter]);
+        }
+	
         #region " GenericToDataTable "
 		
         public static DataTable ConvertTo<T>(this IList<T> lst)
