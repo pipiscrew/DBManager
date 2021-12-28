@@ -1,15 +1,12 @@
-﻿using System;
+﻿using DBManager.DBASES;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.IO;
-using DBManager.DBASES;
-using Aga.Controls.Tree;
-using System.Diagnostics;
 
 namespace DBManager
 {
@@ -230,23 +227,28 @@ namespace DBManager
                     }
 
                     /////////////////////////////////////////////////// FIND REFERENCE TABLE [start]
-                    if (General.DB is MySQL && refTables != null)
+                    if (General.DB is MySQL)
                     {
-                        var matchFieldREF = refTables.AsEnumerable().Where(row => row.Field<string>("COLUMN_NAME").Equals(field.field_name)).FirstOrDefault();
-                        if (matchFieldREF != null)
+                        if (refTables != null)
                         {
-                            string refTable = matchFieldREF["REFERENCED_TABLE_NAME"].ToString();
-                            string refTableID = matchFieldREF["REFERENCED_COLUMN_NAME"].ToString();
-                            selectSQL += string.Format("{0}.title as {1}, ", refTable, field.field_name);
-                            selectSQLJoin += string.Format(selectSQLJoinTemplate, refTable, refTableID, table_name, field.field_name);
+                            var matchFieldREF = refTables.AsEnumerable().Where(row => row.Field<string>("COLUMN_NAME").Equals(field.field_name)).FirstOrDefault();
+                            if (matchFieldREF != null)
+                            {
+                                string refTable = matchFieldREF["REFERENCED_TABLE_NAME"].ToString();
+                                string refTableID = matchFieldREF["REFERENCED_COLUMN_NAME"].ToString();
+                                selectSQL += string.Format("{0}.title as {1}, ", refTable, field.field_name);
+                                selectSQLJoin += string.Format(selectSQLJoinTemplate, refTable, refTableID, table_name, field.field_name);
 
-                            phpGetRecodsFK += CRUD4phpGetRecodsFKtemplate.Replace("{0}", refTable.Capitalize()).Replace("{1}", refTableID).Replace("{2}", "title");
-                            phpGetRecodsFKcall += CRUD4phpGetRecodsFKcallTemplate.Replace("{0}", refTable.Capitalize());
+                                phpGetRecodsFK += CRUD4phpGetRecodsFKtemplate.Replace("{0}", refTable.Capitalize()).Replace("{1}", refTableID).Replace("{2}", "title");
+                                phpGetRecodsFKcall += CRUD4phpGetRecodsFKcallTemplate.Replace("{0}", refTable.Capitalize());
 
-                            lst.Items.Add("At " + table_name + " found reference with table : " + refTable);
-                            lst.Items.Add("ref field is : " + refTableID);
-                            lst.Items.Add("~~Table referenced~~");
-                            lst.Items.Add("");
+                                lst.Items.Add("At " + table_name + " found reference with table : " + refTable);
+                                lst.Items.Add("ref field is : " + refTableID);
+                                lst.Items.Add("~~Table referenced~~");
+                                lst.Items.Add("");
+                            }
+                            else
+                                selectSQL += string.Format("{0}, ", check4date(field));
                         }
                         else
                             selectSQL += string.Format("{0}, ", check4date(field));
@@ -263,7 +265,7 @@ namespace DBManager
                             selectSQL += string.Format("{0}.{1} as {2}, ", refTable, refTableTXT, field.field_name);
                             selectSQLJoin += string.Format(selectSQLJoinTemplate, refTable, refTableID, table_name, field.field_name);
 
-                            phpGetRecodsFK += string.Format(CRUD4phpGetRecodsFKtemplate, refTable.Capitalize(), refTableID, refTableTXT);
+                            phpGetRecodsFK += CRUD4phpGetRecodsFKtemplate.Replace("{0}", refTable.Capitalize()).Replace("{1}", refTableID).Replace("{2}", refTableTXT);
                             phpGetRecodsFKcall += CRUD4phpGetRecodsFKcallTemplate.Replace("{0}", refTable.Capitalize());
 
                             lst.Items.Add("At " + table_name + " found reference with table : " + refTable);
@@ -556,20 +558,25 @@ namespace DBManager
                 switch (field.field_type)
                 {
                     case "int":
+                    case "smallint":
+                    case "mediumint":
                     case "bigint":
 
                         bool tieExists = false;
 
                         /////////////////////////////////////////////////// FIND REFERENCE TABLE [start]
-                        if (General.DB is MySQL && refTables != null)
+                        if (General.DB is MySQL)
                         {
-                            var matchFieldREF = refTables.AsEnumerable().Where(row => row.Field<string>("COLUMN_NAME").Equals(field.field_name)).FirstOrDefault();
-                            if (matchFieldREF != null)
+                            if (refTables != null)
                             {
-                                refTable = matchFieldREF["REFERENCED_TABLE_NAME"].ToString();
-                                refTableID = matchFieldREF["REFERENCED_COLUMN_NAME"].ToString();
-                                refTableTXT = "title";
-                                tieExists = true;
+                                var matchFieldREF = refTables.AsEnumerable().Where(row => row.Field<string>("COLUMN_NAME").Equals(field.field_name)).FirstOrDefault();
+                                if (matchFieldREF != null)
+                                {
+                                    refTable = matchFieldREF["REFERENCED_TABLE_NAME"].ToString();
+                                    refTableID = matchFieldREF["REFERENCED_COLUMN_NAME"].ToString();
+                                    refTableTXT = "title";
+                                    tieExists = true;
+                                }
                             }
                         }
                         else
@@ -605,6 +612,16 @@ namespace DBManager
                         }
                         break;
                     case "tinyint":
+                        if (chkTINYINT.Checked)
+                        { //as boolean
+                            all += CRUD4detailsSwitchElement.Replace("{0}", field.field_name);
+                        }
+                        else
+                        { //as int
+                            vnumberImport = true;
+                            all += CRUD4detailsVNumberINT.Replace("{0}", field.field_name);
+                        }
+                        break;
                     case "bit":
 
                         all += CRUD4detailsSwitchElement.Replace("{0}", field.field_name);
@@ -673,11 +690,24 @@ namespace DBManager
                 switch (field.field_type)
                 {
                     case "int":
+                    case "smallint":
+                    case "mediumint":
                     case "bigint":
                         type = "2";
                         defaultValue = "0";
                         break;
                     case "tinyint":
+                        if (chkTINYINT.Checked)
+                        {
+                            type = "3";
+                            defaultValue = "false";
+                        }
+                        else
+                        {
+                            type = "2";
+                            defaultValue = "0";
+                        }
+                        break;
                     case "bit":
                         type = "3";
                         defaultValue = "false";
@@ -1098,7 +1128,6 @@ namespace DBManager
                             select_fields_wo_joins += fields.field_name + ", ";
 
                             CRUDtemplate_FK_Control_FILL_CHECKinit += CRUDtemplate_FK_Control_FILL_CHECKinit_template.Replace("*field*", fields.field_name);
-
 
                             CRUDtemplate_SAVE_CHECK_validation += CRUDtemplate_SAVE_CHECK_validation_template.Replace("*field*", fields.field_name).Replace("*0var*", "0");
                         }
@@ -1622,7 +1651,12 @@ namespace DBManager
             else if (cmbTemplate.SelectedIndex == 2)
                 img_template_preview.Image = DBManager.Properties.Resources.templateCRUDbootstraptable5;
             else if (cmbTemplate.SelectedIndex == 3)
+            {
                 img_template_preview.Image = DBManager.Properties.Resources.templateCRUDvue2;
+                chkDATE.Checked = chkDATEmalot.Checked = chkDATETIME.Checked = false;
+            }
+
+            chkDATE.Enabled = chkDATEmalot.Enabled = chkDATETIME.Enabled = (cmbTemplate.SelectedIndex != 3);            
         }
 
         private void chkDATE_CheckedChanged(object sender, EventArgs e)
