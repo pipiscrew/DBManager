@@ -131,6 +131,8 @@ namespace DBManager
             string CRUD4phpGetRecordDetailsTemplate = DBManager.Properties.Resources.CRUD4phpGetRecordDetails;
             string appVueTemplate = "        <v-tab to=\"/{0}\">{1}</v-tab>\n";
             string appVue = "";
+            string appVueMenuTemplate = "          <v-list-item to=\"/{0}\"><v-list-item-title>{1}</v-list-item-title></v-list-item>\n";
+            string appVueMenu = "";
 
             string CRUD4appVueMainTemplate = DBManager.Properties.Resources.CRUD4appVueMain;
 
@@ -427,6 +429,7 @@ namespace DBManager
 
                 ///////// COMMON FILES /////////
                 appVue += appVueTemplate.Replace("{0}", table_name.ToLower()).Replace("{1}", table_name);
+                appVueMenu += appVueMenuTemplate.Replace("{0}", table_name.ToLower()).Replace("{1}", table_name);
                 CRUD4route += CRUD4routeTemplate.Replace("{0}", table_name.ToLower()).Replace("{1}", table_name);
             }
 
@@ -436,7 +439,7 @@ namespace DBManager
             string CRUD4routeMain = CRUD4routeMainTemplate.Replace("{0}", firstTable).Replace("{1}", CRUD4route);
             File.WriteAllText(Path.Combine(srcDIR, "router.js"), CRUD4routeMain, outputEnc);
 
-            string CRUD4appVueMain = CRUD4appVueMainTemplate.Replace("{0}", appVue);
+            string CRUD4appVueMain = CRUD4appVueMainTemplate.Replace("{0}", appVue).Replace("{1}", appVueMenu);
             File.WriteAllText(Path.Combine(srcDIR, "App.vue"), CRUD4appVueMain, outputEnc);
         }
 

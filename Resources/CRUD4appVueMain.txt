@@ -4,6 +4,20 @@
       <v-tabs align-with-title>
 {0}
       </v-tabs>
+      <!-- <v-menu
+        left
+        bottom
+      >
+        <template v-slot:activator="{ on }">
+          <v-btn icon v-on="on">
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list>
+{1}
+        </v-list>
+      </v-menu> -->  <!-- on entity.vue insert <v-card-title>entity</v-card-title> -->
     </v-app-bar>
     <v-main>
       <v-container fluid>
@@ -42,6 +56,11 @@ https://github.com/vuetifyjs/vuetify/issues/12748#issuecomment-803589166 */
 .v-tabs-slider-wrapper, .v-tab--active {
   color: #fff !important;
 }
+
+/* use it when tab overloaded only - fix for v-tabs to stop squeeze the v-menu dots-vertical icon */
+/* .v-toolbar__content{
+  padding: 4px 35px !important;
+} */
 </style>
 
 
