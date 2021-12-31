@@ -65,7 +65,7 @@ namespace DBManager
             toolStripSQLServerGenerateScript4Restore.Visible = General.DB.optionsShowRestoreScript();
             toolStripGeneratePROCList.Visible = toolStripGeneratePROCListWhere.Visible =
             toolStripGeneratePROCInsert.Visible = toolStripGeneratePROCUpdate.Visible =
-            toolStripGeneratePROCDelete.Visible = toolStripSeparator10.Visible = General.DB.optionsProceduresFunctions();
+            toolStripGeneratePROCDelete.Visible = toolStripSeparator10.Visible = toolStripGeneratePROCMerge.Visible = General.DB.optionsProceduresFunctions();
 
             try
             {
@@ -1508,6 +1508,35 @@ namespace DBManager
 
         }
 
+        private void toolStripGeneratePROCMerge_Click(object sender, EventArgs e)
+        {
+            List<ListStrings> fields = new List<ListStrings>();
+            string tblName = (TR.SelectedNode.Tag as treeItem).nodeText;
+
+            foreach (var node in TR.SelectedNode.Children)
+            {
+                if ((node.Tag as treeItem).nodeCheck)
+                    if ((node.Tag as treeItem).fieldType.ToLower() == "varchar" || (node.Tag as treeItem).fieldType.ToLower() == "nvarchar")
+                        fields.Add(new ListStrings((node.Tag as treeItem).nodeText, (node.Tag as treeItem).fieldType.ToLower() + "(" +
+                           (node.Tag as treeItem).fieldSize + ")"));
+                    else
+                        fields.Add(new ListStrings((node.Tag as treeItem).nodeText, (node.Tag as treeItem).fieldType.ToLower()));
+
+            }
+
+
+            if (fields.Count == 0)
+                General.Mes("Please check the fields");
+            else
+            {
+                string gen = General.DB.generatePROCMerge(tblName, fields);
+
+                addTAB("table [" + tblName + "] MERGE");
+                setCurrentTSQL(runFormatter(gen));
+                //setCurrentTSQL(gen);
+            }
+        }
+
         private void toolStripGeneratePROCInsertWhere_Click(object sender, EventArgs e)
         {
             List<ListStrings> fields = new List<ListStrings>();
@@ -2274,5 +2303,8 @@ namespace DBManager
             //https://stackoverflow.com/a/32105983/1320686 - fixes "Sum of the columns' FillWeight values cannot exceed 65535"
             e.Column.FillWeight = 10; 
         }
+
+
+
     }
 }

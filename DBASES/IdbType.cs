@@ -40,6 +40,7 @@ namespace DBManager.DBASES
             string parseProcedure(string procName,bool replaceCreate);
             string generatePROCselect(string tablename,List<string> fields,string PK);
             string generatePROCinsert(string tablename, List<ListStrings> fields);
+            string generatePROCMerge(string tablename, List<ListStrings> fields);
             string generatePROCupdate(string tablename, List<ListStrings> fields, string PK);
             string generatePROCdelete(string tablename, string PK);
             string generatePROCnodeJS(string procName);

@@ -423,6 +423,43 @@ namespace DBManager.DBASES
         }
 
 
+        public string generatePROCMerge(string tablename, List<ListStrings> fields)
+        { 
+            string str = "CREATE PROCEDURE `" + tablename + "_merge` ";
+            string flds = "";
+            string fldsParams = "";
+            string procParams = "";
+            string duplicParams = "";
+            string bindParams = "";
+
+            if (fields.Count == 0)
+                flds = "* ";
+            else
+                foreach (ListStrings item in fields)
+                {
+                    flds += item.item1 + ", ";
+                    fldsParams += item.item1.ToLower() + "VAR,";
+                    bindParams += ":" + item.item1 + ", ";
+                    duplicParams += item.item1 + "=:" + item.item1 + ", ";
+
+                    if (item.item2.ToLower().Contains("varchar") || item.item2.ToLower().Contains("nvarchar") || item.item2.ToLower().Contains("text"))
+                        procParams += "IN `" + item.item1.ToLower() + "VAR` " + item.item2 + "  CHARSET utf8,";
+                    else
+                        procParams += "IN `" + item.item1.ToLower() + "VAR` " + item.item2 + ",";
+                    // CHARSET utf8
+                }
+
+            flds = flds.Substring(0, flds.Length - 2);
+            duplicParams = duplicParams.Substring(0, duplicParams.Length - 2);
+            fldsParams = fldsParams.Substring(0, fldsParams.Length - 1);
+            bindParams = bindParams.Substring(0, bindParams.Length - 2);
+
+            return str + "(" + procParams.Substring(0, procParams.Length - 1) + ") \r\nBEGIN \r\n" +
+                    "INSERT INTO " + tablename + "(" + flds + ") VALUES (" + fldsParams + ") \r\nON DUPLICATE KEY UPDATE (" + fldsParams + ");\r\n\r\nEND\r\n" +
+                    "/*raw SQL with bind (ref - https://dev.mysql.com/doc/refman/5.7/en/insert-on-duplicate.html)\r\nINSERT INTO " + tablename + "(" + flds + ") VALUES (" + bindParams + ") \r\nON DUPLICATE KEY UPDATE " + duplicParams;
+
+        }
+
         public string generatePROCupdate(string tablename, List<ListStrings> fields, string PK)
         {
             //string dbase = General.Connections[connectionIndex].dbaseName;

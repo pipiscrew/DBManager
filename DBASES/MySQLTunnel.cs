@@ -777,6 +777,12 @@ namespace DBManager.DBASES
             return true;
         }
 
+
+
+        public string generatePROCMerge(string tablename, List<ListStrings> fields)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

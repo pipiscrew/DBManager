@@ -469,5 +469,11 @@ namespace DBManager.DBASES
         {
             return false;
         }
+
+
+        public string generatePROCMerge(string tablename, List<ListStrings> fields)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
