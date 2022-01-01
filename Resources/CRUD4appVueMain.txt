@@ -4,10 +4,15 @@
       <v-tabs align-with-title>
 {0}
       </v-tabs>
-      <!-- <v-menu
+
+      <v-btn icon @click="switchTheme">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-hidden="true" class="v-icon__svg"><path d="M12,19.58V19.58C10.4,19.58 8.89,18.96 7.76,17.83C6.62,16.69 6,15.19 6,13.58C6,12 6.62,10.47 7.76,9.34L12,5.1M17.66,7.93L12,2.27V2.27L6.34,7.93C3.22,11.05 3.22,16.12 6.34,19.24C7.9,20.8 9.95,21.58 12,21.58C14.05,21.58 16.1,20.8 17.66,19.24C20.78,16.12 20.78,11.05 17.66,7.93Z"></path></svg>
+      </v-btn>
+
+      <v-menu
         left
         bottom
-      >
+      >  <!-- on entities used only to, v-menu, unremark on entity.vue the v-title -->
         <template v-slot:activator="{ on }">
           <v-btn icon v-on="on">
             <v-icon>mdi-dots-vertical</v-icon>
@@ -17,7 +22,7 @@
         <v-list>
 {1}
         </v-list>
-      </v-menu> -->  <!-- on entity.vue insert <v-card-title>entity</v-card-title> -->
+      </v-menu>
     </v-app-bar>
     <v-main>
       <v-container fluid>
@@ -57,10 +62,17 @@ https://github.com/vuetifyjs/vuetify/issues/12748#issuecomment-803589166 */
   color: #fff !important;
 }
 
-/* use it when tab overloaded only - fix for v-tabs to stop squeeze the v-menu dots-vertical icon */
+/* use it when tab overloaded only - fix for v-tabs to stop squeeze the v-menu dots-vertical icon 
+double element */
+/* .v-toolbar__content{
+  padding: 4px 85px !important;
+} */
+
+/* single element */
 /* .v-toolbar__content{
   padding: 4px 35px !important;
-} */
+}
+*/
 </style>
 
 
@@ -75,5 +87,11 @@ export default {
   data: () => ({
     //
   }),
+  methods: {
+    // https://github.com/vuetifyjs/vuetify/issues/5223#issuecomment-457493822
+    switchTheme() {
+      this.$vuetify.theme.dark = ! this.$vuetify.theme.dark
+    }
+  }
 };
 </script>
