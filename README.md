@@ -45,7 +45,7 @@ version history:<br>
 
 
 <br><br>
-*known bug* – when creating a new connection doesn’t appear to connections, user has to restart the application!
+*known bug* – when creating a new connection doesn’t appear to connections, user has to restart the application!  
 
 <br><br>
 
@@ -61,4 +61,11 @@ version history:<br>
 <br><br>
 Copyright (c) 2017 [PipisCrew](http://pipiscrew.com)
 
-Licensed under the [MIT license](http://www.opensource.org/licenses/mit-license.php).
+Licensed under the [MIT license](http://www.opensource.org/licenses/mit-license.php).  
+
+-------  
+  
+
+CRUD generators by others :  
+* [yunhan0/koa-vue-fullstack](https://github.com/yunhan0/koa-vue-fullstack) - vue / nodeJS / mongoDB
+* [radzen](https://www.radzen.com/) - angular / asp.net / SQLServer & Oracle & Postgre
