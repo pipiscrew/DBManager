@@ -11,6 +11,7 @@
             item-text="routine"
             label="Select"
             @change="RunRoutine()"
+            v-on:keyup.13="RunRoutine()"   
             single-line
         ></v-autocomplete> </v-col>
       </v-row>
@@ -217,9 +218,6 @@ export default {
 
         },
         async ApiFillGridExecuteProcedure() {
-
-            // this.headers = [];
-            // this.items = [];
 
             let formData = new FormData();
             formData.append("action", "ExecuteProcedure");

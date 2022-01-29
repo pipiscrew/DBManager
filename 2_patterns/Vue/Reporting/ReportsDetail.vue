@@ -12,10 +12,12 @@
             <v-container>
                 <div v-for="(item, index) in procParameters" :key="index">
                       <v-text-field
+                        autofocus
                         v-model="item.val"
                         :label="item.colname"
                         :rules="[() => !!item.val || 'This field is required']"
                         required
+                        v-on:keyup.13="execute()"  
                       ></v-text-field> 
                 </div>
             </v-container>
