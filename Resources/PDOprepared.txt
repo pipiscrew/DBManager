@@ -7,13 +7,13 @@ $db = connect();
 
 if(isset($_POST['#tblname#FORM_updateID']) && !empty($_POST['#tblname#FORM_updateID']))
 {
-	$sql = "UPDATE `#tblname#` set #updateVAL# WHERE #updateWhere#=:#updateWhere#";
+	$sql = 'UPDATE `#tblname#` set #updateVAL# WHERE #updateWhere#=:#updateWhere#';
 	$stmt = $db->prepare($sql);
 	$stmt->bindValue(':#updateWhere#', $_POST['#tblname#FORM_updateID']);
 }
 else
 {
-	$sql = "INSERT INTO `#tblname#` (#insertFields#) VALUES (#insertVAL#)";
+	$sql = 'INSERT INTO `#tblname#` (#insertFields#) VALUES (#insertVAL#)';
 	$stmt = $db->prepare($sql);
 }
 

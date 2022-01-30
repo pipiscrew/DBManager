@@ -377,6 +377,7 @@
     <EmbeddedResource Include="ResourceSQLServer\proc_node.dbaseJS_declaration.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\CRUD4detailsVDateTimeElement.txt" />
     <None Include="Resources\templateCRUDvue2.png" />
     <None Include="Resources\CRUD4appVueMain.txt" />
     <None Include="Resources\CRUD4routeTemplate.txt" />

@@ -484,27 +484,9 @@ namespace DBManager.Properties {
         ///      &lt;v-tabs align-with-title&gt;
         ///{0}
         ///      &lt;/v-tabs&gt;
-        ///    &lt;/v-app-bar&gt;
-        ///    &lt;v-main&gt;
-        ///      &lt;v-container fluid&gt;
-        ///        &lt;div id=&quot;app&quot;&gt;
-        ///          &lt;router-view /&gt;
-        ///        &lt;/div&gt;
-        ///      &lt;/v-container&gt;
-        ///    &lt;/v-main&gt;
-        ///  &lt;/v-app&gt;
-        ///&lt;/template&gt;
         ///
-        ///&lt;style&gt;
-        ///#app {
-        ///  font-family: Avenir, Helvetica, Arial, sans-serif;
-        ///  -webkit-font-smoothing: antialiased;
-        ///  -moz-osx-font-smoothing: grayscale;
-        ///  text-align: center;
-        ///  color: #2c3e50;
-        ///}
-        ///
-        ///#nav  [rest of string was truncated]&quot;;.
+        ///      &lt;v-btn icon @click=&quot;switchTheme&quot;&gt;
+        ///        &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; role=&quot;img&quot; aria-hidden=&quot;true&quot; class=&quot;v-icon__svg&quot;&gt;&lt;path d=&quot;M12,19.58V19.58C10.4,19.58 8.89,18.96 7.76,17.83C6.62,16.69 6,15.19 6,13.58C6,12 6.62,10.47 7.76,9.34L12,5.1M17.66,7.93L12,2.27V2.27L6.34,7.93C3.22,11.05 3.22,16.12 6.34,19.24C7.9,20.8 9.95,21.58 12,21.58C14.05,21.58 16.1, [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CRUD4appVueMain {
             get {
@@ -581,9 +563,10 @@ namespace DBManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to           this.{0}Items = r[0].map((item) =&gt; {
+        ///   Looks up a localized string similar to           this.{0}Items = r[{2}].map((item) =&gt; {
         ///            return { ...new {1}(item) };
-        ///          });.
+        ///          });
+        ///.
         /// </summary>
         internal static string CRUD4detailsREFTablesPromise {
             get {
@@ -630,6 +613,21 @@ namespace DBManager.Properties {
         internal static string CRUD4detailsVDateElement {
             get {
                 return ResourceManager.GetString("CRUD4detailsVDateElement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to               &lt;vdatetimepickerex
+        ///                caption=&quot;{0}&quot;
+        ///                :required=&quot;{1}&quot;
+        ///                :setTodayWhenNew=&quot;true&quot;
+        ///                v-model=&quot;privateRecord.{0}&quot;
+        ///                :value.sync=&quot;privateRecord.{0}&quot;
+        ///              /&gt;.
+        /// </summary>
+        internal static string CRUD4detailsVDateTimeElement {
+            get {
+                return ResourceManager.GetString("CRUD4detailsVDateTimeElement", resourceCulture);
             }
         }
         
@@ -691,6 +689,7 @@ namespace DBManager.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &lt;template&gt;
         ///  &lt;v-card&gt;
+        ///    &lt;!-- &lt;v-card-title&gt;{0}&lt;/v-card-title&gt;  --&gt;
         ///    &lt;v-snackbar v-model=&quot;snackbar&quot; timeout=&quot;2500&quot;&gt;
         ///      {{snackbarMessage}}
         ///    &lt;/v-snackbar&gt;
@@ -704,9 +703,7 @@ namespace DBManager.Properties {
         ///        label=&quot;Search&quot;
         ///        single-line
         ///        hide-details
-        ///        v-on:keyup.13=&quot;FillGrid{0}()&quot;        
-        ///        class=&quot;shrink&quot;
-        ///      &gt;&lt;/v [rest of string was truncated]&quot;;.
+        ///        v-on:keyup.13=&quot;FillGrid{0 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CRUD4entityVUE {
             get {
@@ -825,8 +822,9 @@ namespace DBManager.Properties {
         ///    $db = new dbase();
         ///    $db-&gt;connect_mysql();
         ///
-        ///    echo json_encode( $db-&gt;getSet(&quot;select {1},{2} from {0}&quot;, null));
-        ///}.
+        ///    echo json_encode( $db-&gt;getSet(&apos;select {1},{2} from {0}&apos;, null));
+        ///}
+        ///.
         /// </summary>
         internal static string CRUD4phpGetRecodsFK {
             get {
@@ -837,7 +835,8 @@ namespace DBManager.Properties {
         /// <summary>
         ///   Looks up a localized string similar to 	case &apos;GetRecords{0}&apos;:
         ///		GetRecords{0}();
-        ///		break;.
+        ///		break;
+        ///.
         /// </summary>
         internal static string CRUD4phpGetRecodsFKcall {
             get {

@@ -447,11 +447,14 @@ namespace DBManager
         {
             string fieldName = f.field_name;
             string fieldType = f.field_type;
-            if (fieldType == "date" || fieldType == "datetime")
+            if (fieldType == "date")
                 return string.Format("DATE_FORMAT({0},\\'%d-%m-%Y\\') as {0}", fieldName);
+            else if (fieldType == "datetime")
+                return string.Format("DATE_FORMAT({0},\\'%d-%m-%Y %H:%i\\') as {0}", fieldName);
             else
                 return fieldName;
         }
+
         private string helper_template_vuetify_details_component(DataTable refTables, treeItem2 tbl)
         {
             string table_name;
@@ -478,7 +481,7 @@ namespace DBManager
 
             //generate markup
             object[] g = helper_template_vuetify_details_component4elements(refTables, tbl.table_fields);
-            //0 - markup // 1 - list of REFTABLES // 2 - list of FK key // 3 - bool vnumber import // 4 - bool vdate import
+            //0 - markup // 1 - list of REFTABLES // 2 - list of FK key // 3 - bool vnumber import // 4 - bool vdate import // 5 - bool vdatatime import
 
             /////////////////////////////////// REFERENCE TABLES [ START ]                
             List<string> allREFtables = (List<string>)g[1];
@@ -516,6 +519,11 @@ namespace DBManager
                 imports += importElementsTemplate.Replace("{0}", "vdatepickerex");
             }
 
+            if (g[5].ToBool())
+            {
+                componentsList.Add("vdatetimepickerex");
+                imports += importElementsTemplate.Replace("{0}", "vdatetimepickerex");
+            }
 
             item = CRUD4detailsTemplate.Replace("{0}", pk).Replace("{1}", (string)g[0]);
             item = item.Replace("{2}", imports).Replace("{3}", dataItems);
@@ -541,12 +549,14 @@ namespace DBManager
             string CRUD4detailsVNumberDEC = DBManager.Properties.Resources.CRUD4detailsVNumberDEC;
             string CRUD4detailsSwitchElement = DBManager.Properties.Resources.CRUD4detailsSwitchElement;
             string CRUD4detailsVDateElement = DBManager.Properties.Resources.CRUD4detailsVDateElement;
+            string CRUD4detailsVDateTimeElement = DBManager.Properties.Resources.CRUD4detailsVDateTimeElement;
             string all = "";
 
             List<string> refTablesImport = new List<string>();
             List<string> refFKfield = new List<string>();
             bool vnumberImport = false;
             bool vdateImport = false;
+            bool vdatetimeImport = false;
             foreach (treeItem2fields field in fields)
             {
                 if (field.field_PK)
@@ -635,9 +645,12 @@ namespace DBManager
 
                         break;
                     case "date":
-                    case "datetime":
                         vdateImport = true;
                         all += CRUD4detailsVDateElement.Replace("{0}", field.field_name).Replace("{1}", field.field_allow_null ? "false" : "true");
+                        break;
+                    case "datetime":
+                        vdatetimeImport = true;
+                        all += CRUD4detailsVDateTimeElement.Replace("{0}", field.field_name).Replace("{1}", field.field_allow_null ? "false" : "true");
                         break;
                     case "varchar":
                     case "text":
@@ -669,7 +682,7 @@ namespace DBManager
                 all += "            </v-col>\n";
             }
 
-            return new object[] { all, refTablesImport, refFKfield, vnumberImport, vdateImport };
+            return new object[] { all, refTablesImport, refFKfield, vnumberImport, vdateImport, vdatetimeImport };
         }
 
         private string helper_template_vuetify_entityJS(string tablename, List<treeItem2fields> fields)
