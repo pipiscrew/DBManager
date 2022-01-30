@@ -384,14 +384,29 @@ namespace DBManager.DBASES
 
         public string generatePROCselect(string tablename, List<string> fields, string PK)
         {
-            throw new NotImplementedException();
+            string str = "CREATE PROCEDURE `" + tablename + "_list` " + (PK.Length > 0 ? "\r\n(IN `rec_idVAR` INT)" : "()");
+            string flds = "";
+
+            if (fields.Count == 0)
+                flds = "* ";
+            else
+                foreach (string item in fields)
+                {
+                    flds += item + ",";
+                }
+
+            if (PK.Length > 0)
+                return str + "\r\nBEGIN \r\n" +
+                    "SELECT " + flds.Substring(0, flds.Length - 1) + " FROM " + tablename + " WHERE " + PK + " = " + "rec_idVAR;\r\n\r\nEND";
+            else
+            return str + "\r\nBEGIN \r\n" +
+                    "SELECT " + flds.Substring(0, flds.Length - 1) + " FROM " + tablename + ";\r\n\r\nEND";
+
         }
 
 
         public string generatePROCinsert(string tablename, List<ListStrings> fields)
         {
-            //string dbase = General.Connections[connectionIndex].dbaseName;
-            //FOR MYSQL PHP string str = "DELIMITER $$\r\n\r\nCREATE PROCEDURE `" + tablename + "_add` ";
             string str = "CREATE PROCEDURE `" + tablename + "_add` ";
             string flds = "";
             string fldsParams = "";
@@ -406,7 +421,7 @@ namespace DBManager.DBASES
                     fldsParams += item.item1.ToLower() + "VAR,";
 
                     if (item.item2.ToLower().Contains("varchar") || item.item2.ToLower().Contains("nvarchar") || item.item2.ToLower().Contains("text"))
-                        procParams += "IN `" + item.item1.ToLower() + "VAR` " + item.item2 + "  CHARSET utf8,";
+                        procParams += "IN `" + item.item1.ToLower() + "VAR` " + item.item2 + " CHARSET utf8mb4,";
                     else
                         procParams += "IN `" + item.item1.ToLower() + "VAR` " + item.item2 + ",";
                     // CHARSET utf8
@@ -414,12 +429,6 @@ namespace DBManager.DBASES
 
             return str + "(" + procParams.Substring(0, procParams.Length - 1) + ") \r\nBEGIN \r\n" +
                     "INSERT INTO " + tablename + "(" + flds.Substring(0, flds.Length - 1) + ") VALUES (" + fldsParams.Substring(0, fldsParams.Length - 1) + ");\r\n\r\nEND";
-
-            //FOR MYSQL PHP
-            //return str + "(" + procParams.Substring(0, procParams.Length - 1) + ") \r\nBEGIN \r\n" +
-            //    "INSERT INTO " + tablename + "(" + flds.Substring(0, flds.Length - 1) + ") VALUES (" + fldsParams.Substring(0, fldsParams.Length - 1) + ")\r\n\r\nEND IF;\r\n\r\nEND$$\r\n\r\nDELIMITER ;";
-
-            //throw new NotImplementedException();
         }
 
 
@@ -431,6 +440,7 @@ namespace DBManager.DBASES
             string procParams = "";
             string duplicParams = "";
             string bindParams = "";
+            string vals = "";
 
             if (fields.Count == 0)
                 flds = "* ";
@@ -441,9 +451,10 @@ namespace DBManager.DBASES
                     fldsParams += item.item1.ToLower() + "VAR,";
                     bindParams += ":" + item.item1 + ", ";
                     duplicParams += item.item1 + "=:" + item.item1 + ", ";
+                    vals += item.item1 + "=" + item.item1.ToLower() + "VAR, ";
 
                     if (item.item2.ToLower().Contains("varchar") || item.item2.ToLower().Contains("nvarchar") || item.item2.ToLower().Contains("text"))
-                        procParams += "IN `" + item.item1.ToLower() + "VAR` " + item.item2 + "  CHARSET utf8,";
+                        procParams += "IN `" + item.item1.ToLower() + "VAR` " + item.item2 + " CHARSET utf8mb4,";
                     else
                         procParams += "IN `" + item.item1.ToLower() + "VAR` " + item.item2 + ",";
                     // CHARSET utf8
@@ -453,10 +464,10 @@ namespace DBManager.DBASES
             duplicParams = duplicParams.Substring(0, duplicParams.Length - 2);
             fldsParams = fldsParams.Substring(0, fldsParams.Length - 1);
             bindParams = bindParams.Substring(0, bindParams.Length - 2);
-
+            vals = vals.Substring(0, vals.Length - 2);
             return str + "(" + procParams.Substring(0, procParams.Length - 1) + ") \r\nBEGIN \r\n" +
-                    "INSERT INTO " + tablename + "(" + flds + ") VALUES (" + fldsParams + ") \r\nON DUPLICATE KEY UPDATE (" + fldsParams + ");\r\n\r\nEND\r\n" +
-                    "/*raw SQL with bind (ref - https://dev.mysql.com/doc/refman/5.7/en/insert-on-duplicate.html)\r\nINSERT INTO " + tablename + "(" + flds + ") VALUES (" + bindParams + ") \r\nON DUPLICATE KEY UPDATE " + duplicParams;
+                    "INSERT INTO " + tablename + "(" + flds + ") VALUES (" + fldsParams + ") \r\nON DUPLICATE KEY UPDATE " + vals + ";\r\n\r\nEND\r\n" +
+                    "/*\r\nraw SQL with bind (ref - https://dev.mysql.com/doc/refman/5.7/en/insert-on-duplicate.html)\r\nINSERT INTO " + tablename + "(" + flds + ") VALUES (" + bindParams + ") \r\nON DUPLICATE KEY UPDATE " + duplicParams + "\r\n*/";
 
         }
 
@@ -464,7 +475,7 @@ namespace DBManager.DBASES
         {
             //string dbase = General.Connections[connectionIndex].dbaseName;
             string str = "CREATE PROCEDURE `" + tablename + "_update`\r\n";
-            string where = "\r\n( IN `rec_idVAR` INT,";
+            string where = "\r\n(IN `rec_idVAR` INT,";
             string flds = "";
             string procParams = where;
 
@@ -476,7 +487,7 @@ namespace DBManager.DBASES
                     flds += item.item1 + " = " + item.item1.ToLower() + "VAR,";
 
                     if (item.item2.ToLower().Contains("varchar") || item.item2.ToLower().Contains("nvarchar") || item.item2.ToLower().Contains("text"))
-                        procParams += "IN `" + item.item1.ToLower() + "VAR` " + item.item2 + "  CHARSET utf8,";
+                        procParams += "IN `" + item.item1.ToLower() + "VAR` " + item.item2 + " CHARSET utf8mb4,";
                     else
                         procParams += "IN `" + item.item1.ToLower() + "VAR` " + item.item2 + ",";
 
@@ -486,7 +497,7 @@ namespace DBManager.DBASES
 
             return str + procParams.Substring(0, procParams.Length - 1) + ")\r\nBEGIN\r\n" +
                 "UPDATE " + tablename + " SET " + flds.Substring(0, flds.Length - 1) + "\r\n" +
-                " WHERE " + PK + " =  rec_idVAR;" + "\r\n\r\nEND";
+                " WHERE " + PK + " = rec_idVAR;" + "\r\n\r\nEND";
         }
 
 
@@ -637,6 +648,7 @@ namespace DBManager.DBASES
         {
             return true;
         }
+
 
     }
 }
