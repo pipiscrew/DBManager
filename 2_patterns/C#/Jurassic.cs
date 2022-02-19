@@ -292,6 +292,22 @@ namespace Jurassic
             }
             return string.Format("{0:###0.##} {1}", num, arg);
         }
+		
+        public static string FormatBytes(long size)
+        { // https://www.c-sharpcorner.com/article/csharp-convert-bytes-to-kb-mb-gb/
+            string[] suffixes = { "Bytes", "KB", "MB", "GB", "TB", "PB" };
+
+            int counter = 0;
+            decimal number = size;
+
+            while (Math.Round(number / 1024) >= 1)
+            {
+                number = number / 1024;
+                counter++;
+            }
+
+            return string.Format("{0:n1}{1}", number, suffixes[counter]);
+        }
     }
 
     public static class MD5Helper
@@ -755,4 +771,109 @@ namespace Jurassic
 
         public const string XML_DEFINITION = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
     }
+	
+    public class StopwatchProxy
+    {
+		/*  src - https://stackoverflow.com/a/10669397
+			StopwatchProxy.Instance.Stopwatch.Start();
+			.
+			StopwatchProxy.Instance.Stopwatch.Stop();
+			this.Text = StopwatchProxy.GetResult();
+		*/
+        private Stopwatch _stopwatch;
+        private static readonly StopwatchProxy _stopwatchProxy = new StopwatchProxy();
+
+        private StopwatchProxy()
+        {
+            _stopwatch = new Stopwatch();
+        }
+
+        public Stopwatch Stopwatch { get { return _stopwatch; } }
+
+        public static StopwatchProxy Instance
+        {
+            get { return _stopwatchProxy; }
+        }
+
+        public static string GetResult(){
+            string g =  StopwatchProxy.Instance.Stopwatch.Elapsed.ToString(@"mm\:ss\.ff");
+            StopwatchProxy.Instance.Stopwatch.Reset();
+            return g;
+        }
+    }
+	
+    public class Reflect
+    {	//src - https://stackoverflow.com/a/39132579
+		/* TODO : Optimize w/ LINQ */
+        public static void SetPrivatePropertyValue<T>(T obj, string propertyName, object newValue)
+        { 
+            BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField;
+            FieldInfo field = obj.GetType().GetField(propertyName, flags);
+
+            if (field != null)
+                field.SetValue(obj, newValue);
+            else
+                throw new Exception("!!");
+
+            return;
+            // add a check here that the object obj and propertyName string are not null
+            foreach (FieldInfo fi in obj.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
+            {
+                if (fi.Name.ToLower().Contains(propertyName.ToLower()))
+                {
+                    fi.SetValue(obj, newValue);
+                    break;
+                }
+            }
+        }
+
+        public static void SetBasePrivatePropertyValue<T>(T obj, string propertyName, object newValue)
+        {  /* when using inheritance access BASE private field */
+            BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
+            FieldInfo field = obj.GetType().BaseType.GetField(propertyName, flags);
+
+            if (field != null)
+                field.SetValue(obj, newValue);
+            else
+                throw new Exception("!!");
+
+            return;
+            // add a check here that the object obj and propertyName string are not null
+            foreach (FieldInfo fi in obj.GetType().BaseType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
+            {
+                if (fi.Name.ToLower().Contains(propertyName.ToLower()))
+                {
+                    fi.SetValue(obj, newValue);
+                    break;
+                }
+            }
+        }
+
+        public static object GetBasePrivatePropertyValue<T>(T obj, string propertyName)
+        { 
+            //Manaual - https://jike.in/?qa=1114048/c%23-use-reflection-to-get-a-private-member-variable-from-a-derived-class
+            //BASE https://stackoverflow.com/a/6961970
+
+            BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
+            FieldInfo field = obj.GetType().BaseType.GetField(propertyName, flags);
+
+            if (field != null)
+                return field.GetValue(obj);
+            else
+                throw new Exception("!!");
+            
+            return null;
+            // add a check here that the object obj and propertyName string are not null
+            foreach (FieldInfo fi in obj.GetType().BaseType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
+            {
+                Console.WriteLine(fi.Name);
+                if (fi.Name.ToLower().Contains(propertyName.ToLower()))
+                {
+                    return fi.GetValue(obj);
+                }
+            }
+
+            return null;
+        }
+	}
 }
