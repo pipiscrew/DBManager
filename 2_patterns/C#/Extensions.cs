@@ -103,6 +103,13 @@ public static class Extensions
 		return result;
 	}
 
+    public static string ReplaceIgnoreCase(this string str, string from, string to)
+    {
+		//https://stackoverflow.com/a/41275230
+		//https://docs.microsoft.com/en-us/dotnet/standard/base-types/substitutions-in-regular-expressions
+        return Regex.Replace(str, Regex.Escape(from), to.Replace("$", "$$"), RegexOptions.IgnoreCase);
+    }
+	
 	public static string MakeSafeFilename(this string filename)
 	{
 	  Regex pattern = new Regex("[" + string.Join(",", Path.GetInvalidFileNameChars()) + "]");
