@@ -181,39 +181,64 @@ public static class Extensions
 	
         #region " GenericToDataTable "
 		
-        public static DataTable ConvertTo<T>(this IList<T> lst)
-        { //https://stackoverflow.com/a/45138154
-            DataTable tbl = CreateTable<T>();
-            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
-            foreach (T item in lst)
+        //public static DataTable ConvertTo<T>(this IList<T> lst)
+        //{ //https://stackoverflow.com/a/45138154
+        //    DataTable tbl = CreateTable<T>();
+        //    PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
+        //    foreach (T item in lst)
+        //    {
+        //        DataRow row = tbl.NewRow();
+        //        foreach (PropertyDescriptor prop in properties)
+        //        {
+        //            if (!prop.PropertyType.IsGenericType || !(prop.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>)))
+        //            {
+        //                row[prop.Name] = prop.GetValue(item);
+        //            }
+        //        }
+        //        tbl.Rows.Add(row);
+        //    }
+        //    return tbl;
+        //}
+
+        //private static DataTable CreateTable<T>()
+        //{   
+        //    Type expr_0A = typeof(T);
+        //    DataTable tbl = new DataTable(expr_0A.Name);
+        //    foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(expr_0A))
+        //    {
+        //        if (!prop.PropertyType.IsGenericType || !(prop.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>)))
+        //        {
+        //            tbl.Columns.Add(prop.Name, prop.PropertyType);
+        //        }
+        //    }
+        //    return tbl;
+        //}
+
+        public static DataTable ConvertToDataTable<T>(this IEnumerable<T> source)
+        {   // https://stackoverflow.com/a/6784997
+            DataTable dt = new DataTable();
+
+            var props = TypeDescriptor.GetProperties(typeof(T));
+
+            foreach (PropertyDescriptor prop in props)
             {
-                DataRow row = tbl.NewRow();
-                foreach (PropertyDescriptor prop in properties)
-                {
-                    if (!prop.PropertyType.IsGenericType || !(prop.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>)))
-                    {
-                        row[prop.Name] = prop.GetValue(item);
-                    }
-                }
-                tbl.Rows.Add(row);
+                DataColumn dc = dt.Columns.Add(prop.Name, prop.PropertyType);
+                dc.Caption = prop.DisplayName;
+                dc.ReadOnly = prop.IsReadOnly;
             }
-            return tbl;
+
+            foreach (T item in source)
+            {
+                DataRow dr = dt.NewRow();
+                foreach (PropertyDescriptor prop in props)
+                    dr[prop.Name] = prop.GetValue(item);
+
+                dt.Rows.Add(dr);
+            }
+
+            return dt;
         }
 
-        private static DataTable CreateTable<T>()
-        {   
-            Type expr_0A = typeof(T);
-            DataTable tbl = new DataTable(expr_0A.Name);
-            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(expr_0A))
-            {
-                if (!prop.PropertyType.IsGenericType || !(prop.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>)))
-                {
-                    tbl.Columns.Add(prop.Name, prop.PropertyType);
-                }
-            }
-            return tbl;
-        }
-	
         public static DataTable ConvertToDataTableX<T>(this IList<T> data)
         {   // the ConvertTo+CreateTable should deprecated
             var properties = TypeDescriptor.GetProperties(typeof(T));
@@ -406,10 +431,10 @@ public static class Extensions
             return  r.Replace(s, "");
         }
 	
-	public static string LeaveOnlyAlphaNumeric(this string filename)
-	{ //AlphaNumeric space and dash
-	 return Regex.Replace(filename, @"[^\p{IsGreek}a-zA-Z0-9 -]", string.Empty);
-	}
+	    public static string LeaveOnlyAlphaNumeric(this string filename)
+	    { //AlphaNumeric space and dash
+	     return Regex.Replace(filename, @"[^\p{IsGreek}a-zA-Z0-9 -]", string.Empty);
+	    }
 	
         public static string ExRemoveAccents(this string text)
         {
@@ -458,7 +483,13 @@ public static class Extensions
 
             return chunks;
         }
-	
+
+        public static int[] FindAllIndex<T>(this T[] array, Predicate<T> match)
+        {//https://stackoverflow.com/a/15295523
+            return array.Select((value, index) => match(value) ? index : -1)
+                    .Where(index => index != -1).ToArray();
+        }
+
         public static string Replace(this Match match, string source, string replacement)
         { //https://stackoverflow.com/a/44955641
             return source.Substring(0, match.Index) + replacement + source.Substring(match.Index + match.Length);
