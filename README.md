@@ -37,8 +37,9 @@
 <br><br>
 
 version history:<br>
-2021 - v2.4.3 (adding template on CRUD 'PHPtemplateVue2')  - 13 tables with total 119 fields, `dist` costs 1mb  
-2021 - v2.4.2 (adding template on CRUD 'PHPtemplateAPIbootstraptable')  
+2023 - v2.4.4 (adding template on CRUD `PHPtemplateVue3`) using [kianfang/vue-import](https://github.com/kianfang/vue-import/issues/3)  
+2021 - v2.4.3 (adding template on CRUD `PHPtemplateVue2`)  - 13 tables with total 119 fields, `dist` costs 1mb  
+2021 - v2.4.2 (adding template on CRUD `PHPtemplateAPIbootstraptable`)  
 2019 - v2.4.1 (fixes "Sum of the columns' FillWeight values cannot exceed 65535")<br>
 2019 - v2.4.0 (sqlserver tunnel support added)<br>
 2014 - v2.3.9
@@ -49,15 +50,15 @@ version history:<br>
 
 <br><br>
 
-# This project uses the following 3rd-party dependencies :<br>
--[Aga.Controls.dll](https://sourceforge.net/projects/treeviewadv/)<br>
--[ICSharpCode.TextEditor.dll](http://www.icsharpcode.net/)<br>
--[MySql.Data.dll](https://dev.mysql.com)<br>
--[Newtonsoft.Json.dll](http://www.newtonsoft.com/json)<br>
--[SQLite.NET.dll](http://adodotnetsqlite.sourceforge.net/)<br>
--[sqlite3.dll](https://sqlite.org/)
+# This project uses the following 3rd-party dependencies :  
+* [Aga.Controls.dll](https://sourceforge.net/projects/treeviewadv/)<br>
+* [ICSharpCode.TextEditor.dll](http://www.icsharpcode.net/)<br>
+* [MySql.Data.dll](https://dev.mysql.com)<br>
+* [Newtonsoft.Json.dll](http://www.newtonsoft.com/json)<br>
+* [SQLite.NET.dll](http://adodotnetsqlite.sourceforge.net/)<br>
+* [sqlite3.dll](https://sqlite.org/)
 <br><br><br>
-##This project is no longer maintained
+## This project is no longer maintained
 <br><br>
 Copyright (c) 2017 [PipisCrew](http://pipiscrew.com)
 
