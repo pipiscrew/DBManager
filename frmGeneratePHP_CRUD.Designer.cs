@@ -66,7 +66,8 @@
             "AdminLTE",
             "bootstrap-table by wenzhixin",
             "bootstrap-table b5 for API",
-            "vue2 with vuetify"});
+            "vue2 with vuetify (nodeJS)",
+            "vue3 with vuetify (vanilla)"});
             this.cmbTemplate.Location = new System.Drawing.Point(620, 175);
             this.cmbTemplate.Name = "cmbTemplate";
             this.cmbTemplate.Size = new System.Drawing.Size(191, 24);

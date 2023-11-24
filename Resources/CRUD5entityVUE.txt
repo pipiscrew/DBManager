@@ -1,0 +1,156 @@
+<template>
+  <v-card>
+    <v-snackbar
+      :timeout="2500"
+      color="blue-grey"
+      rounded="pill"
+      v-model="snackbar"
+    >
+      {{ snackbarMessage }}
+    </v-snackbar>
+    <v-card-title>
+      <v-row no-gutters>
+        <v-col class="item" cols="12" sm="6" md="4">
+          <v-btn elevation="1" @click="show{0}Detail = true"
+            >add new</v-btn
+          >
+        </v-col>
+        <v-col class="item" cols="12" sm="6" md="4">
+          <v-spacer></v-spacer>
+          <v-text-field
+            v-model="search"
+            label="Search"
+            variant="solo"
+            class="shrink"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+    </v-card-title>
+    <v-data-table-server
+      v-model:items-per-page="itemsPerPage"
+      v-model:sort-by="sortBy"
+      :headers="headers"
+      :items-length="totalItems"
+      :items="serverItems"
+      :loading="loading"
+      :search="search"
+      @update:options="load{0}"
+      @dblclick:row="editRow{0}"
+    ></v-data-table-server>
+    <!-- v-if offers completely add & remove the Detail view (each time) thats has created & destroyed events, smile ;) -->
+    <!-- the prop show-modal on child component expecting to be showModal-->
+    <!-- the prop child-to-parent-cancel on child component expecting to be childToParentCancel-->
+    <{0l}detail
+      v-if="show{0}Detail"
+      v-model:show-modal="show{0}Detail"
+      v-model:record="dialog{0}Item"
+      @child-to-parent-cancel="dialog{0}ItemCancel"
+      @child-to-parent-refresh="dialog{0}ItemRefresh"
+      @child-to-parent-success="dialog{0}ItemSuccess"
+    />
+  </v-card>
+</template>
+
+<script>
+import general from "../general.js";
+import vueImport from "vue-import";
+
+export default {
+  components: {
+    {0l}detail: await vueImport("./components/{0}Detail.vue"),
+  },
+  data: () => ({
+    snackbar: false,
+    snackbarMessage: "",
+    show{0}Detail: false,
+    dialog{0}Item: null,
+    itemsPerPage: 10,
+    headers: [
+      //https://vuetifyjs.com/en/api/v-data-table/#props-headers
+{3}
+    ],
+    search: "",
+    serverItems: [],
+    loading: true,
+    totalItems: 0,
+    sortBy: [{ key: "{1}", order: "desc" }], //set v-data-table default sort, is passed to API query call
+  }),
+  methods: {
+    load{0}({ page, itemsPerPage, sortBy, search }) {
+      this.loading = true;
+      {0}API.fetch({ page, itemsPerPage, sortBy, search }).then(
+        (items) => {
+          this.serverItems = items.data;
+          this.totalItems = items.total;
+          this.loading = false;
+        }
+      );
+    },
+    editRow{0}(target, row) {
+      // if (target)
+      {
+        this.dialog{0}Item = row.item;
+        this.show{0}Detail = true;
+      }
+    },
+    dialog{0}ItemCancel(value) {
+      this.snackbarMessage = value;
+      this.snackbar = true;
+    },
+    dialog{0}ItemSuccess(value, id) {
+      if (id) {
+        //logic for delete only, useful when you have search datatable
+        this.serverItems.splice(
+          this.serverItems.findIndex((c) => c.{1} == id),
+          1
+        );
+        this.totalItems = this.totalItems - 1;
+      }
+
+      this.snackbarMessage = value;
+      this.snackbar = true;
+    },
+    dialog{0}ItemRefresh(value) {
+      this.snackbarMessage = value;
+      this.snackbar = true;
+      this.search = "";
+      this.load{0}({
+        page: 1,
+        itemsPerPage: this.itemsPerPage,
+        sortBy: this.sortBy,
+      });
+    },
+  },
+};
+
+const {0}API = {
+  // search bind direct, smile ;)
+  async fetch({ page, itemsPerPage, sortBy, search }) {
+    let formData = new FormData();
+    formData.append("action", "FillGrid{0}");
+
+    if (itemsPerPage > -1) {
+      formData.append("limit", itemsPerPage);
+      formData.append("offset", (page - 1) * itemsPerPage);
+    }
+
+    if (search) {  //when search
+      formData.append("search", search);
+    }
+
+    if (sortBy.length > 0) {  //when column sort
+      formData.append("sort", sortBy[0]["key"]);
+      formData.append("order", sortBy[0]["order"]);
+    }
+
+    const items = await general.GetData("api/{0}API.php", formData);
+
+    if (!items || items.error) {
+      alert("Error in communication with the Server!");
+      return null;
+    }
+
+    return items;
+  },
+};
+</script>

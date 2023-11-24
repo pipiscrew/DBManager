@@ -1,0 +1,20 @@
+import general from "../general.js";
+
+class {0} {
+
+//PHP PDO, always returns string for all dbase column types. So here user, must cast it, if he like it to use as for example on checkbox
+
+  constructor(data) {
+    
+    if (data != null) {
+{1}
+    }
+    else {
+{2}
+	//new Date().toISOString().substr(0, 10);
+    }
+  }
+
+}
+
+export default {0}

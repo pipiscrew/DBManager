@@ -620,7 +620,6 @@ namespace DBManager.Properties {
         ///   Looks up a localized string similar to               &lt;vdatetimepickerex
         ///                caption=&quot;{0}&quot;
         ///                :required=&quot;{1}&quot;
-        ///                :setTodayWhenNew=&quot;true&quot;
         ///                v-model=&quot;privateRecord.{0}&quot;
         ///                :value.sync=&quot;privateRecord.{0}&quot;
         ///              /&gt;.
@@ -917,6 +916,168 @@ namespace DBManager.Properties {
         internal static string CRUD4routeTemplate {
             get {
                 return ResourceManager.GetString("CRUD4routeTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;template&gt;
+        ///  &lt;v-card&gt;
+        ///    &lt;v-tabs bg-color=&quot;primary&quot;&gt;
+        ///{0}
+        ///    &lt;/v-tabs&gt;
+        ///  &lt;/v-card&gt;
+        ///&lt;/template&gt;
+        ///
+        ///&lt;script&gt;
+        ///export default {
+        ///  data() {
+        ///    return {
+        ///      date: new Date().toLocaleString(),
+        ///    };
+        ///  },
+        ///};
+        ///&lt;/script&gt;
+        ///.
+        /// </summary>
+        internal static string CRUD5appVueMain {
+            get {
+                return ResourceManager.GetString("CRUD5appVueMain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;template&gt;
+        ///  &lt;v-dialog v-model=&quot;showModal&quot; fullscreen&gt;
+        ///    &lt;v-card&gt;
+        ///      &lt;v-toolbar dark color=&quot;primary&quot;&gt;
+        ///        &lt;v-btn icon dark @click=&quot;close()&quot;&gt;
+        ///          &lt;v-icon&gt;mdi-close&lt;/v-icon&gt;
+        ///        &lt;/v-btn&gt;
+        ///        &lt;v-toolbar-title&gt;{{ header }}&lt;/v-toolbar-title&gt;
+        ///        &lt;v-spacer&gt;&lt;/v-spacer&gt;
+        ///        &lt;v-toolbar-items&gt;
+        ///          &lt;v-btn
+        ///            dark
+        ///            text
+        ///            v-if=&quot;privateRecord.{0} &gt; 0&quot;
+        ///            @click=&quot;deleteRecord()&quot;
+        ///          &gt;
+        ///            Delete
+        ///          &lt;/v-btn&gt;
+        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CRUD5details {
+            get {
+                return ResourceManager.GetString("CRUD5details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to               &lt;v-switch
+        ///                v-model=&quot;privateRecord.{0}&quot;
+        ///                color=&quot;primary&quot;
+        ///                label=&quot;{0}&quot;
+        ///              &gt;&lt;/v-switch&gt;.
+        /// </summary>
+        internal static string CRUD5detailsSwitchElement {
+            get {
+                return ResourceManager.GetString("CRUD5detailsSwitchElement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to import general from &quot;../general.js&quot;;
+        ///
+        ///class {0} {
+        ///
+        /////PHP PDO, always returns string for all dbase column types. So here user, must cast it, if he like it to use as for example on checkbox
+        ///
+        ///  constructor(data) {
+        ///    
+        ///    if (data != null) {
+        ///{1}
+        ///    }
+        ///    else {
+        ///{2}
+        ///	//new Date().toISOString().substr(0, 10);
+        ///    }
+        ///  }
+        ///
+        ///}
+        ///
+        ///export default {0}.
+        /// </summary>
+        internal static string CRUD5entityJS {
+            get {
+                return ResourceManager.GetString("CRUD5entityJS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;template&gt;
+        ///  &lt;v-card&gt;
+        ///    &lt;v-snackbar
+        ///      :timeout=&quot;2500&quot;
+        ///      color=&quot;blue-grey&quot;
+        ///      rounded=&quot;pill&quot;
+        ///      v-model=&quot;snackbar&quot;
+        ///    &gt;
+        ///      {{ snackbarMessage }}
+        ///    &lt;/v-snackbar&gt;
+        ///    &lt;v-card-title&gt;
+        ///      &lt;v-row no-gutters&gt;
+        ///        &lt;v-col class=&quot;item&quot; cols=&quot;12&quot; sm=&quot;6&quot; md=&quot;4&quot;&gt;
+        ///          &lt;v-btn elevation=&quot;1&quot; @click=&quot;show{0}Detail = true&quot;
+        ///            &gt;add new&lt;/v-btn
+        ///          &gt;
+        ///        &lt;/v-col&gt;
+        ///        &lt;v-col class=&quot;item&quot; cols=&quot;12&quot; sm=&quot;6&quot; md=&quot;4&quot;&gt;
+        ///          &lt;v-spacer&gt;&lt;/v-spacer&gt;
+        ///          &lt; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CRUD5entityVUE {
+            get {
+                return ResourceManager.GetString("CRUD5entityVUE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to   { 
+        ///    path: &apos;/{0}&apos;,
+        ///    component: (() =&gt; vueImport(&apos;./components/{1}.vue&apos;)),
+        ///  },.
+        /// </summary>
+        internal static string CRUD5route {
+            get {
+                return ResourceManager.GetString("CRUD5route", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to import { createRouter, createWebHashHistory } from &apos;vue-router&apos;;
+        ///import vueImport from &apos;vue-import&apos;;
+        ///
+        ///const routes = [
+        ///  { path: &apos;/&apos;, redirect: &apos;/{0}&apos; },
+        ///  /* dont use &apos;await vueImport&apos; as will load all the components on load!! */
+        ///{1}
+        ///  {
+        ///    path: &apos;/:catchAll(.*)&apos;,
+        ///    component: (() =&gt; vueImport(&apos;./components/page-not-found.vue&apos;)),
+        ///  },
+        ///];
+        ///
+        ///const router = createRouter({
+        ///  history: createWebHashHistory(),
+        ///  routes,
+        ///});
+        ///
+        ///export default router;
+        ///.
+        /// </summary>
+        internal static string CRUD5routeTemplate {
+            get {
+                return ResourceManager.GetString("CRUD5routeTemplate", resourceCulture);
             }
         }
         
@@ -1431,13 +1592,13 @@ namespace DBManager.Properties {
         ///
         ///if(isset($_POST[&apos;#tblname#FORM_updateID&apos;]) &amp;&amp; !empty($_POST[&apos;#tblname#FORM_updateID&apos;]))
         ///{
-        ///	$sql = &quot;UPDATE `#tblname#` set #updateVAL# WHERE #updateWhere#=:#updateWhere#&quot;;
+        ///	$sql = &apos;UPDATE `#tblname#` set #updateVAL# WHERE #updateWhere#=:#updateWhere#&apos;;
         ///	$stmt = $db-&gt;prepare($sql);
         ///	$stmt-&gt;bindValue(&apos;:#updateWhere#&apos;, $_POST[&apos;#tblname#FORM_updateID&apos;]);
         ///}
         ///else
         ///{
-        ///	$sql = &quot;INSERT INTO `#tblname#` (#insertFields#) VALUES (#insertVAL#)&quot;;
+        ///	$sql = &apos;INSERT INTO `#tblname#` (#insertFields#) VALUES (#insertVAL#)&apos;;
         ///	$stmt = $db-&gt;pre [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string PDOprepared {
@@ -1822,6 +1983,16 @@ namespace DBManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] PHPtemplateVue3 {
+            get {
+                object obj = ResourceManager.GetObject("PHPtemplateVue3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap refresh {
@@ -1887,6 +2058,16 @@ namespace DBManager.Properties {
         internal static System.Drawing.Bitmap templateCRUDvue2 {
             get {
                 object obj = ResourceManager.GetObject("templateCRUDvue2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap templateCRUDvue3 {
+            get {
+                object obj = ResourceManager.GetObject("templateCRUDvue3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

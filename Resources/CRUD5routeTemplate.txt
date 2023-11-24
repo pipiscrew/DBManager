@@ -1,0 +1,19 @@
+import { createRouter, createWebHashHistory } from 'vue-router';
+import vueImport from 'vue-import';
+
+const routes = [
+  { path: '/', redirect: '/{0}' },
+  /* dont use 'await vueImport' as will load all the components on load!! */
+{1}
+  {
+    path: '/:catchAll(.*)',
+    component: (() => vueImport('./components/page-not-found.vue')),
+  },
+];
+
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes,
+});
+
+export default router;

@@ -1,0 +1,4 @@
+  { 
+    path: '/{0}',
+    component: (() => vueImport('./components/{1}.vue')),
+  },

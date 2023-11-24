@@ -1,0 +1,5 @@
+              <v-switch
+                v-model="privateRecord.{0}"
+                color="primary"
+                label="{0}"
+              ></v-switch>

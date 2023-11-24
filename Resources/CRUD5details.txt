@@ -1,0 +1,220 @@
+<template>
+  <v-dialog v-model="showModal" fullscreen>
+    <v-card>
+      <v-toolbar dark color="primary">
+        <v-btn icon dark @click="close()">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+        <v-toolbar-title>{{ header }}</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-toolbar-items>
+          <v-btn
+            dark
+            text
+            v-if="privateRecord.{0} > 0"
+            @click="deleteRecord()"
+          >
+            Delete
+          </v-btn>
+          <v-btn dark text @click="save()"> Save </v-btn>
+        </v-toolbar-items>
+      </v-toolbar>
+      <v-form ref="form">
+
+      <v-overlay v-model="loading">
+        <!-- <v-progress-circular color="primary" indeterminate :size="55"></v-progress-circular> -->
+      </v-overlay>
+
+        <v-container>
+          <v-row style="padding-top: 20px">
+{1}
+          </v-row>
+        </v-container>
+      </v-form>
+    </v-card>
+  </v-dialog>
+</template>
+
+<script>
+import general from "../general.js";
+{8}
+{2}
+
+export default {
+  components: { {11} },
+  setup() { //executed before the created and mounted hooks -- https://vuejs.org/api/composition-api-setup.html
+	  console.log("test");
+  },
+  created: function () {
+    console.log('Component is created!');
+    //layer to avoid null binding error
+    this.privateRecord = new {9}();
+  },
+  mounted: function () {
+    console.log('Component is mounted!');
+    this.GetAllFromAPI();
+  },
+  beforeUnmount() {
+    // null parent sync variable - is not reflected to GRID because doesn't have the needed properties ;)
+    this.$emit("update:record", null);
+
+    console.log("destroyed");
+  },
+  props: {
+    showModal: {
+      type: Boolean,
+      default: false
+    },
+    record: {
+      type: Object,
+      default: null
+    }
+  },
+  data() {
+    return {
+      privateRecord: null,
+      header: null,
+      loading: false,
+{3}
+    };
+  },
+  // emits: ['update:showModal', 'update:record'],
+  methods: {
+    async GetAllFromAPI() {
+      this.loading = true;
+
+      //always the read record must be last function
+      await Promise.all([{4} this.getRecord()])
+        .then((responses) => {
+          // Get a JSON object from each of the responses - https://gomakethings.com/waiting-for-multiple-all-api-responses-to-complete-with-the-vanilla-js-promise.all-method/
+          return Promise.all(
+            responses.map(function (response) {
+              return response.json();
+            })
+          );
+        })
+        .then((r) => {
+          this.loading = false;
+
+          //PDO results always [string] for any dbase type, we passing it to TypeRegulator. Otherwise can't match the value, because on the 'main dbase record' stored as [int]
+{5}
+
+          if (r[{6}] != 0)
+            // when edit (avoid dymmy promise result)
+            this.privateRecord = new {9}(r[{6}]);
+        })
+        .catch((error) => {
+          this.loading = false;
+          alert(error);
+          this.$emit("update:showModal", false); //close dialog
+        });
+    },
+    //called on #mounted# event - fetch record from server
+    getRecord() {
+      if (this.record == null) {
+        this.header = "New record";
+        // eslint-disable-next-line no-unused-vars
+        return new Promise(function (resolve, reject) {
+          //dummy promise result - https://stackoverflow.com/a/50093624
+          resolve({
+            json: () => {
+              return JSON.stringify(0);
+            },
+          });
+        });
+      } else {
+        this.header = "Edit record";
+
+        let formData = new FormData();
+        formData.append("action", "GetRecord{9}");
+        formData.append("{0}", this.record.{0});
+
+        const requestOptions = {
+          method: "POST",
+          cache: "no-cache",
+          body: formData,
+        };
+
+        return fetch("api/{9}API.php", requestOptions);
+      }
+    },
+  async save() {
+
+      //validate form - https://vuetifyjs.com/en/components/forms/#exposed-properties
+      const { valid } = await this.$refs.form.validate();
+      if (!valid) return;
+
+      this.loading = true;
+
+      this.save2server().then((r) => {
+        this.loading = false;
+
+        if (!r || r.error) {
+          alert("Error in communication with the Server!");
+        } else {
+          if (r.code > 0) {
+            alert("ERROR : The action is not performed to server!");
+          } else {
+            //if is update reflect it to parent
+            if (this.privateRecord.id > 0) {
+              // this.record.title =  this.privateRecord.title;
+              // this.record.type =  this.privateRecord.type;
+              general.Class2Class(this.privateRecord, this.record);
+              this.$emit("childToParentSuccess", "Record updated!");
+            } else this.$emit("childToParentRefresh", "Record saved!");
+
+            this.$emit("update:showModal", false); //close dialog
+          }
+        }
+      });
+    },
+    async save2server() {
+      return await general.SetData(
+        "api/{9}API.php",
+        general.Class2FormData("SaveRecord{9}", this.privateRecord)
+      );
+    },
+    deleteRecord() {
+      if (
+        prompt(
+          "Warning this action will delete the record!\n\nTo proceed, please type 'delete'"
+        ) == "delete"
+      ) {
+        this.loading = true;
+
+        this.delete2server().then((r) => {
+          this.loading = false;
+
+          if (!r || r.error) {
+            alert("Error in communication with the Server!");
+          } else {
+            if (r.code != 0) {
+              alert("ERROR : The action is not performed to server!");
+            } else {
+                this.$emit(
+                  "childToParentSuccess",
+                  "Record deleted!",
+                  this.privateRecord.{0}
+                );
+
+              this.$emit("update:showModal", false); //close dialog
+            }
+          }
+        });
+      }
+    },
+    async delete2server() {
+      return await general.SetData(
+        "api/{9}API.php",
+        general.Class2FormData("DeleteRecord{9}", this.privateRecord)
+      );
+    },
+    close() {
+      this.$emit("update:showModal", false); //close the form - (via updating the binded variable to parent)
+
+      this.$emit("childToParentCancel", this.header + " aborted");
+    },
+{10}
+  },
+};
+</script>

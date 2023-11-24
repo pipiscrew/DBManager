@@ -1,0 +1,17 @@
+<template>
+  <v-card>
+    <v-tabs bg-color="primary">
+{0}
+    </v-tabs>
+  </v-card>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      date: new Date().toLocaleString(),
+    };
+  },
+};
+</script>
