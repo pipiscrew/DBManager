@@ -1,0 +1,10 @@
+              <v-autocomplete
+                v-model="privateRecord.{0}"
+                :items="{0}Items"
+                :rules="[() => !!privateRecord.{0} || 'This field is required']"
+                item-title="{1}"
+                item-value="{2}"
+                label="Select"
+                single-line
+                required
+              ></v-autocomplete>

@@ -378,6 +378,7 @@
     <EmbeddedResource Include="ResourceSQLServer\proc_node.dbaseJS_declaration.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\CRUD5detailsAutoCompleteElement.txt" />
     <None Include="Resources\CRUD5detailsSwitchElement.txt" />
     <None Include="Resources\CRUD5entityJS.txt" />
     <None Include="Resources\CRUD5details.txt" />

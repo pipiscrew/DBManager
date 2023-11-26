@@ -912,7 +912,7 @@ namespace DBManager
             //string TextElementREQ = "() => !!privateRecord.{0} || 'This field is required',";
             string TextElementREQ = "privateRecord.{0} && ";
 
-            string CRUD4detailsAutoCompleteElement = DBManager.Properties.Resources.CRUD4detailsAutoCompleteElement;
+            string CRUD4detailsAutoCompleteElement = DBManager.Properties.Resources.CRUD5detailsAutoCompleteElement;
             //string CRUD4detailsVNumberINT = DBManager.Properties.Resources.CRUD4detailsVNumberINT;
             //string CRUD4detailsVNumberDEC = DBManager.Properties.Resources.CRUD4detailsVNumberDEC;
             string CRUD4detailsSwitchElement = DBManager.Properties.Resources.CRUD5detailsSwitchElement;
@@ -990,7 +990,7 @@ namespace DBManager
                         {//otherwise vnumber
                             //vnumberImport = true;
                             //all += CRUD4detailsVNumberINT.Replace("{0}", field.field_name);
-                            all += CRUD4detailsTextElement.Replace("{0}", field.field_name).Replace("{1}", 4.ToString());
+                            all += CRUD4detailsTextElement.Replace("{0}", field.field_name).Replace("{1}", 4.ToString()).Replace("{2}", "").Replace("{3}", "");
                         }
                         break;
                     case "tinyint":
@@ -1002,7 +1002,7 @@ namespace DBManager
                         { //as int
                             //vnumberImport = true;
                             //all += CRUD4detailsVNumberINT.Replace("{0}", field.field_name);
-                            all += CRUD4detailsTextElement.Replace("{0}", field.field_name).Replace("{1}", 3.ToString());
+                            all += CRUD4detailsTextElement.Replace("{0}", field.field_name).Replace("{1}", 3.ToString()).Replace("{2}", "").Replace("{3}", "");
                         }
                         break;
                     case "bit":

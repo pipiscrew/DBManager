@@ -973,6 +973,24 @@ namespace DBManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to               &lt;v-autocomplete
+        ///                v-model=&quot;privateRecord.{0}&quot;
+        ///                :items=&quot;{0}Items&quot;
+        ///                :rules=&quot;[() =&gt; !!privateRecord.{0} || &apos;This field is required&apos;]&quot;
+        ///                item-title=&quot;{1}&quot;
+        ///                item-value=&quot;{2}&quot;
+        ///                label=&quot;Select&quot;
+        ///                single-line
+        ///                required
+        ///              &gt;&lt;/v-autocomplete&gt;.
+        /// </summary>
+        internal static string CRUD5detailsAutoCompleteElement {
+            get {
+                return ResourceManager.GetString("CRUD5detailsAutoCompleteElement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to               &lt;v-switch
         ///                v-model=&quot;privateRecord.{0}&quot;
         ///                color=&quot;primary&quot;
