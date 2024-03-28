@@ -66,6 +66,23 @@ static class General
 			return DialogResult.OK;
 
 	}
+	
+	public static string GetOrDefault(string keyName, string defaultValue)
+	{//application_name.exe.config
+		string value = ConfigurationManager.AppSettings[keyName];
+
+		if (value != null)
+			return value;
+		else
+		{
+			Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+			config.AppSettings.Settings.Add(keyName, defaultValue);
+			config.Save(ConfigurationSaveMode.Modified);
+			ConfigurationManager.RefreshSection("appSettings");
+		}
+
+		return defaultValue;
+	}
 
 	internal static DataTable ImportDelimitedFile(string filename, string delimiter, bool first_is_column_names)
 	{
