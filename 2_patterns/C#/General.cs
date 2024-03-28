@@ -83,6 +83,27 @@ static class General
 
 		return defaultValue;
 	}
+	
+	public static string GetOrDefault2(string keyName, string defaultValue)
+	{//Settings.settings
+		var settings = Properties.Settings.Default;
+
+		if (settings.Properties[keyName] != null)
+			return settings.Properties[keyName].DefaultValue.ToString();
+		
+		else
+		{
+			settings.Properties.Add(new SettingsProperty(keyName)
+			{
+				DefaultValue = defaultValue,
+				IsReadOnly = false
+			});
+
+			settings.Reload();
+			settings.Save(); //is not writing the value to file, is only for current session
+			return defaultValue;
+		}
+	}
 
 	internal static DataTable ImportDelimitedFile(string filename, string delimiter, bool first_is_column_names)
 	{
