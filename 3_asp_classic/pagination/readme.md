@@ -7,6 +7,10 @@
 
 all files should have **UTF8-BOM** encoding.  
 
+Use of mssql and Northwind2005 dbase.
+
+---
+
 reference - https://datatables.net/examples/server_side/simple.html  
 
 for PHP, seems they have a custom pagination class named [SSP class](https://github.com/DataTables/DataTablesSrc/blob/master/examples/server_side/scripts/ssp.class.php)
