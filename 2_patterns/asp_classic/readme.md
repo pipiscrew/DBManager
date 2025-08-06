@@ -4,7 +4,7 @@ If you have to involve UTF8 characters to a webpage, your **.asp files** must be
 
 <img width="221" height="69" alt="Image" src="https://github.com/user-attachments/assets/31f542e7-2680-4b3d-bae7-b17718176f32" />
 
-The same occur when you instruct **ADO** to write UTF8 chars to database, even you use `Parameterized Queries` with adVarWChar failing again.. Again here is a sample .asp, UTF8 vs ANSI :  
+The same occur when you instruct **ADO** to write UTF8 chars to database, even you use `Parameterized Queries` with adVarWChar failing.. Again here is a sample .asp, UTF8 vs ANSI database view :  
 
 <img width="442" height="40" alt="Image" src="https://github.com/user-attachments/assets/56a75f99-92a8-4252-ae4a-5951ae5baca2" />
 
