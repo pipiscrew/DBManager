@@ -10,7 +10,7 @@ The same occur when you instruct **ADO** to write UTF8 chars to database, even y
 
 another method which tested&working with database (even the file is UTF8) :  
 ```
-<%@ Language="VBScript" CodePage=65001 %>
+<%@ CodePage=65001 %>
 ```
 
 if needed for html (no tested), for `ISO-8859-7` is :  
