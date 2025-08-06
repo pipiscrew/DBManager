@@ -1,5 +1,12 @@
 <%
-
+' ADO params - https://www.w3schools.com/asp/prop_comm_commandtype.asp + https://www.w3schools.com/asp/met_comm_createparameter.asp
+Const adInteger = 3
+Const adCmdText = 1
+Const adVarWChar = 202
+Const adParamInput = 1
+Const adParamOutput = 2
+Const adDBTimeStamp = 135
+	
 Public Function GetRecordset(sql)
         Dim objConn
         Dim rsServer
@@ -79,14 +86,6 @@ End Function
 
 Function AddTeam(user)
 	Dim rs, sql, cmd
-	dim adCmdText, adInteger, adVarWChar, adDBTimeStamp, adParamInput, adParamOutput
-	' https://www.w3schools.com/asp/prop_comm_commandtype.asp + https://www.w3schools.com/asp/met_comm_createparameter.asp
-	adInteger = 3
-	adCmdText = 1
-	adVarWChar = 202
-	adParamInput = 1
-	adParamOutput = 2
-	adDBTimeStamp = 135
 
 	'dummy sql to get the ActiveConnection
 	set rs = GetRecordset("select top 1 id from Tournament")
@@ -139,13 +138,6 @@ End Function
 
 Function UnTournament(TournamentID)
 	Dim rs, sql, cmd
-	dim adCmdText, adInteger, adVarWChar, adDBTimeStamp, adParamInput, adParamOutput
-	adInteger = 3
-	adCmdText = 1
-	adVarWChar = 202
-	adParamInput = 1
-	adParamOutput = 2
-	adDBTimeStamp = 135
 
 	'dummy sql to get the ActiveConnection
 	set rs = GetRecordset("select top 1 id from Tournament")
