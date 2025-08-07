@@ -28,3 +28,21 @@ Response.AddHeader "Content-Disposition", "attachment; filename=" & filename
 Response.Write fileContent
 Response.End
 %>
+
+
+---------------example_call.html by JS
+function DownloadCustomers(){
+	var form = document.createElement('form');
+	form.method = 'POST';
+	form.action = 'download.asp';
+	
+	var input = document.createElement('input');
+	input.type = 'hidden';
+	input.name = 'fileName';
+	input.value = getTodayFormatted()+"-Pending.xls";
+	form.appendChild(input);
+	
+	document.body.appendChild(form);
+	form.submit();
+	document.body.removeChild(form);
+}
