@@ -4,8 +4,8 @@ If you have to involve UTF8 characters to a webpage, your **.asp files** must be
 
 <img width="221" height="69" alt="Image" src="https://github.com/user-attachments/assets/31f542e7-2680-4b3d-bae7-b17718176f32" />  
 
-meanwhile in VSCode modify this setting  
-<img width="400" height="327" alt="Image" src="https://github.com/user-attachments/assets/f7942e6c-5922-4b80-9f87-1f78606bfd92" />
+meanwhile in VSCode modify at  
+<img width="400" height="348" alt="Image" src="https://github.com/user-attachments/assets/1b51a20f-6cd7-48eb-86a4-4735417db6bc" />
 
 ---
 
