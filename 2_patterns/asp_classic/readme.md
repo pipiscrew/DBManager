@@ -2,7 +2,12 @@
 
 If you have to involve UTF8 characters to a webpage, your **.asp files** must be **ANSI** and on the **codepage** you working on. Below example how Greek chars appears on  **UTF8 .asp file** :  
 
-<img width="221" height="69" alt="Image" src="https://github.com/user-attachments/assets/31f542e7-2680-4b3d-bae7-b17718176f32" />
+<img width="221" height="69" alt="Image" src="https://github.com/user-attachments/assets/31f542e7-2680-4b3d-bae7-b17718176f32" />  
+
+meanwhile in VSCode modify this setting  
+<img width="562" height="327" alt="Image" src="https://github.com/user-attachments/assets/f7942e6c-5922-4b80-9f87-1f78606bfd92" />
+
+---
 
 The same occur when you instruct **ADO** to write UTF8 chars to database, even you use `Parameterized Queries` with adVarWChar failing.. Again here is a sample .asp, UTF8 vs ANSI database view :  
 
@@ -16,4 +21,5 @@ another method which tested&working with database (even the file is UTF8) :
 if needed for html (no tested), for `ISO-8859-7` is :  
 ```
 <%@ CodePage=28597 %>
-```
+```  
+
