@@ -6,7 +6,7 @@ The version attached is [boostrap-table](https://github.com/wenzhixin/bootstrap-
 
 tested&working on IE11.
 
-<img width="983" height="595" alt="Image" src="https://github.com/user-attachments/assets/b70d2c63-192f-4b8c-91d3-abdc7f9639b2" />
+<img width="983" height="595" alt="Image" src="https://github.com/user-attachments/assets/b70d2c63-192f-4b8c-91d3-abdc7f9639b2" />  
 
 more options on this [file](https://github.com/pipiscrew/fb_organizer/blob/master/src/tab_dashboard_seller_paid_list.php), snoop around you will find more files containing other properties..  
 
