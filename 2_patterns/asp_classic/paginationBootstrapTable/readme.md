@@ -2,7 +2,7 @@
 
 I liked this variant more than datatables (included in previous folder).  
 
-The version attached is [boostrap-table](https://github.com/wenzhixin/bootstrap-table) **v1.3.0** (2014).  
+The version attached is [boostrap-table](https://github.com/wenzhixin/bootstrap-table) **v1.3.0** (2014). Use it with [bootstrap v3.3.6](https://bootstrapdocs.com/v3.3.6/docs/).
 
 tested&working on IE11.
 
