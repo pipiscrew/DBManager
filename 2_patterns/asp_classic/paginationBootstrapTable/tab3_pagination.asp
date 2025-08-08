@@ -43,7 +43,7 @@ sql = "SELECT [id] ,[cust_name] ,[date_rec] ,[amount] from customers WHERE " & s
 
 '//
 	
-Set rs = GetRecordsetDeals(sql)
+Set rs = GetRecordset(sql)
 
 
 ' Output the data in JSON format
