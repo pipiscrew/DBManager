@@ -13,10 +13,11 @@ The same occur when you instruct **ADO** to write UTF8 chars to database, even y
 
 <img width="442" height="40" alt="Image" src="https://github.com/user-attachments/assets/56a75f99-92a8-4252-ae4a-5951ae5baca2" />
 
-another method which tested&working with database (even the file is UTF8) :  
+another method which tested&working with database is to set the encoding to UTF8 via :  
 ```
 <%@ CodePage=65001 %>
 ```
+morever for an API that `send` data to client is acceptable the .asp file to be by default `UTF8-BOM`.  
 
 if needed for html (no tested), for `ISO-8859-7` is :  
 ```
