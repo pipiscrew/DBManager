@@ -66,6 +66,10 @@ Licensed under the [MIT license](http://www.opensource.org/licenses/mit-license.
 
 -------  
   
+alternative :
+* [SQLEctron](https://github.com/sqlectron/sqlectron)
+* [Mini SQL Query](https://github.com/paulkohler/minisqlquery)
+* [HeidiSQL](https://www.heidisql.com/)
 
 CRUD generators by others :  
 * [yunhan0/koa-vue-fullstack](https://github.com/yunhan0/koa-vue-fullstack) - vue / nodeJS / mongoDB
