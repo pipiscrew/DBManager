@@ -76,7 +76,7 @@ function GetClients()
 
     If xmlhttp.Status = 200 Then
         apiResponse = xmlhttp.responseText
-        GetAvailableBreakdowns = apiResponse
+        GetClients = apiResponse
     Else
         Response.Write "API Error: " & xmlhttp.Status & " - " & xmlhttp.statusText
     End If
