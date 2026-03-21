@@ -74,3 +74,7 @@ alternative :
 CRUD generators by others :  
 * [yunhan0/koa-vue-fullstack](https://github.com/yunhan0/koa-vue-fullstack) - vue / nodeJS / mongoDB
 * [radzen](https://www.radzen.com/) - angular / asp.net / SQLServer & Oracle & Postgre
+* [aspnetzero](https://aspnetzero.com/) - asp.net
+* [junnark](https://junnark.com/Products) - winforms / asp.net
+* [xlinesoft](https://xlinesoft.com/products.htm) - php / asp / asp.net
+* [eWorld](https://aspnetmaker.dev/) - [php](https://phpmaker.dev/) / asp.net / [db2mobile](https://www.hkvstore.com/)
