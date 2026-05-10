@@ -19,7 +19,7 @@ another method which tested&working with database is to set the encoding to UTF8
 ```
 
 > [!TIP]
-> morever for an API that `send` data to client is acceptable the .asp file to be by default `UTF8-BOM`.  
+> morever for an API that `send` data to client is acceptable the .asp file encoding to be by default `UTF8-BOM`.  
 
 if needed for html (no tested), for `ISO-8859-7` is :  
 ```
