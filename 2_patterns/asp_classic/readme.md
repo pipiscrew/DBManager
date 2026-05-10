@@ -17,7 +17,9 @@ another method which tested&working with database is to set the encoding to UTF8
 ```
 <%@ CodePage=65001 %>
 ```
-morever for an API that `send` data to client is acceptable the .asp file to be by default `UTF8-BOM`.  
+
+> [!TIP]
+> morever for an API that `send` data to client is acceptable the .asp file to be by default `UTF8-BOM`.  
 
 if needed for html (no tested), for `ISO-8859-7` is :  
 ```
