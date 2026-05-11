@@ -2,7 +2,7 @@
 
 * you running the website with `IIS Management Console` (not IIS Express), tested on windows10x64
 * on EDGE, you using the option **Reload in Internet Explorer mode**
-* Open the Classic ASP folder in Visual Studio and set a breakpoint to a file for test
+* Open the **Classic ASP folder** in Visual Studio and set a breakpoint to a file for test
 * Debug Menu > Attach to Process (make sure you check `Show processes from all users`)
 * On `Attach to` option select `Script code`
 * Locate the IIS ASP worker process (`w3wp.exe` on IIS v6-v10, `dllhost.exe` on IIS5.1)
@@ -29,4 +29,8 @@
 VSCode : 
 * [Classic ASP Syntaxes](https://marketplace.visualstudio.com/items?itemName=jtjoo.classic-asp-html) [[2](https://github.com/jtjoo/vscode-classic-asp-extension)]
 * [VBA](https://marketplace.visualstudio.com/items?itemName=serkonda7.vscode-vba)
-* [GumDotNet Form Viewer](https://marketplace.visualstudio.com/items?itemName=preechagum.gumdotnet-form-viewer)
+* [GumDotNet Form Viewer](https://marketplace.visualstudio.com/items?itemName=preechagum.gumdotnet-form-viewer)  
+
+---
+
+> We moved to Visual Studio **2022**. However, we are **unable** to achieve the same debugging functionality for **Classic ASP** code. Specifically, breakpoints in .asp files **are not hit**, and step-through debugging no longer works **as it did** in Visual Studio **2019**. [source](https://learn.microsoft.com/en-in/answers/questions/5566004/request-for-classic-asp-debugging-support-in-visua)
