@@ -90,7 +90,7 @@ MsgBox ("Result from complex method is: " & oMathMethods.CalculateComplexMethod(
 ### Extras
 ##### VB6 in Github
 
-In order to use Github for your VB6 source code add this extensions to your Visual Studio .gitignore file. Like in this project [.gitignore file for VB6](.gitignore)
+In order to use Github for your VB6 source code add this extensions to your Visual Studio .gitignore file. Like in this project [.gitignore file for VB6](gitignore.txt)
 
 ```markdown
 *.csi
