@@ -6,7 +6,7 @@
 homepage - <http://www.axtools.com/products-codesmart-vb6.php>
 
 
-## MZ-Tools
+## MZ-Tools for VB6
 
 * code metrics 
 * `paid`
