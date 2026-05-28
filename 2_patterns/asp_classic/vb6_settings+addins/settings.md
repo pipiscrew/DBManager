@@ -17,4 +17,4 @@ In case the developer split the code from main exe to `ActiveX DLL`, use of `Mod
 * Add **User Defined Types** to that class and declare them **public**
 * Any project referencing those can now create those **User Defined Types** and pass them around
 
-[source](https://www.vbforums.com/showthread.php?783383-RESOLVED-How-to-access-Module-items-in-a-DLL&p=4805795&viewfull=1#post4805795) 
+[source](https://www.vbforums.com/showthread.php?783383-RESOLVED-How-to-access-Module-items-in-a-DLL&p=4805795&viewfull=1#post4805795)  
