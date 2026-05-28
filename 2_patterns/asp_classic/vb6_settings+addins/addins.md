@@ -27,7 +27,7 @@ homepage - <https://github.com/rubberduck-vba/Rubberduck>
 
 <img width="392" height="72" alt="Image" src="https://github.com/user-attachments/assets/74dc37ca-dd58-4f7a-a20c-0760b5779e54" />  
 
-<br>
+---
 
 >-When I parse the first time, I get an Unexpected Error status in the toolbar, but no additional information that would help me track it down.  
 >-You can find the logs under `%appdata%\rubberduck\logs`. They're **disabled** by default, but **enabled** on first startup. [source](https://github.com/rubberduck-vba/Rubberduck/issues/4635)
