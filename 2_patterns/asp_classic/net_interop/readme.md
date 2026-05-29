@@ -107,6 +107,24 @@ Set o = CreateObject("NetStandardLibrary.MathUtils")
 
 ---
 
+## use .net classes to vb6
+* [Kellyethridge.VBCorLib](https://github.com/kellyethridge/VBCorLib)
+* [WindowStations/VB6NameSpaces](https://github.com/WindowStations/VB6NameSpaces)
+  * [VBForumsCommunity/VB6Porter](https://github.com/VBForumsCommunity/VB6Porter) [[2](https://github.com/VBForumsCommunity/VB6Porter/discussions/8)]
+* [bclothier/vbDotNetLoader](https://gist.github.com/bclothier/1916699dad057b0bdf884c10f4cc8475)
+
+## ide
+* [twinBASIC](https://twinbasic.com/) - opens VB6 project
+* [AvaloniaVisualBasic6](https://github.com/BAndysc/AvaloniaVisualBasic6) - Avalonia - Visual Basic 6 IDE recreated in C#
+* [Visual Free Basic](http://www.yfvb.com/soft-48.htm) - designed by a programmer in China (w/ English support) not able to open a VB6 project
+
+## analyzers
+* [aivosto.Project Analyzer](https://www.aivosto.com/project/project.html)
+* [CodeGears.VBDepend](https://www.vbdepend.com/) - last release 2017
+
+<img width="521" height="302" alt="Image" src="https://github.com/user-attachments/assets/4853afa0-894f-4721-af4f-d7b3919df456" />  
+
+
 more :  
   * [VB6 Dynamic Behaviors](https://github.com/vegitz/codes/blob/1de4798dd0dc6dc41e8982453f4bbb8ab51c4dce/0031%20VB6%20Dynamic%20Behaviors/App/Form1.frm#L142)
   * [VB6 Dictionary](https://github.com/vegitz/vb6/blob/master/dictionary/codes/Form1.frm)
