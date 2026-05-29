@@ -3,6 +3,12 @@
 * [twinBASIC](https://twinbasic.com/) - opens VB6 project
 * [AvaloniaVisualBasic6](https://github.com/BAndysc/AvaloniaVisualBasic6) - Avalonia - Visual Basic 6 IDE recreated in C#
 * [Visual Free Basic](http://www.yfvb.com/soft-48.htm) - designed by a programmer in China (w/ English support) not able to open a VB6 project
+* [RAD Basic](https://www.youtube.com/@RADBasic/videos) - no hope
+
+### misc
+* [Cogito.VisualBasic6.MSBuild](https://github.com/alethic/Cogito.VisualBasic6) - additional VS.NET `MSBuild targets` for handling Visual Basic 6 project builds
+* (2012) [Converting a VB6 Application to VB.NET](Converting_a_VB6_Application_to_VBnet.txt) - an experience
+* (https://deepinthecode.com/2012/08/23/converting-a-vb6-application-to-vb-net/)
 
 ## analyzers
 * [aivosto.Project Analyzer](https://www.aivosto.com/project/project.html)

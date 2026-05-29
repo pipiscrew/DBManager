@@ -1,0 +1,30 @@
+﻿Converting a VB6 Application to VB.NET
+
+written : 2012.08.23 by David Young
+
+src - https://deepinthecode.com/2012/08/23/converting-a-vb6-application-to-vb-net/
+
+
+Recently I was tasked with stabilizing an old Windows Forms app written in Visual Basic 6.  VB6 was a great language for simple applications in its heyday, but now that the .NET Framework is 10 years old and new PCs all have 64-bit CPUs, it’s high time for an upgrade.
+
+Fortunately, all versions of Visual Studio from VS.NET to VS 2008 provided a Visual Basic Upgrade Wizard that could be used to convert a VB6 app to a VB.NET application.  Unfortunately, this process is rarely without problems.  (Microsoft did not include the VB Upgrade Wizard in VS 2010 or VS 2012. If you use either of these, a newer version of the tool can be purchased from ArtinSoft, which also provided the one included with the earlier VS versions.)
+The process should go like this: You have a VB6 project with project file (.vbp extension).  You can open and compile this project on VB6.  You then close VB6 and open the project file with Visual Studio 200x, and the Upgrade Wizard converts the project to .NET.
+How the process usually goes: You have a VB6 project with project file.  You can open and compile this project on VB6.  You then close VB6 and open the project file with Visual Studio 200x, and the Upgrade Wizard hangs while parsing a form or during some other conversion process.  You may be forced to kill the VS task in Task Manager if the Cancel button doesn’t work, and will likely not get an error log as to what or why it wouldn’t upgrade.  You then begin disabling references to third-party (and even some MS) ActiveX controls or other DLLs, one at a time, to figure out which one(s) are causing the problem.  Much wailing and gnashing of teeth ensues as you discover that the Upgrade Wizard often behaves more like the Sorcerer’s Apprentice rather than Merlin.   The process can be painless, but it usually isn’t.
+
+You will need to have both VB6 and a version of Visual Studio that includes the Upgrade Wizard.  It has been my experience that VB6 must be installed first for the Wizard to be installed.  I had VS 2008 installed on my development PC, and later installed VB6.  No dice; VS 2008 didn’t recognize files with “.vbp” as project files.  I then installed VS 2005, where the Wizard was eventually used by me on this project.  (I probably could have uninstalled and reinstalled VS 2008, but I didn’t see the need.)
+
+To begin, I opened the project in VB6, and with a few tweaks here and there, it compiled and ran with no errors.  I closed VB6.  Next, I opened the project using VS 2005.  After the standard “Next–>Next–>…–>Finish” set of dialog boxes the conversion process began.  After less than a minute, it hung with no error dialogs.  After killing the task and trying a couple more times, I found out that indeed there was an error dialog popping up — behind Visual Studio — where I couldn’t see it while VS was hung.
+
+Fortunately, the dialog was written by the maker of the third-party ActiveX control that was causing the problem.  I manually edited the project file with Notepad to remove the reference, and was able to complete the conversion to VB.NET in about 20 minutes.  Afterwards, I loaded up the new project file — the one created with VS 2005 — in Visual Studio 2010 and changed the .NET Framework from 2.0 to 4.0.
+
+(At this point, those ActiveX components and DLLs that were disabled before the conversion can be re-referenced, assuming they work with the new environment.  Otherwise, recoding may be necessary.)
+
+That was just the beginning.  From here, I found that there were several VB6 methods that don’t have direct equivalents in the .NET Framework, which Visual Studio changed to “VB6.<<method name>>“.  These methods will still work, but raise Warnings (the yellow exclamations) as they have been deprecated and will not be supported in some future version of VS.  They also would not be supported if the app ran as a 64-bit process, so until the methods are manually changed, the compiled program must be run as a 32-bit process.
+
+Since I had hundreds of these Warnings, and VS will only display about 100 of them, I refactored those methods by creating a class with deprecated methods and called the new method, which then referenced the old one.  (This is done so that you can see more, hopefully all, of the Warnings before actually beginning to fix them.  It gave me a good idea of how much more work was to be done before testing was necessary.)
+
+In cases where an entire class is deprecated (like ADODC), I created a new class that inherited from the deprecated base class.  In this way, the number of Warnings can be minimized, and the new classes and methods can later be rewritten using the .NET Framework rather than relying on backwards compatibility with VB6.  This did not work  for methods that are part of the deprecated class; each call to the method from the inherited class also raised a Warning.
+
+In some cases, the calls to these methods and the instances of these classes will require the calling code to be rewritten, though it will not always be necessary; sometimes just a new definition of the class or method will allow the old code to work just fine.
+
+I am not finished with this upgrade as yet, though things are moving more smoothly now.  Apparently, the backwards compatibility with the VB6 classes and methods will remain through .NET Framework 4.5, but will likely be removed with .NET 5.0.
