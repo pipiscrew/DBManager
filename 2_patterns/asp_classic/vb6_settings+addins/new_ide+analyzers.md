@@ -7,8 +7,7 @@
 
 ### misc
 * [Cogito.VisualBasic6.MSBuild](https://github.com/alethic/Cogito.VisualBasic6) - additional VS.NET `MSBuild targets` for handling Visual Basic 6 project builds
-* (2012) [Converting a VB6 Application to VB.NET](Converting_a_VB6_Application_to_VBnet.txt) - an experience
-* (https://deepinthecode.com/2012/08/23/converting-a-vb6-application-to-vb-net/)
+* (2012) [Converting a VB6 Application to VB.NET](https://deepinthecode.com/2012/08/23/converting-a-vb6-application-to-vb-net/) - an experience 
 
 ## analyzers
 * [aivosto.Project Analyzer](https://www.aivosto.com/project/project.html)
