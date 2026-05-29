@@ -27,4 +27,6 @@ In cases where an entire class is deprecated (like ADODC), I created a new class
 
 In some cases, the calls to these methods and the instances of these classes will require the calling code to be rewritten, though it will not always be necessary; sometimes just a new definition of the class or method will allow the old code to work just fine.
 
-I am not finished with this upgrade as yet, though things are moving more smoothly now.  Apparently, the backwards compatibility with the VB6 classes and methods will remain through .NET Framework 4.5, but will likely be removed with .NET 5.0.
+I am not finished with this upgrade as yet, though things are moving more smoothly now.  Apparently, the backwards compatibility with the VB6 classes and methods will remain through .NET Framework 4.5, but will likely be removed with .NET 5.0.  
+
+also read - ADODB Issues in VB.NET - https://deepinthecode.com/2012/10/09/adodb-issues-in-vb-net-with-an-oracle-database/
