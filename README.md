@@ -78,3 +78,6 @@ CRUD generators by others :
 * [junnark](https://junnark.com/Products) - winforms / asp.net
 * [xlinesoft](https://xlinesoft.com/products.htm) - php / asp / asp.net
 * [eWorld](https://aspnetmaker.dev/) - [php](https://phpmaker.dev/) / asp.net / [db2mobile](https://www.hkvstore.com/)
+
+Form generators :  
+* [Datensen.Luna Modeler](https://www.datensen.com/products/luna-modeler/videos/how-to-use-custom-properties-in-luna-modeler/) [[2](https://www.datensen.com/blog/docs/custom-templates-scripts/)] + user can customize the template
