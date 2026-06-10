@@ -80,4 +80,4 @@ CRUD generators by others :
 * [eWorld](https://aspnetmaker.dev/) - [php](https://phpmaker.dev/) / asp.net / [db2mobile](https://www.hkvstore.com/)
 
 Form generators :  
-* [Datensen.Luna Modeler](https://www.datensen.com/products/luna-modeler/videos/how-to-use-custom-properties-in-luna-modeler/) [[2](https://www.datensen.com/blog/docs/custom-templates-scripts/)] + user can customize the template
+* [Datensen.Luna Modeler](https://www.datensen.com/products/luna-modeler/videos/how-to-use-custom-properties-in-luna-modeler/) [[2](https://www.datensen.com/blog/docs/customizations-and-custom-properties/)] [[3](https://www.datensen.com/blog/docs/custom-templates-scripts/)] - user can customize the template
