@@ -39,7 +39,7 @@ In case the developer split the code from main exe to `ActiveX DLL`, use of `Mod
 	* If a method name, parameters, or return types change, the DLL needs to maintain the same GUID (Globally Unique Identifier) and type library.
 	* This is typically used for component-based development.
 
-when having .vbg (visual basic group) that has a `activexDLL` & a `Standar EXE` projects (the EXE project using the activexDLL)... When you done a change to activexDLL and compile it, throws an error that the DLL is used by another application. Possible use is the `Standar EXE` has a reference to dll by other directory and not by direct `activexDLL` folder, where build. [reference](https://stackoverflow.com/a/8181512)  
+when having .vbg (visual basic group) that has a `activexDLL` & a `Standar EXE` projects... Once you done a change to `activexDLL` and compile it, `throws an error` that the `DLL is used by another application`. Possible solution is the `Standar EXE` has a reference to dll by **other directory** and not by direct `activexDLL` folder (where build). [reference](https://stackoverflow.com/a/8181512)  
 
 use of [kinook.VisBuildPro](https://www.kinook.com/VisBuildPro/Manual/index.htm?makevb6.htm)  
 
