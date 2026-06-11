@@ -1,0 +1,79 @@
+@echo off
+::VB6 compilation
+set VB6_PATH="C:\Program Files (x86)\Microsoft Visual Studio\VB98\VB6.EXE"
+set PROJ_PATH="C:\src2026\projectX.VBP"
+set OUTPUT_PATH="C:\src2026"
+
+::WINLICENSE OUTPUT
+set WINLIC_OUTPUT_PATH="C:\src2026setup"
+
+::INNO
+set INNO_PATH="C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+set INNO_ISS= "C:\src2026setup\!setup.iss"
+
+echo Clearing %OUTPUT_PATH% Folder...
+
+:: Clean Deploy Folder
+del %OUTPUT_PATH%\projectX.exe
+::del %OUTPUT_PATH%\Project1.dll
+
+echo Compiling %PROJ_PATH%...
+
+:: Run the compiler
+%VB6_PATH% /m %PROJ_PATH% /outdir %OUTPUT_PATH%
+
+:: Check the exit code
+if %ERRORLEVEL% NEQ 0 (
+    echo [ERROR] Compilation failed with exit code %ERRORLEVEL%!
+    PAUSE
+    exit /b %ERRORLEVEL%
+)
+
+echo Clearing %WINLIC_OUTPUT_PATH% Folder...
+
+:: Clean Setup Folder
+del %WINLIC_OUTPUT_PATH%\projectX.exe
+
+echo Winlicense Protect...
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::Winlicense Protect - automatically outputs to `C:\src2026setup`
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+cd /d C:\Users\938475\Desktop\WinLicense
+
+::invoke Winlicense
+start /w WinLicense /protect projectX
+
+::error handling
+if errorlevel 3 goto 3
+if errorlevel 2 goto 2
+if errorlevel 1 goto 1
+if errorlevel 0 goto 0
+goto done
+
+:0
+echo Application protected successfully
+goto done
+
+:1
+echo ERROR: File already protected
+goto done 
+
+:2
+echo ERROR: File to protect cannot be opened 
+goto done 
+
+:3
+echo ERROR: An internal error occurred while protecting
+
+
+:done
+if %ERRORLEVEL% NEQ 0 (
+    echo [ERROR] Compilation failed with exit code %ERRORLEVEL%!
+    PAUSE
+    exit /b %ERRORLEVEL%
+)
+
+echo Inno Setup Bundle...
+%INNO_PATH% %INNO_ISS%
+
+pause
