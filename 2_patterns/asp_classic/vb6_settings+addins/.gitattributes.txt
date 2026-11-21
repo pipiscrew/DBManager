@@ -1,0 +1,10 @@
+# VB6 source is ANSI (cp1252) with CRLF line ends, and VB6 reads nothing else: never convert it.
+# https://github.com/teepean/vb6decompiler/blob/main/.gitattributes
+*.vbp -text
+*.frm -text
+*.bas -text
+*.cls -text
+*.ctl -text
+*.frx binary
+*.exe binary
+*.dll binary
